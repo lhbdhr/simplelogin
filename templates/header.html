@@ -6,12 +6,12 @@
       </a>
 
       <div class="d-flex order-lg-2 ml-auto">
-        <div class="nav-item" data-toggle="dark-mode" title='Toggle bright/dark mode'>
+        <div class="nav-item" data-toggle="dark-mode" title='切换浅色深色模式'>
           <i class="fe fe-moon"></i>
         </div>
         {% if current_user.should_show_upgrade_button() %}
           <div class="nav-item">
-            <a href="{{ url_for('dashboard.pricing') }}" class="btn btn-sm btn-outline-primary">Upgrade</a>
+            <a href="{{ url_for('dashboard.pricing') }}" class="btn btn-sm btn-outline-primary">升级高级计划</a>
           </div>
         {% endif %}
 
@@ -41,7 +41,7 @@
             </div>
 
             <div class="text-center">
-              <button v-if="canLoadMore" @click="loadMore()" class="btn btn-link">Load more</button>
+              <button v-if="canLoadMore" @click="loadMore()" class="btn btn-link">加载更多</button>
             </div>
 
           </div>
@@ -62,16 +62,16 @@
               </span>
 
               {% if current_user.in_trial() %}
-                <small class="text-success d-block mt-1">Premium expires {{ current_user.trial_end|dt }}
+                <small class="text-success d-block mt-1">高级计划过期于 {{ current_user.trial_end|dt }}
                 <i class="fe fe-info" data-toggle="tooltip"
-                   title="After you signed up you were given a free 7 day Premium trial, after this period your account will automatically be downgraded to the Free plan."></i>
+                   title="注册后，您将获得 7 天的免费高级试用期，试用期过后，您的帐户将自动降级为免费计划。"></i>
                 </small>
               {% elif current_user.is_premium() %}
 
                 <small class="text-success d-block mt-1">Premium
                   {% set sub = current_user.get_subscription() %}
                   {% if sub and sub.cancelled and not current_user.lifetime %}
-                    until {{ sub.next_bill_date.strftime("%Y-%m-%d") }}
+                    直到 {{ sub.next_bill_date.strftime("%Y-%m-%d") }}
                   {% endif %}
                 </small>
               {% endif %}
@@ -80,14 +80,14 @@
           </a>
 
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-            <a class="dropdown-item" href="{{ url_for('dashboard.api_key') }}">
+            <!-- <a class="dropdown-item" href="{{ url_for('dashboard.api_key') }}">
               <i class="dropdown-icon"><img src="/static/key.svg"></i> API Keys
-            </a>
+            </a> 
 
             <hr class="my-2">
-
+            -->
             <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
-              <i class="dropdown-icon fe fe-log-out"></i> Sign out
+              <i class="dropdown-icon fe fe-log-out"></i> 退出登陆
             </a>
 
           </div>

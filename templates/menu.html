@@ -3,28 +3,28 @@
     <a href="{{ url_for('dashboard.index') }}"
        class="nav-link {{ 'active' if active_page == 'dashboard' }}">
       <i class="fe fe-home"></i>
-      Aliases
+      别名
     </a>
   </li>
 
   <li class="nav-item">
     <a href="{{ url_for('dashboard.directory') }}"
        class="nav-link {{ 'active' if active_page == 'directory' }}">
-      <i class="fe fe-folder"></i> Directories
+      <i class="fe fe-folder"></i> 目录
     </a>
   </li>
 
   <li class="nav-item">
     <a href="{{ url_for('dashboard.mailbox_route') }}"
        class="nav-link {{ 'active' if active_page == 'mailbox' }}">
-      <i class="fe fe-inbox"></i> Mailboxes
+      <i class="fe fe-inbox"></i> 收件箱
     </a>
   </li>
 
   <li class="nav-item">
     <a href="{{ url_for('dashboard.custom_domain') }}"
        class="nav-link {{ 'active' if active_page == 'custom_domain' }}">
-      <i class="fe fe-server"></i> Domains
+      <i class="fe fe-server"></i> 自定义域名
     </a>
   </li>
 
@@ -36,7 +36,6 @@
       Discover
     </a>
   </li>
-  -->
 
   <li class="nav-item">
     <a href="{{ url_for('developer.index') }}"
@@ -45,8 +44,8 @@
       SIWSL
     </a>
   </li>
-
-  {% if current_user.should_show_app_page() %}
+  -->
+  <!-- {% if current_user.should_show_app_page() %}
     <li class="nav-item">
       <a href="{{ url_for('dashboard.app_route') }}"
          class="nav-link {{ 'active' if active_page == 'app' }}">
@@ -54,13 +53,13 @@
         Apps
       </a>
     </li>
-  {% endif %}
+  {% endif %} -->
 
   <li class="nav-item">
     <a href="{{ url_for('dashboard.setting') }}"
        class="nav-link {{ 'active' if active_page == 'setting' }}">
       <i class="fe fe-settings"></i>
-      Settings
+      设置
     </a>
   </li>
 </ul>

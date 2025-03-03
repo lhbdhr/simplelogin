@@ -1,316 +1,483 @@
-{% extends 'dashboard/domain_detail/base.html' %}
+{% extends 'dashboard/domain_detail/base.html' %} {% set domain_detail_page =
+"dns" %} {% block title %} {{ custom_domain.domain }} DNS {% endblock %} {%
+block domain_detail_content %}
+<div
+  class="p-4 mr-auto"
+  style="max-width: 60rem"
+>
+  <h1 class="h2">{{ custom_domain.domain }}</h1>
+  <div class="">请按照以下步骤设置您的域名。</div>
 
-{% set domain_detail_page = "dns" %}
+  <div class="small-text mb-5">
+    DNS 更改可能需要长达 24
+    小时才能生效。但实际上，它要快得多（根据我们的经验，大约 1 分钟）。
+  </div>
 
-{% block title %}
-  {{ custom_domain.domain }} DNS
-{% endblock %}
-
-
-{% block domain_detail_content %}
-  <div class="p-4 mr-auto" style="max-width: 60rem;">
-    <h1 class="h2"> {{ custom_domain.domain }} </h1>
-    <div class="">Please follow the steps below to set up your domain.</div>
-
-    <div class="small-text mb-5">
-      DNS changes could take up to 24 hours to propagate. In practice, it's a lot faster though (~1
-      minute or in our experience).
-    </div>
-
-    <div id="mx-form">
-      <div class="font-weight-bold">1. MX record
-
-        {% if custom_domain.verified %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="MX Record Verified">✅</span>
-        {% else %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="MX Record Not Verified">🚫 </span>
-        {% endif %}
-      </div>
-
-      <div class="mb-2">Add the following MX DNS record to your domain. <br>
-        Please note that there's a point (<em>.</em>) at the end target addresses.
-        This is to make sure the <i>absolute</i> address is used.
-        <br>
-        Also some domain registrars (Namecheap, CloudFlare, etc) might use <em>@</em> for the root domain.
-      </div>
-
-      {% for priority, email_server in EMAIL_SERVERS_WITH_PRIORITY %}
-        <div class="mb-3 p-3 dns-record">
-          Record: MX <br>
-          Domain: {{ custom_domain.domain }} or
-          <em data-toggle="tooltip"
-              title="Click to copy"
-              class="clipboard"
-              data-clipboard-text="@">@</em> <br>
-          Priority: {{ priority }} <br>
-          Target: <em data-toggle="tooltip"
-                      title="Click to copy"
-                      class="clipboard"
-                      data-clipboard-text="{{ email_server }}">{{ email_server }}</em>
-        </div>
-      {% endfor %}
-
-      <form method="post" action="#mx-form">
-        <input type="hidden" name="form-name" value="check-mx">
-        {% if custom_domain.verified %}
-          <button type="submit" class="btn btn-outline-primary">
-            Re-verify
-          </button>
-        {% else %}
-          <button type="submit" class="btn btn-primary">
-            Verify
-          </button>
-        {% endif %}
-      </form>
-
-      {% if not mx_ok %}
-        <div class="text-danger mt-4">
-          Your DNS is not correctly set. The MX record we obtain is:
-          <div class="mb-3 p-3 dns-record">
-            {% if not mx_errors %}
-              (Empty)
-            {% endif %}
-            {% for r in mx_errors %}
-              {{ r }} <br>
-            {% endfor %}
-          </div>
-          {% if custom_domain.verified %}
-            <div class="alert alert-danger">
-              Without the MX record set up correctly, you can miss emails sent to your aliases.
-              Please update the MX record ASAP.
-            </div>
-          {% endif %}
-        </div>
+  <div id="mx-form">
+    <div class="font-weight-bold">
+      1. MX 记录 {% if custom_domain.verified %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="MX 记录已通过验证"
+      >
+        ✅
+      </span>
+      {% else %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="MX 记录未通过验证"
+      >
+        🚫
+      </span>
       {% endif %}
     </div>
 
-    <hr>
+    <div class="mb-2">
+      将以下 MX DNS 记录添加到您的域。
+      <br />
+      请注意，目标地址末尾有一个点 (
+      <em>.</em>
+      )。这是为了确保使用
+      <i>绝对</i>
+      地址。
+      <br />
+      此外，一些域名注册商（Namecheap、CloudFlare 等）可能会使用
+      <em>@</em>
+      作为根域。
+    </div>
 
-    <div id="spf-form">
-      <div class="font-weight-bold">2. SPF (Optional)
-        {% if custom_domain.spf_verified %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="SPF Verified">✅</span>
-        {% else %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="SPF Not Verified">🚫 </span>
-        {% endif %}
+    {% for priority, email_server in EMAIL_SERVERS_WITH_PRIORITY %}
+    <div class="mb-3 p-3 dns-record">
+      记录类型: MX
+      <br />
+      域名: {{ custom_domain.domain }} 或者
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="@"
+      >
+        @
+      </em>
+      <br />
+      优先级: {{ priority }}
+      <br />
+      值:
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="{{ email_server }}"
+      >
+        {{ email_server }}
+      </em>
+    </div>
+    {% endfor %}
+
+    <form
+      method="post"
+      action="#mx-form"
+    >
+      <input
+        type="hidden"
+        name="form-name"
+        value="check-mx"
+      />
+      {% if custom_domain.verified %}
+      <button
+        type="submit"
+        class="btn btn-outline-primary"
+      >
+        重新验证
+      </button>
+      {% else %}
+      <button
+        type="submit"
+        class="btn btn-primary"
+      >
+        验证
+      </button>
+      {% endif %}
+    </form>
+
+    {% if not mx_ok %}
+    <div class="text-danger mt-4">
+      您的 DNS 设置不正确。我们获取的 MX 记录是：
+      <div class="mb-3 p-3 dns-record">
+        {% if not mx_errors %} (Empty) {% endif %} {% for r in mx_errors %} {{ r
+        }}
+        <br />
+        {% endfor %}
       </div>
-
-      <div>
-        SPF <a href="https://en.wikipedia.org/wiki/Sender_Policy_Framework" target="_blank"
-               rel="noopener">(Wikipedia↗)</a> is an email
-        authentication method
-        designed to detect forging sender addresses during the delivery of the email. <br>
-        Setting up SPF is highly recommended to reduce the chance your emails ending up in the recipient's Spam folder.
+      {% if custom_domain.verified %}
+      <div class="alert alert-danger">
+        如果未正确设置 MX 记录，您可能会错过发送至您的
+        别名的电子邮件。请尽快更新 MX 记录。
       </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
 
-      <div class="mb-2">Add the following TXT DNS record to your domain.</div>
+  <hr />
 
-      <div class="mb-2 p-3 dns-record">
-        Record: TXT <br>
-        Domain: {{ custom_domain.domain }} or
-        <em data-toggle="tooltip"
-            title="Click to copy"
-            class="clipboard"
-            data-clipboard-text="@">@</em> <br>
-        Value:
-        <em data-toggle="tooltip"
-            title="Click to copy"
-            class="clipboard"
-            data-clipboard-text="{{ spf_record }}">
-          {{ spf_record }}
-        </em>
-      </div>
-
-      <form method="post" action="#spf-form">
-        <input type="hidden" name="form-name" value="check-spf">
-        {% if custom_domain.spf_verified %}
-          <button type="submit" class="btn btn-outline-primary">
-            Re-verify
-          </button>
-        {% else %}
-          <button type="submit" class="btn btn-primary">
-            Verify
-          </button>
-        {% endif %}
-      </form>
-
-      {% if not spf_ok %}
-        <div class="text-danger mt-4">
-          Your DNS is not correctly set. The TXT record we obtain is:
-          <div class="mb-3 p-3 dns-record">
-            {% if not spf_errors %}
-              (Empty)
-            {% endif %}
-
-            {% for r in spf_errors %}
-              {{ r }} <br>
-            {% endfor %}
-          </div>
-          {% if custom_domain.spf_verified %}
-            Without SPF setup, emails you sent from your alias might end up in Spam/Junk folder.
-          {% endif %}
-        </div>
+  <div id="spf-form">
+    <div class="font-weight-bold">
+      2. SPF (可选项) {% if custom_domain.spf_verified %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="SPF 已通过验证"
+      >
+        ✅
+      </span>
+      {% else %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="SPF 未通过验证"
+      >
+        🚫
+      </span>
       {% endif %}
     </div>
 
-    <hr>
+    <div>
+      SPF
+      <a
+        href="https://en.wikipedia.org/wiki/Sender_Policy_Framework"
+        target="_blank"
+        rel="noopener"
+      >
+        (Wikipedia↗)
+      </a>
+      是一种电子邮件身份验证方法，旨在在电子邮件传递过程中检测伪造的发件人地址。
+      <br />
+      强烈建议设置 SPF，以减少您的电子邮件最终进入收件人垃圾邮件文件夹的机会。
+    </div>
 
-    <div id="dkim-form">
-      <div class="font-weight-bold">3. DKIM (Optional)
-        {% if custom_domain.dkim_verified %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="SPF Verified">✅</span>
-        {% else %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="DKIM Not Verified">🚫 </span>
-        {% endif %}
+    <div class="mb-2">将以下 TXT DNS 记录添加到您的域。</div>
+
+    <div class="mb-2 p-3 dns-record">
+      记录类型: TXT
+      <br />
+      域名: {{ custom_domain.domain }} 或者
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="@"
+      >
+        @
+      </em>
+      <br />
+      值:
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="{{ spf_record }}"
+      >
+        {{ spf_record }}
+      </em>
+    </div>
+
+    <form
+      method="post"
+      action="#spf-form"
+    >
+      <input
+        type="hidden"
+        name="form-name"
+        value="check-spf"
+      />
+      {% if custom_domain.spf_verified %}
+      <button
+        type="submit"
+        class="btn btn-outline-primary"
+      >
+        重新验证
+      </button>
+      {% else %}
+      <button
+        type="submit"
+        class="btn btn-primary"
+      >
+        验证
+      </button>
+      {% endif %}
+    </form>
+
+    {% if not spf_ok %}
+    <div class="text-danger mt-4">
+      您的 DNS 设置不正确。我们获取的 TXT 记录是：
+      <div class="mb-3 p-3 dns-record">
+        {% if not spf_errors %} (Empty) {% endif %} {% for r in spf_errors %} {{
+        r }}
+        <br />
+        {% endfor %}
       </div>
+      {% if custom_domain.spf_verified %} 如果没有设置
+      SPF，您从别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。 {% endif %}
+    </div>
+    {% endif %}
+  </div>
 
-      <div>
-        DKIM <a href="https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail" target="_blank" rel="noopener">(Wikipedia↗)</a>
-        is an
-        email
-        authentication method
-        designed to avoid email spoofing. <br>
-        Setting up DKIM is highly recommended to reduce the chance your emails ending up in the recipient's Spam folder.
-      </div>
+  <hr />
 
-      <div class="mb-2">Add the following CNAME DNS record to your domain.</div>
+  <div id="dkim-form">
+    <div class="font-weight-bold">
+      3. DKIM (可选) {% if custom_domain.dkim_verified %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="SPF 已通过验证"
+      >
+        ✅
+      </span>
+      {% else %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="DKIM 未通过验证"
+      >
+        🚫
+      </span>
+      {% endif %}
+    </div>
 
-      <div class="mb-2 p-3 dns-record">
-        Record: CNAME <br>
-        Domain: <em data-toggle="tooltip"
-                    title="Click to copy"
-                    class="clipboard"
-                    data-clipboard-text="dkim._domainkey">dkim._domainkey</em> <br>
-        Value:
-        <em data-toggle="tooltip"
-            title="Click to copy"
-            class="clipboard"
-            data-clipboard-text="{{ dkim_cname + '.' }}" style="overflow-wrap: break-word">
-          {{ dkim_cname }}.
-        </em>
-      </div>
+    <div>
+      DKIM
+      <a
+        href="https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail"
+        target="_blank"
+        rel="noopener"
+      >
+        (Wikipedia↗)
+      </a>
+      是一种旨在避免电子邮件欺骗的电子邮件身份验证方法。
+      <br />
+      强烈建议设置 DKIM，以减少您的电子邮件 最终进入收件人垃圾邮件文件夹的机会。
+    </div>
+
+    <div class="mb-2">将以下 CNAME DNS 记录添加到您的域。</div>
+
+    <div class="mb-2 p-3 dns-record">
+      记录类型: CNAME
+      <br />
+      域名:
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="dkim._domainkey"
+      >
+        dkim._domainkey
+      </em>
+      <br />
+      值:
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="{{ dkim_cname + '.' }}"
+        style="overflow-wrap: break-word"
+      >
+        {{ dkim_cname }}.
+      </em>
+    </div>
 
     <div class="alert alert-info">
-      Some DNS registrar might require a full record path, in this case please use
-      <i>dkim._domainkey.{{ custom_domain.domain }}</i> as domain value instead. <br>
-      If you are using a subdomain, e.g. <i>subdomain.domain.com</i>,
-      you need to use <i>dkim._domainkey.subdomain</i> as domain value instead.
-      <br>
+      某些 DNS 注册商可能需要完整的记录路径，在这种情况下，请
+      改用
+      <i>dkim._domainkey.{{ custom_domain.domain }}
+      作为域值。
+      <br />
+      如果您使用的是子域，例如
+      <i>subdomain.domain.com</i>
+      ，则需要改用
+      <i>dkim._domainkey.subdomain</i>
+      作为域值。
+      <br />
     </div>
-      <div class="alert alert-info">
-        If you are using CloudFlare, please make sure to <b>not</b> select the Proxy option. <br><br>
-        <img src="/static/images/cloudflare-proxy.png" class="w-100">
+    <div class="alert alert-info">
+      如果您正在使用 CloudFlare，请确保
+      <b>不要</b>
+      开启代理选项。
+      <br />
+      <br />
+      <img
+        src="/static/images/cloudflare-proxy.png"
+        class="w-100"
+      />
+    </div>
+
+    <form
+      method="post"
+      action="#dkim-form"
+    >
+      <input
+        type="hidden"
+        name="form-name"
+        value="check-dkim"
+      />
+      {% if custom_domain.dkim_verified %}
+      <button
+        type="submit"
+        class="btn btn-outline-primary"
+      >
+        重新验证
+      </button>
+      {% else %}
+      <button
+        type="submit"
+        class="btn btn-primary"
+      >
+        验证
+      </button>
+      {% endif %}
+    </form>
+
+    {% if not dkim_ok %}
+    <div class="text-danger mt-4">
+      您的 DNS 设置不正确。{% if dkim_errors %} 我们为
+      <em>dkim._domainkey.{{ custom_domain.domain }}</em>
+      获取的 CNAME 记录是：
+      <div class="mb-3 p-3 dns-record">
+        {% for r in dkim_errors %} {{ r }}
+        <br />
+        {% endfor %}
       </div>
-
-      <form method="post" action="#dkim-form">
-        <input type="hidden" name="form-name" value="check-dkim">
-        {% if custom_domain.dkim_verified %}
-          <button type="submit" class="btn btn-outline-primary">
-            Re-verify
-          </button>
-        {% else %}
-          <button type="submit" class="btn btn-primary">
-            Verify
-          </button>
-        {% endif %}
-      </form>
-
-      {% if not dkim_ok %}
-        <div class="text-danger mt-4">
-          Your DNS is not correctly set.
-          {% if dkim_errors %}
-            The CNAME record we obtain for
-            <em>dkim._domainkey.{{ custom_domain.domain }}</em> is:
-
-            <div class="mb-3 p-3 dns-record">
-              {% for r in dkim_errors %}
-                {{ r }} <br>
-              {% endfor %}
-            </div>
-          {% endif %}
-
-          {% if custom_domain.dkim_verified %}
-            Without DKIM setup, emails you sent from your alias might end up in Spam/Junk folder.
-          {% endif %}
-        </div>
+      {% endif %} 
+      {% if custom_domain.dkim_verified %} 
+      如果没有设置 DKIM，您从别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。
       {% endif %}
     </div>
-
-    <hr>
-
-    <div id="dmarc-form">
-      <div class="font-weight-bold">4. DMARC (Optional)
-        {% if custom_domain.dmarc_verified %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="DMARC Verified">✅</span>
-        {% else %}
-          <span class="cursor" data-toggle="tooltip" data-original-title="DMARC Not Verified">🚫 </span>
-        {% endif %}
-      </div>
-
-      <div>
-        DMARC <a href="https://en.wikipedia.org/wiki/DMARC" target="_blank" rel="noopener">(Wikipedia↗)</a>
-        is designed to protect the domain from unauthorized use, commonly known as email spoofing. <br>
-        Built around SPF and DKIM, a DMARC policy tells the receiving mail server what to do if
-        neither of those authentication methods passes.
-      </div>
-
-      <div class="mb-2">Add the following TXT DNS record to your domain.</div>
-
-      <div class="mb-2 p-3 dns-record">
-        Record: TXT <br>
-        Domain: <em data-toggle="tooltip"
-                    title="Click to copy"
-                    class="clipboard"
-                    data-clipboard-text="_dmarc">_dmarc</em> <br>
-        Value:
-        <em data-toggle="tooltip"
-            title="Click to copy"
-            class="clipboard"
-            data-clipboard-text="{{ dmarc_record }}">
-          {{ dmarc_record }}
-        </em>
-      </div>
-
-      <div class="alert alert-info">
-        Some DNS registrar might require a full record path, in this case please use
-        <i>_dmarc.{{ custom_domain.domain }}</i> as domain value instead. <br>
-        If you are using a subdomain, e.g. <i>subdomain.domain.com</i>,
-        you need to use <i>_dmarc.subdomain</i> as domain value instead.
-        <br>
-      </div>
-
-      <form method="post" action="#dmarc-form">
-        <input type="hidden" name="form-name" value="check-dmarc">
-        {% if custom_domain.dmarc_verified %}
-          <button type="submit" class="btn btn-outline-primary">
-            Re-verify
-          </button>
-        {% else %}
-          <button type="submit" class="btn btn-primary">
-            Verify
-          </button>
-        {% endif %}
-      </form>
-
-      {% if not dmarc_ok %}
-        <div class="text-danger mt-4">
-          Your DNS is not correctly set.
-          The TXT record we obtain is:
-          <div class="mb-3 p-3" style="background-color: #eee">
-            {% if not dmarc_errors %}
-              (Empty)
-            {% endif %}
-
-            {% for r in dmarc_errors %}
-              {{ r }} <br>
-            {% endfor %}
-          </div>
-          {% if custom_domain.dmarc_verified %}
-            Without DMARC setup, emails sent from your alias might end up in the Spam/Junk folder.
-          {% endif %}
-        </div>
-      {% endif %}
-    </div>
-
+    {% endif %}
   </div>
+
+  <hr />
+
+  <div id="dmarc-form">
+    <div class="font-weight-bold">
+      4. DMARC (可选) {% if custom_domain.dmarc_verified %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="DMARC 已通过验证"
+      >
+        ✅
+      </span>
+      {% else %}
+      <span
+        class="cursor"
+        data-toggle="tooltip"
+        data-original-title="DMARC 未通过验证"
+      >
+        🚫
+      </span>
+      {% endif %}
+    </div>
+
+    <div>
+      DMARC
+      <a
+        href="https://en.wikipedia.org/wiki/DMARC"
+        target="_blank"
+        rel="noopener"
+      >
+        (Wikipedia↗)
+      </a>
+      旨在保护域名免遭未经授权的使用，俗称
+      电子邮件欺骗。
+      <br />
+      DMARC 策略以 SPF 和 DKIM 为基础，可告知接收邮件服务器
+      如果这两种身份验证方法均未通过，该如何处理。
+    </div>
+
+    <div class="mb-2">将以下 TXT DNS 记录添加到您的域。</div>
+
+    <div class="mb-2 p-3 dns-record">
+      记录类型: TXT
+      <br />
+      域名:
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="_dmarc"
+      >
+        _dmarc
+      </em>
+      <br />
+      值:
+      <em
+        data-toggle="tooltip"
+        title="点击复制"
+        class="clipboard"
+        data-clipboard-text="{{ dmarc_record }}"
+      >
+        {{ dmarc_record }}
+      </em>
+    </div>
+
+    <div class="alert alert-info">
+      某些 DNS 注册商可能需要完整的记录路径，在这种情况下，请
+      改用
+      <i>_dmarc.{{ custom_domain.domain }}</i>
+      作为域值。
+      <br />
+      如果您使用的是子域，例如
+      <i>subdomain.domain.com</i>
+      ，则需要改用
+      <i>_dmarc.subdomain</i>
+      作为域值。
+      <br />
+    </div>
+
+    <form
+      method="post"
+      action="#dmarc-form"
+    >
+      <input
+        type="hidden"
+        name="form-name"
+        value="check-dmarc"
+      />
+      {% if custom_domain.dmarc_verified %}
+      <button
+        type="submit"
+        class="btn btn-outline-primary"
+      >
+        重新验证
+      </button>
+      {% else %}
+      <button
+        type="submit"
+        class="btn btn-primary"
+      >
+        验证
+      </button>
+      {% endif %}
+    </form>
+
+    {% if not dmarc_ok %}
+    <div class="text-danger mt-4">
+      您的 DNS 设置不正确。我们获取的 TXT 记录是：
+      <div
+        class="mb-3 p-3"
+        style="background-color: #eee"
+      >
+        {% if not dmarc_errors %} (Empty) {% endif %} {% for r in dmarc_errors
+        %} {{ r }}
+        <br />
+        {% endfor %}
+      </div>
+      {% if custom_domain.dmarc_verified %} 如果没有设置 DMARC，从您的别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。 {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

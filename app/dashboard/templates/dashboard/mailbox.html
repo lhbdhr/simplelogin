@@ -1,157 +1,222 @@
-{% extends 'default.html' %}
-{% set active_page = "mailbox" %}
+{% extends 'default.html' %} {% set active_page = "mailbox" %} {% block title %}
+Mailboxes {% endblock %} {% block default_content %}
+<div class="row">
+  <div class="col">
+    <h1 class="h3">
+      Mailboxes
+      <a
+        class="ml-3 text-info"
+        style="font-size: 12px"
+        data-toggle="collapse"
+        href="#howtouse"
+        role="button"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+      >
+        如何使用
+        <i class="fe fe-chevrons-down"></i>
+      </a>
+    </h1>
 
-{% block title %}
-  Mailboxes
-{% endblock %}
+    {% if not current_user.is_premium() %}
+    <div
+      class="alert alert-danger"
+      role="alert"
+    >
+      此功能仅在高级计划中可用。
+    </div>
+    {% endif %}
 
-{% block default_content %}
-  <div class="row">
-    <div class="col">
-      <h1 class="h3"> Mailboxes
-        <a class="ml-3 text-info" style="font-size: 12px" data-toggle="collapse" href="#howtouse" role="button"
-           aria-expanded="false" aria-controls="collapseExample">
-          How to use <i class="fe fe-chevrons-down"></i>
-        </a>
-      </h1>
+    <div
+      class="alert alert-primary collapse {% if mailboxes|length == 1 %} show {% endif %}"
+      id="howtouse"
+      role="alert"
+    >
+      <em>邮箱</em>
+      只是另一个个人电子邮件地址。创建新别名时，您可以选择拥有此别名的邮箱，即：
+      <br />
+      - 发送到此别名的所有电子邮件都将转发到此邮箱
+      <br />
+      - 您可以从此邮箱回复/发送电子邮件。
+      <br />
+      <br />
 
-      {% if not current_user.is_premium() %}
-        <div class="alert alert-danger" role="alert">
-          This feature is only available in premium plan.
-        </div>
-      {% endif %}
+      注册后，将自动创建一个邮箱，其中包含您的电子邮件
+      <b>{{ current_user.email }}</b>
+      <br />
+      <br />
 
-      <div class="alert alert-primary collapse {% if mailboxes|length == 1 %} show {% endif %}" id="howtouse" role="alert">
-        A <em>mailbox</em> is just another personal email address. When creating a new alias, you could choose the
-        mailbox that <em>owns</em> this alias, i.e: <br>
-        - all emails sent to this alias will be forwarded to this mailbox <br>
-        - from this mailbox, you can reply/send emails from the alias. <br><br>
-
-        When you signed up, a mailbox is automatically created with your email <b>{{ current_user.email }}</b>
-        <br><br>
-
-        The mailbox doesn't have to be your email: it can be your friend's email
-        if you want to create aliases for your buddy.
-      </div>
-
-      <div class="row">
-        {% for mailbox in mailboxes %}
-          <div class="col-12 col-lg-6">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">
-                  {{ mailbox.email }}
-                  {% if mailbox.verified %}
-                    <span class="cursor" data-toggle="tooltip" data-original-title="Mailbox Verified">✅</span>
-                  {% else %}
-                    <span class="cursor" data-toggle="tooltip" data-original-title="Mailbox Not Verified">
-                  🚫
-                </span>
-                  {% endif %}
-                  {% if mailbox.pgp_enabled() %}
-                    <span class="cursor" data-toggle="tooltip" data-original-title="PGP Enabled">🗝</span>
-                  {% endif %}
-
-                  {% if mailbox.id == current_user.default_mailbox_id %}
-                    <div class="badge badge-primary float-right" data-toggle="tooltip"
-                         title="When a new random alias is created, it belongs to the default mailbox">Default Mailbox
-                    </div>
-                  {% endif %}
-                </h5>
-
-                <h6 class="card-subtitle mb-2 text-muted">
-                  Created {{ mailbox.created_at | dt }} <br>
-                  <span class="font-weight-bold">{{ mailbox.nb_alias() }}</span> aliases. <br>
-
-                </h6>
-
-                <a href="{{ url_for('dashboard.mailbox_detail_route', mailbox_id=mailbox.id) }}">Edit ➡</a>
-              </div>
-
-              <div class="card-footer p-0">
-                <div class="row">
-                  {% if mailbox.verified %}
-                    <div class="col">
-                      <form method="post">
-                        <input type="hidden" name="form-name" value="set-default">
-                        <input type="hidden" class="mailbox" value="{{ mailbox.email }}">
-                        <input type="hidden" name="mailbox-id" value="{{ mailbox.id }}">
-                        <button class="card-link btn btn-link
-                    {% if mailbox.id == current_user.default_mailbox_id %} disabled {% endif %}"
-                        >
-                          Set As Default Mailbox
-                        </button>
-                      </form>
-                    </div>
-                  {% endif %}
-
-                  <div class="col">
-                    <form method="post">
-                      <input type="hidden" name="form-name" value="delete">
-                      <input type="hidden" class="mailbox" value="{{ mailbox.email }}">
-                      <input type="hidden" name="mailbox-id" value="{{ mailbox.id }}">
-                      <span class="card-link btn btn-link text-danger float-right delete-mailbox
-                    {% if mailbox.id == current_user.default_mailbox_id %} disabled {% endif %}">
-                    Delete
-                  </span>
-                    </form>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-
-      <form method="post" class="mt-2">
-        {{ new_mailbox_form.csrf_token }}
-        <input type="hidden" name="form-name" value="create">
-
-        <h2 class="h4">New Mailbox</h2>
-
-        {{ new_mailbox_form.email(class="form-control", placeholder="email@example.com") }}
-        {{ render_field_errors(new_mailbox_form.email) }}
-        <div class="small-text alert alert-info">
-          A mailbox can't be a disposable or forwarding email address.
-        </div>
-
-        <button class="btn btn-lg btn-success mt-2">Create</button>
-      </form>
-
+      邮箱不一定是您本人的电子邮件：如果您想为您的好友创建别名，它可以是您朋友的电子邮件。
     </div>
 
+    <div class="row">
+      {% for mailbox in mailboxes %}
+      <div class="col-12 col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ mailbox.email }} {% if mailbox.verified %}
+              <span
+                class="cursor"
+                data-toggle="tooltip"
+                data-original-title="邮件地址已验证"
+              >
+                ✅
+              </span>
+              {% else %}
+              <span
+                class="cursor"
+                data-toggle="tooltip"
+                data-original-title="邮件地址为未验证"
+              >
+                🚫
+              </span>
+              {% endif %} {% if mailbox.pgp_enabled() %}
+              <span
+                class="cursor"
+                data-toggle="tooltip"
+                data-original-title="PGP 已启用"
+              >
+                🗝
+              </span>
+              {% endif %} {% if mailbox.id == current_user.default_mailbox_id %}
+              <div
+                class="badge badge-primary float-right"
+                data-toggle="tooltip"
+                title="创建新的随机别名时，它属于默认邮箱"
+              >
+                默认收件箱
+              </div>
+              {% endif %}
+            </h5>
+
+            <h6 class="card-subtitle mb-2 text-muted">
+              创建于 {{ mailbox.created_at | dt }}
+              <br />
+              拥有
+              <span class="font-weight-bold">{{ mailbox.nb_alias() }}</span>
+              个别名
+              <br />
+            </h6>
+
+            <a
+              href="{{ url_for('dashboard.mailbox_detail_route', mailbox_id=mailbox.id) }}"
+            >
+              编辑 ➡
+            </a>
+          </div>
+
+          <div class="card-footer p-0">
+            <div class="row">
+              {% if mailbox.verified %}
+              <div class="col">
+                <form method="post">
+                  <input
+                    type="hidden"
+                    name="form-name"
+                    value="set-default"
+                  />
+                  <input
+                    type="hidden"
+                    class="mailbox"
+                    value="{{ mailbox.email }}"
+                  />
+                  <input
+                    type="hidden"
+                    name="mailbox-id"
+                    value="{{ mailbox.id }}"
+                  />
+                  <button
+                    class="card-link btn btn-link {% if mailbox.id == current_user.default_mailbox_id %} disabled {% endif %}"
+                  >
+                    设为默认收件箱
+                  </button>
+                </form>
+              </div>
+              {% endif %}
+
+              <div class="col">
+                <form method="post">
+                  <input
+                    type="hidden"
+                    name="form-name"
+                    value="delete"
+                  />
+                  <input
+                    type="hidden"
+                    class="mailbox"
+                    value="{{ mailbox.email }}"
+                  />
+                  <input
+                    type="hidden"
+                    name="mailbox-id"
+                    value="{{ mailbox.id }}"
+                  />
+                  <span
+                    class="card-link btn btn-link text-danger float-right delete-mailbox {% if mailbox.id == current_user.default_mailbox_id %} disabled {% endif %}"
+                  >
+                    删除
+                  </span>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <form
+      method="post"
+      class="mt-2"
+    >
+      {{ new_mailbox_form.csrf_token }}
+      <input
+        type="hidden"
+        name="form-name"
+        value="create"
+      />
+
+      <h2 class="h4">新建收件箱</h2>
+
+      {{ new_mailbox_form.email(class="form-control",
+      placeholder="email@example.com") }} {{
+      render_field_errors(new_mailbox_form.email) }}
+      <div class="mt-2 small-text alert alert-info">
+        邮箱不能是一次性或转发电子邮件地址。
+      </div>
+
+      <button class="btn btn-lg btn-success mt-2">创建</button>
+    </form>
   </div>
-{% endblock %}
+</div>
+{% endblock %} {% block script %}
+<script>
+  $('.delete-mailbox').on('click', function (e) {
+    let mailbox = $(this).parent().find('.mailbox').val()
 
-{% block script %}
-  <script>
-    $(".delete-mailbox").on("click", function (e) {
-      let mailbox = $(this).parent().find(".mailbox").val();
+    let that = $(this)
+    let message =
+      `此邮箱 <b>${mailbox}</b> 拥有的所有别名也将被删除，` + '请确认。'
 
-      let that = $(this);
-      let message = `All aliases owned by this mailbox <b>${mailbox}</b> will be also deleted, ` +
-        " please confirm.";
-
-      bootbox.confirm({
-        message: message,
-        buttons: {
-          confirm: {
-            label: 'Yes, delete it',
-            className: 'btn-danger'
-          },
-          cancel: {
-            label: 'Cancel',
-            className: 'btn-outline-primary'
-          }
+    bootbox.confirm({
+      message: message,
+      buttons: {
+        confirm: {
+          label: '我已了解，确认删除',
+          className: 'btn-danger',
         },
-        callback: function (result) {
-          if (result) {
-            that.closest("form").submit();
-          }
+        cancel: {
+          label: '取消',
+          className: 'btn-outline-primary',
+        },
+      },
+      callback: function (result) {
+        if (result) {
+          that.closest('form').submit()
         }
-      })
-    });
-  </script>
+      },
+    })
+  })
+</script>
 {% endblock %}

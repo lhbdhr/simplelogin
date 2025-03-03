@@ -15,22 +15,22 @@
       <h1 class="h3"> API Key
         <a class="ml-3 text-info" style="font-size: 12px" data-toggle="collapse" href="#howtouse" role="button"
            aria-expanded="false" aria-controls="collapseExample">
-          What is this? <i class="fe fe-chevrons-down"></i>
+          API Key 是什么？ <i class="fe fe-chevrons-down"></i>
         </a>
       </h1>
 
       <div class="alert alert-primary collapse" id="howtouse" role="alert">
-        An API key is used by the SimpleLogin browser extensions.
-        <br><br>You can install the official SimpleLogin browser extensions through the following links:
+        <!-- SimpleLogin 浏览器扩展程序使用 API 密钥。
+        <br><br>您可以通过以下链接安装官方 SimpleLogin 浏览器扩展程序：
         <a href="https://chrome.google.com/webstore/detail/dphilobhebphkdjbpfohgikllaljmgbn"
-           target="_blank" rel="noopener">Chrome<i class="fe fe-external-link"></i></a>,
+        target="_blank" rel="noopener">Chrome<i class="fe fe-external-link"></i></a>,
         <a href="https://addons.mozilla.org/firefox/addon/simplelogin/"
-           target="_blank" rel="noopener">Firefox<i class="fe fe-external-link"></i></a> &
+        target="_blank" rel="noopener">Firefox<i class="fe fe-external-link"></i></a> &
         <a href="https://apps.apple.com/app/id1494051017"
-            target="_blank" rel="noopener">Safari<i class="fe fe-external-link"></i></a>
+        target="_blank" rel="noopener">Safari<i class="fe fe-external-link"></i></a>
         <br>
-        <span class="text-danger">
-          ⚠️API Keys should be kept secret and treated like passwords, they can be used to gain access to your account.
+        <span class="text-danger"> -->
+        ⚠️API密钥应保密并像密码一样对待，它们可用于访问您的帐户。
         </span>
       </div>
 
@@ -42,10 +42,10 @@
                 <h5 class="card-title">{{ api_key.name }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">
                   {% if api_key.last_used %}
-                    Last used: {{ api_key.last_used | dt }} <br>
-                    Used: {{ api_key.times }} times.
+                    上一次使用于: {{ api_key.last_used | dt }} <br>
+                    使用了: {{ api_key.times }} 次.
                   {% else %}
-                    Never used
+                    从未使用过
                   {% endif %}
                 </h6>
 
@@ -66,7 +66,7 @@
                     <button class="clipboard btn btn-primary" data-clipboard-action="copy"
                             data-clipboard-text="{{ api_key.code }}"
                             data-clipboard-target="#apikey-{{ api_key.id }}">
-                      Copy &nbsp; &nbsp; <i class="fe fe-clipboard"></i>
+                      复制 &nbsp; &nbsp; <i class="fe fe-clipboard"></i>
                     </button>
                   </div>
 
@@ -75,7 +75,7 @@
                       <input type="hidden" name="form-name" value="delete">
                       <input type="hidden" name="api-key-id" value="{{ api_key.id }}">
                       <span class="card-link btn btn-link float-right text-danger delete-api-key">
-                    Delete
+                    删除
                   </span>
                     </form>
                   </div>
@@ -90,13 +90,13 @@
       <form method="post">
         {{ new_api_key_form.csrf_token }}
         <input type="hidden" name="form-name" value="create">
-        <h2 class="h4">New API Key</h2>
+        <h2 class="h4">新建 API Key</h2>
 
         {{ new_api_key_form.name(class="form-control", placeholder="Chrome") }}
         {{ render_field_errors(new_api_key_form.name) }}
-        <div class="small-text">Name of the api key, e.g. where it will be used.</div>
+        <div class="my-2 small-text">API 密钥的名称，例如它将在何处使用。</div>
 
-        <button class="btn btn-lg btn-success mt-2">Create</button>
+        <button class="btn btn-lg btn-success mt-2">创建</button>
       </form>
 
 
@@ -111,14 +111,14 @@
       let that = $(this);
 
       bootbox.confirm({
-        message: "If this api key is currently in use, you need to replace it with another api key, please confirm.",
+        message: "您确定该 API Key 已经不再使用了吗？<br />删除使用中的 API Key 可能会导致某些应用程序无法正常工作。",
         buttons: {
           confirm: {
-            label: 'Yes, delete it',
+            label: '我确定，删除',
             className: 'btn-danger'
           },
           cancel: {
-            label: 'Cancel',
+            label: '取消',
             className: 'btn-outline-primary'
           }
         },

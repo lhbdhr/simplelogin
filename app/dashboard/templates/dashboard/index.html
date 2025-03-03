@@ -30,7 +30,7 @@
       <div class="card">
         <div class="card-body p-3 text-center">
           <div class="h1 m-0">{{ stats.nb_alias }}</div>
-          <div class="text-muted">Aliases</div>
+          <div class="text-muted">别名数</div>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
       <div class="card">
         <div class="card-body p-3 text-center">
           <div class="h1 m-0">{{ stats.nb_forward }}</div>
-          <div class="text-muted">Forwards</div>
+          <div class="text-muted">转发数</div>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@
       <div class="card">
         <div class="card-body p-3 text-center">
           <div class="h1 m-0">{{ stats.nb_reply }}</div>
-          <div class="text-muted">Replies</div>
+          <div class="text-muted">回复数</div>
         </div>
       </div>
     </div>
@@ -54,7 +54,14 @@
       <div class="card">
         <div class="card-body p-3 text-center">
           <div class="h1 m-0">{{ stats.nb_block }}</div>
-          <div class="text-muted">Blocks</div>
+          <div class="text-muted"
+               title="这里的屏蔽是指：
+               你生成反向别名用来发邮件，但是谁都可以给这个反向别名发邮件，
+               那岂不是所有知道你反向别名邮箱地址的人都可以冒充你，
+               所以有了这个屏蔽，你必须设置白名单，来设置谁可以给你的反向别名发邮件，
+               不在白名单的邮件地址，给你的反向别名发邮件会被屏蔽，
+               如果屏蔽数不为0,代表有人在试图冒充你，或者你没有给自己的真实邮箱设置白名单"
+          >屏蔽数<i class="fe fe-help-circle"></i></div>
         </div>
       </div>
     </div>
@@ -70,16 +77,16 @@
         <form method="post">
           <input type="hidden" name="form-name" value="create-custom-email">
           <button data-toggle="tooltip"
-                  title="Create a custom alias"
-                  class="btn btn-primary mr-2"><i class="fa fa-plus"></i> New Custom Alias
+                  title="创建一个自定义别名"
+                  class="btn btn-primary mr-2"><i class="fa fa-plus"></i> 新建自定义别名
           </button>
         </form>
         <div class="btn-group" role="group">
           <form method="post">
             <input type="hidden" name="form-name" value="create-random-email">
             <button data-toggle="tooltip"
-                    title="Create a totally random alias"
-                    class="btn btn-success"><i class="fa fa-random"></i> Random Alias
+                    title="创建一个随机别名"
+                    class="btn btn-success"><i class="fa fa-random"></i> 随机别名
             </button>
           </form>
           <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle btn-group-border-left"
@@ -90,14 +97,14 @@
               <form method="post">
                 <input type="hidden" name="form-name" value="create-random-email">
                 <input type="hidden" name="generator_scheme" value="{{ AliasGeneratorEnum.word.value }}">
-                <button class="dropdown-item">By Random Words</button>
+                <button class="dropdown-item">随机单词</button>
               </form>
             </div>
             <div class="">
               <form method="post">
                 <input type="hidden" name="form-name" value="create-random-email">
                 <input type="hidden" name="generator_scheme" value="{{ AliasGeneratorEnum.uuid.value }}">
-                <button class="dropdown-item">By UUID</button>
+                <button class="dropdown-item">UUID</button>
               </form>
             </div>
           </div>
@@ -115,19 +122,19 @@
                     onchange="this.form.submit()"
                     class="form-control mr-3 shadow">
               <option value="" {% if sort == "" %} selected {% endif %}>
-                Sort by most recent activity
+                按最近活动排序
               </option>
               <option value="old2new" {% if sort == "old2new" %} selected {% endif %}>
-                Alias Old-Recent
+                创建时间 旧->新
               </option>
               <option value="new2old" {% if sort == "new2old" %} selected {% endif %}>
-                Alias Recent-Old
+                创建时间 新->旧
               </option>
               <option value="a2z" {% if sort == "a2z" %} selected {% endif %}>
-                Alias A-Z
+                字母 A->Z
               </option>
               <option value="z2a" {% if sort == "z2a" %} selected {% endif %}>
-                Alias Z-A
+                字母 Z->A
               </option>
             </select>
 
@@ -135,31 +142,31 @@
                     onchange="this.form.submit()"
                     class="form-control mr-3 shadow">
               <option value="" {% if filter == "" %} selected {% endif %}>
-                All Aliases
+                所有别名
               </option>
               <option value="enabled" {% if filter == "enabled" %} selected {% endif %}>
-                Only Enabled Aliases
+                仅显示启用的别名
               </option>
               <option value="disabled" {% if filter == "disabled" %} selected {% endif %}>
-                Only Disabled Aliases
+                仅显示未启用的别名
               </option>
             </select>
 
-            <input type="search" name="query" placeholder="Enter to search for alias"
+            <input type="search" name="query" placeholder="搜索别名"
                    class="form-control shadow mr-2"
                    style="max-width: 15em"
                    value="{{ query }}">
 
             {% if query or sort or filter %}
               <a href="{{ url_for('dashboard.index') }}"
-                 class="btn btn-light">Reset</a>
+                 class="btn btn-light">重置筛选条件</a>
             {% endif %}
           </form>
         </div>
 
         <div class="btn-group">
           <a v-if="!showFilter" @click="toggleFilter()" class="btn btn-outline-secondary">
-            <i class="fe fe-chevrons-left"></i> Filters
+            <i class="fe fe-chevrons-left"></i> 筛选
           </a>
 
           <a v-if="showFilter" @click="toggleFilter()" class="btn btn-outline-secondary">
@@ -187,7 +194,7 @@
                   {% endif %}
                   {% if alias.enabled %}
                     data-toggle="tooltip"
-                    title="Click to copy"
+                    title="点击复制"
                     data-clipboard-text="{{ alias.email }}"
                   {% endif %}
               >
@@ -195,26 +202,25 @@
               </span>
               {% if alias.automatic_creation %}
                 <span class="fa fa-inbox" data-toggle="tooltip"
-                      title="This alias was automatically generated because of an incoming email"></span>
+                      title="此别名是由于收到一封电子邮件而自动生成的"></span>
               {% endif %}
 
               {% if alias.pinned %}
                 <span class="fa fa-heart" data-toggle="tooltip"
-                      title="This alias added to favorite"></span>
+                      title="此别名已添加到收藏夹"></span>
               {% endif %}
             </div>
             <div class="col text-right">
               <label class="custom-switch cursor"
                      data-toggle="tooltip"
                   {% if alias.enabled %}
-                     title="Disable alias - stop receiving emails sent to this alias"
+                     title="禁用别名 - 停止接收发送到此别名的电子邮件"
                   {% else %}
-                     title="Enable alias - start receiving emails sent to this alias"
+                     title="启用别名 - 开始接收发送到此别名的电子邮件"
                   {% endif %}
 
                   {% if loop.index ==1 %}
-                     data-intro="By <em>disabling</em> an alias, emails sent to this alias will <em>not</em>
-                         be forwarded to your inbox. <br><br>"
+                     data-intro="通过<em>禁用</em>别名，发送到此别名的电子邮件将<em>不会</em>转发到您的收件箱。 <br><br>"
                      data-step="3"
                   {% endif %}
                      style="padding-left: 0px"
@@ -239,26 +245,26 @@
 
                   {% if email_log.is_reply %}
                     {{ contact.website_email }}
-                    <i class="fa fa-reply mr-2" data-toggle="tooltip" title="Email reply/sent from alias"></i>
+                    <i class="fa fa-reply mr-2" data-toggle="tooltip" title="电子邮件回复/从别名发送"></i>
                     {{ email_log.created_at | dt }}
                   {% elif email_log.bounced %}
                     <span class="text-danger">
                   {{ contact.website_email }}
                   <i class="fa fa-warning mr-2" data-toggle="tooltip"
-                     title="Email bounced and cannot be forwarded to your mailbox"></i>
+                     title="电子邮件被退回，无法转发至您的邮箱"></i>
                   {{ email_log.created_at | dt }}
                 </span>
                   {% elif email_log.blocked %}
                     {{ contact.website_email }}
-                    <i class="fa fa-ban mr-2 text-danger" data-toggle="tooltip" title="Email blocked"></i>
+                    <i class="fa fa-ban mr-2 text-danger" data-toggle="tooltip" title="电子邮件被阻止"></i>
                     {{ email_log.created_at | dt }}
                   {% else %}
                     {{ contact.website_email }}
-                    <i class="fa fa-paper-plane  mr-2" data-toggle="tooltip" title="Email sent to alias"></i>
+                    <i class="fa fa-paper-plane  mr-2" data-toggle="tooltip" title="电子邮件已发送至别名"></i>
                     {{ email_log.created_at | dt }}
                   {% endif %}
                 {% else %}
-                  No Activity. Alias created {{ alias.created_at | dt }}
+                  无活动。别名创建于 {{ alias.created_at | dt }} 之前
                 {% endif %}
 
               </div>
@@ -272,23 +278,23 @@
               <a href="{{ url_for('dashboard.alias_contact_manager', alias_id=alias.id) }}"
                  id="send-email-{{ alias.id }}"
                   {% if loop.index ==1 %}
-                 data-intro="Not only alias can receive emails, it can <em>send</em> emails too! <br><br>
-                 You can add a new <em>contact</em> for your alias here. <br><br>
-                 If you need to reply to an email, just hit 'Reply': the response will come from your alias
-                 and your real email address stays <em>hidden</em>."
+                 data-intro="别名不仅可以接收电子邮件，还可以<em>发送</em>电子邮件！<br><br>
+                 您可以在此处为您的别名添加新的<em>联系人</em>。<br><br>
+                 如果您需要回复电子邮件，只需点击“回复”：回复将来自您的别名
+                 并且您的真实电子邮件地址将保持<em>隐藏</em>状态。"
                  data-step="4"
                   {% endif %}
                  class="btn btn-sm btn-outline-primary {% if not alias.enabled %} disabled {% endif %}"
                  data-toggle="tooltip"
-                 title="Alias can be used to SEND and RECEIVE messages"
+                 title="别名可用于发送和接收消息"
               >
-                Send Email&nbsp; &nbsp;<i class="fe fe-send"></i>
+                发邮件&nbsp; &nbsp;<i class="fe fe-send"></i>
               </a>
             </div>
             <div class="col text-right">
               <a class="btn btn-sm" data-toggle="collapse" href="#alias-{{ alias.id }}" role="button"
                  aria-expanded="false">
-                More <i class="fe fe-chevron-down"></i>
+                更多 <i class="fe fe-chevron-down"></i>
               </a>
             </div>
           </div>
@@ -299,20 +305,20 @@
 
             {% if alias_info.latest_email_log != None %}
               <div style="font-size: 12px">
-                Alias created {{ alias.created_at | dt }}
+                别名创建于 {{ alias.created_at | dt }} 之前
               </div>
             {% endif %}
 
-            <span class="alias-activity">{{ alias_info.nb_forward }}</span> forwards,
-            <span class="alias-activity">{{ alias_info.nb_blocked }}</span> blocks,
-            <span class="alias-activity">{{ alias_info.nb_reply }}</span> replies
+            <span class="alias-activity">{{ alias_info.nb_forward }}</span> 转发,
+            <span class="alias-activity">{{ alias_info.nb_blocked }}</span> 屏蔽,
+            <span class="alias-activity">{{ alias_info.nb_reply }}</span> 回复
             <a href="{{ url_for('dashboard.alias_log', alias_id=alias.id) }}"
                class="btn btn-sm btn-link">
-              See All &nbsp;→
+              全部数据 &nbsp;→
             </a>
 
             {% if mailboxes|length > 1 %}
-              <div class="small-text">Current mailbox</div>
+              <div class="small-text">当前收件箱设置</div>
               <div class="d-flex">
                 <div class="flex-grow-1 mr-2">
                   <select required id="mailbox-{{ alias.id }}"
@@ -330,7 +336,7 @@
                 <div class="">
                   <a data-alias="{{ alias.id }}"
                      class="save-mailbox btn btn-sm btn-outline-info w-100">
-                    Update
+                    保存
                   </a>
                 </div>
 
@@ -341,7 +347,7 @@
               </div>
             {% endif %}
 
-            <div class="small-text mt-2">Alias Note</div>
+            <div class="small-text mt-2">别名笔记</div>
             <div class="d-flex">
               <div class="flex-grow-1 mr-2">
                 <textarea
@@ -349,20 +355,20 @@
                     name="note"
                     class="form-control"
                     rows="2"
-                    placeholder="e.g. where the alias is used or why is it created">{{ alias.note or "" }}</textarea>
+                    placeholder="例如，别名在哪里使用或为什么创建它">{{ alias.note or "" }}</textarea>
               </div>
 
               <div class="">
                 <a data-alias="{{ alias.id }}"
                    class="save-note btn btn-sm btn-outline-success w-100">
-                  Save
+                  保存
                 </a>
               </div>
             </div>
 
             <div class="small-text mt-2" data-toogle="tooltip"
-                 title="Alias name is used when you send or reply from alias">
-              Alias name
+                 title="发件人名称 - 当你用该别名'回复邮件/发送邮件'时，对方看到的发件人的名称">
+              发件人名称
               <i class="fe fe-help-circle"></i>
             </div>
 
@@ -370,21 +376,21 @@
               <div class="flex-grow-1 mr-2">
                 <input id="alias-name-{{ alias.id }}"
                        value="{{ alias.name or '' }}" class="form-control"
-                       placeholder="{{ alias.custom_domain.name or "Alias name" }}">
+                       placeholder="{{ alias.custom_domain.name or "发件人的名称：你用别名发邮件，对方看到你是谁" }}">
               </div>
 
 
               <div class="">
                 <a data-alias="{{ alias.id }}"
                    class="save-alias-name btn btn-sm btn-outline-primary w-100">
-                  Save
+                  保存
                 </a>
               </div>
             </div>
 
             {% if alias.mailbox_support_pgp() %}
               <div class="small-text mt-2" data-toogle="tooltip"
-                   title="You can decide to turn off the PGP for an alias. This can be useful if the sender already encrypts the emails">
+                   title="您可以决定关闭别名的 PGP。如果发件人已经加密电子邮件，这将很有用">
                 PGP
                 <i class="fe fe-help-circle"></i>
               </div>
@@ -401,8 +407,8 @@
             {% endif %}
 
             <div class="small-text mt-2" data-toogle="tooltip"
-                 title="Add alias to favorite so it's always pinned on top">
-              Add to favorite
+                 title="别名添加到收藏后，会置顶">
+              添加到收藏
               <i class="fe fe-help-circle"></i>
             </div>
             <div>
@@ -420,7 +426,7 @@
               <div class="btn-group float-right" role="group" aria-label="Basic example">
                 <a href="{{ url_for('dashboard.alias_transfer_send_route', alias_id=alias.id) }}"
                    class="btn btn-sm btn-link">
-                  Transfer
+                  转移别名
                   <i class="ml-0 dropdown-icon fe fe-share-2 text-primary"></i>
                 </a>
 
@@ -438,7 +444,7 @@
                         data-alias="{{ alias.id }}"
                         data-alias-email="{{ alias.email }}"
                   >
-                    Delete&nbsp; &nbsp;<i class="dropdown-icon fe fe-trash-2 text-danger"></i>
+                    删除&nbsp; &nbsp;<i class="dropdown-icon fe fe-trash-2 text-danger"></i>
                   </span>
                 </form>
 
@@ -460,12 +466,12 @@
           <li class="page-item">
             <a class="btn btn-outline-secondary {% if page == 0 %}disabled{% endif %}"
                href="{{ url_for('dashboard.index', page=page-1, query=query, sort=sort, filter=filter) }}">
-              Previous</a>
+              上一页</a>
           </li>
           <li class="page-item">
             <a class="btn btn-outline-secondary {% if last_page %}disabled{% endif %}"
                href="{{ url_for('dashboard.index', page=page+1, query=query, sort=sort, filter=filter) }}">
-              Next</a>
+              下一页</a>
           </li>
         </ul>
       </nav>

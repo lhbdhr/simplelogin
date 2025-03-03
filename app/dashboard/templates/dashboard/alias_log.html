@@ -76,28 +76,28 @@
       <div class="card-counter primary">
         <i class="fa fa-at"></i>
         <span class="count-numbers">{{ total }}</span>
-        <span class="count-name">Email Handled</span>
+        <span class="count-name">已处理邮件</span>
       </div>
     </div>
     <div class="col-md-3 col-sm-6">
       <div class="card-counter primary">
         <i class="fa fa-paper-plane"></i>
         <span class="count-numbers">{{ email_forwarded }}</span>
-        <span class="count-name">Email Forwarded</span>
+        <span class="count-name">已转发邮件</span>
       </div>
     </div>
     <div class="col-md-3 col-sm-6">
       <div class="card-counter primary">
         <i class="fa fa-reply"></i>
         <span class="count-numbers">{{ email_replied }}</span>
-        <span class="count-name">Email Replied</span>
+        <span class="count-name">已回复邮件</span>
       </div>
     </div>
     <div class="col-md-3 col-sm-6">
       <div class="card-counter danger">
         <i class="fa fa-ban"></i>
         <span class="count-numbers">{{ email_blocked }}</span>
-        <span class="count-name">Email Blocked</span>
+        <span class="count-name">已屏蔽邮件</span>
       </div>
     </div>
   </div>
@@ -154,11 +154,11 @@
     <ul class="pagination">
       <li class="page-item">
         <a class="btn btn-outline-secondary {% if page_id == 0 %}disabled{% endif %}"
-           href="{{ url_for('dashboard.alias_log', alias_id=alias_id, page_id=page_id-1) }}">Previous</a>
+           href="{{ url_for('dashboard.alias_log', alias_id=alias_id, page_id=page_id-1) }}">上一页</a>
       </li>
       <li class="page-item">
         <a class="btn btn-outline-secondary {% if last_page %}disabled{% endif %}"
-           href="{{ url_for('dashboard.alias_log', alias_id=alias_id, page_id=page_id+1) }}">Next</a>
+           href="{{ url_for('dashboard.alias_log', alias_id=alias_id, page_id=page_id+1) }}">下一页</a>
       </li>
     </ul>
   </nav>

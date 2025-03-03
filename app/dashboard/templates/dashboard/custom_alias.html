@@ -9,13 +9,13 @@
 {% block default_content %}
   <div class="card">
     <div class="card-body">
-      <h1 class="h3">New Custom Alias</h1>
+      <h1 class="h3">新建自定义别名</h1>
 
       {% if  user_custom_domains|length == 0 and not DISABLE_ALIAS_SUFFIX %}
         <div class="row">
           <div class="col p-1">
             <div class="alert alert-primary" role="alert">
-              You might notice a random word after the dot(<em>.</em>) in the alias.
+              你可能会注意到(<em>.</em>)后面有一个随机单词在这个别名里.
               This part is to avoid a person taking all the "nice" aliases like
               <b>hello@{{ FIRST_ALIAS_DOMAIN }}</b>,
               <b>me@{{ FIRST_ALIAS_DOMAIN }}</b>, etc. <br>
@@ -48,9 +48,9 @@
               {% for suffix_info in suffixes %}
                 <option value="{{ suffix_info.signed_suffix }}"
                     {% if suffix_info.is_premium %}
-                      title="Only available to Premium accounts"
+                      title="此功能仅在高级计划中可用。"
                     {% elif not suffix_info.is_custom and at_least_a_premium_domain %}
-                      title="Available to all accounts"
+                      title="适用于所有帐户"
                     {% endif %}
                 >
                   {% if suffix_info.is_custom %}

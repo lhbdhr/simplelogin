@@ -1,58 +1,53 @@
-{% extends 'default.html' %}
+{% extends 'default.html' %} {% set active_page = "dashboard" %} {% block title
+%} Send {{ alias.email }} {% endblock %} {% block default_content %}
+<div class="card">
+  <div class="card-body">
+    <h1 class="h3">转移别名 {{ alias.email }}</h1>
 
-{% set active_page = "dashboard" %}
+    <p>
+      此页面允许您将 {{ alias.email }}
+      转移给其他人，以便他们可以使用它来接收和发送电子邮件。
+    </p>
 
-{% block title %}
-  Send {{ alias.email }}
-{% endblock %}
+    <p>
+      为了转让所有权，请创建
+      <b>转移网址</b>
+      👇 并将其发送给其他人。
+    </p>
 
-{% block default_content %}
-  <div class="card">
-    <div class="card-body">
-      <h1 class="h3">Transfer {{ alias.email }}</h1>
+    {% if alias_transfer_url %}
+    <em
+      data-toggle="tooltip"
+      title="Click to copy"
+      class="clipboard"
+      data-clipboard-text="{{ alias_transfer_url }}"
+    >
+      {{ alias_transfer_url }}
+    </em>
 
-      <p>
-        This page allows you to transfer {{ alias.email }} to another person so they can use it to receive and send
-        emails.
-      </p>
+    <form method="post">
+      <input
+        type="hidden"
+        name="form-name"
+        value="remove"
+      />
+      <button class="btn btn-warning mt-2">删除转移网址</button>
+      <div class="small-text">如果你不想转移了，可以删除这个转移网址。</div>
+    </form>
+    {% else %}
+    <form method="post">
+      <input
+        type="hidden"
+        name="form-name"
+        value="create"
+      />
+      <button class="btn btn-primary mt-2">创建转移网址</button>
+    </form>
+    {% endif %}
 
-      <p>
-        In order to transfer ownership,
-        please create the <b>Share URL</b> 👇 and send it to the other person.
-      </p>
-
-      {% if alias_transfer_url %}
-        <em data-toggle="tooltip"
-            title="Click to copy"
-            class="clipboard"
-            data-clipboard-text="{{ alias_transfer_url }}">
-          {{ alias_transfer_url }}
-        </em>
-
-        <form method="post">
-          <input type="hidden" name="form-name" value="remove">
-          <button class="btn btn-warning mt-2">Remove Share URL</button>
-          <div class="small-text">
-            If you don't want to share this alias anymore, you can remove the share URL.
-          </div>
-        </form>
-      {% else %}
-        <form method="post">
-          <input type="hidden" name="form-name" value="create">
-          <button class="btn btn-primary mt-2">Create Share URL</button>
-        </form>
-      {% endif %}
-
-      <p class="mt-5">
-        This person can then confirm the reception and become the owner of the alias.
-      </p>
-      <div class="alert alert-danger">
-        After the confirmation, you can no longer use this alias.
-      </div>
-
-
-    </div>
+    <p class="mt-5">然后此人可以确认接收并成为别名的所有者。</p>
+    <div class="alert alert-danger">确认之后，您将不能再使用该别名。</div>
   </div>
+</div>
 
 {% endblock %}
-
