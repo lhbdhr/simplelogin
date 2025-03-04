@@ -161,7 +161,7 @@ def setting():
 
         elif request.form.get("form-name") == "change-password":
             flash(
-                "You are going to receive an email containing instructions to change your password",
+                "您将收到一封电子邮件，其中包含更改密码的说明",
                 "success",
             )
             send_reset_password_email(current_user)

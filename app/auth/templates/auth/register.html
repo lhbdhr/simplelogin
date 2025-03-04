@@ -1,21 +1,21 @@
 {% extends "single.html" %}
 
 {% block title %}
-  Register
+  注册
 {% endblock %}
 
 {% block single_content %}
   <form class="card" style="border-radius: 2%" method="post">
     {{ form.csrf_token }}
     <div class="card-body p-6">
-      <div class="card-title">Create new account</div>
+      <div class="card-title">注册一个新的账号</div>
 
       <div class="form-group">
-        <label class="form-label">Email address</label>
+        <label class="form-label">登陆邮箱</label>
         {{ form.email(class="form-control", type="email") }}
-        <div class="small-text alert alert-info">
-          Emails sent to your alias will be forwarded to this email address.
-          It can't be a disposable or forwarding email address.
+        <div class="mt-2 small-text alert alert-info">
+          发送到您的别名的电子邮件将被转发到此电子邮件地址。
+          它不能是一次性或转发电子邮件地址。
         </div>
         {{ render_field_errors(form.email) }}
       </div>
@@ -40,18 +40,18 @@
         <script src="https://hcaptcha.com/1/api.js" async defer></script>
       {% endif %}
 
-      <small class="text-center mt-3">
-        By clicking Create Account, you agree to abide by
-        <a href="https://simplelogin.io/terms">SimpleLogin's Terms and Conditions.</a>
-      </small>
+      <!-- <small class="text-center mt-3">
+        点击“创建帐户”即表示您同意遵守
+        <a href="https://simplelogin.io/terms">SimpleLogin 的条款和条件。</a>
+      </small> -->
 
       <div class="mt-2">
-        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        <button type="submit" class="btn btn-primary btn-block">创建账号</button>
       </div>
     </div>
   </form>
   <div class="text-center text-muted mb-6">
-    Already have account? <a href="{{ url_for('auth.login') }}">Sign in</a>
+    已有账户？<a href="{{ url_for('auth.login') }}">登录</a>
   </div>
 
 {% endblock %}

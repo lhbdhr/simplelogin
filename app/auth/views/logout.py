@@ -8,7 +8,7 @@ from app.config import SESSION_COOKIE_NAME
 @auth_bp.route("/logout")
 def logout():
     logout_user()
-    flash("You are logged out", "success")
+    flash("你已退出登陆", "success")
     response = make_response(redirect(url_for("auth.login")))
     response.delete_cookie(SESSION_COOKIE_NAME)
     response.delete_cookie("mfa")

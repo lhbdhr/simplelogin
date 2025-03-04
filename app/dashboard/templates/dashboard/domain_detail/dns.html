@@ -214,13 +214,16 @@ block domain_detail_content %}
     <div class="text-danger mt-4">
       您的 DNS 设置不正确。我们获取的 TXT 记录是：
       <div class="mb-3 p-3 dns-record">
-        {% if not spf_errors %} (Empty) {% endif %} {% for r in spf_errors %} {{
-        r }}
-        <br />
+        {% if not spf_errors %} (记录为空) {% endif %} 
+        {% for r in spf_errors %} {{ r }}
+          <br />
         {% endfor %}
       </div>
-      {% if custom_domain.spf_verified %} 如果没有设置
-      SPF，您从别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。 {% endif %}
+      {% if not custom_domain.spf_verified %} 
+        <div class="alert alert-danger">
+          如果没有设置SPF，您从别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。 
+        </div>
+      {% endif %}
     </div>
     {% endif %}
   </div>
@@ -233,7 +236,7 @@ block domain_detail_content %}
       <span
         class="cursor"
         data-toggle="tooltip"
-        data-original-title="SPF 已通过验证"
+        data-original-title="DKIM 已通过验证"
       >
         ✅
       </span>
@@ -351,8 +354,10 @@ block domain_detail_content %}
         {% endfor %}
       </div>
       {% endif %} 
-      {% if custom_domain.dkim_verified %} 
-      如果没有设置 DKIM，您从别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。
+      {% if not custom_domain.dkim_verified %} 
+        <div class="alert alert-danger">
+          如果没有设置 DKIM，您从别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。
+        </div>
       {% endif %}
     </div>
     {% endif %}
@@ -470,12 +475,14 @@ block domain_detail_content %}
         class="mb-3 p-3"
         style="background-color: #eee"
       >
-        {% if not dmarc_errors %} (Empty) {% endif %} {% for r in dmarc_errors
-        %} {{ r }}
-        <br />
+        {% if not dmarc_errors %} (Empty) {% endif %} 
+        {% for r in dmarc_errors %} {{ r }}
+          <br />
         {% endfor %}
       </div>
-      {% if custom_domain.dmarc_verified %} 如果没有设置 DMARC，从您的别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。 {% endif %}
+      <div class="alert alert-danger">
+        如果没有设置 DMARC，您从别名发送的电子邮件可能会被归入垃圾邮件/垃圾文件夹。
+      </div>
     </div>
     {% endif %}
   </div>

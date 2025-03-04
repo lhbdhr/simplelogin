@@ -23,7 +23,7 @@ def forgot_password():
     if form.validate_on_submit():
         email = sanitize_email(form.email.data)
         flash(
-            "If your email is correct, you are going to receive an email to reset your password",
+            "如果您的电子邮箱正确，您将收到一封重置密码的电子邮件",
             "success",
         )
 

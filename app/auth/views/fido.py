@@ -27,7 +27,7 @@ from app.models import User, Fido, MfaBrowser
 class FidoTokenForm(FlaskForm):
     sk_assertion = HiddenField("sk_assertion", validators=[validators.DataRequired()])
     remember = BooleanField(
-        "attr", default=False, description="Remember this browser for 30 days"
+        "attr", default=False, description="记住此浏览器 30 天"
     )
 
 
@@ -41,13 +41,13 @@ def fido():
 
     # user access this page directly without passing by login page
     if not user_id:
-        flash("Unknown error, redirect back to main page", "warning")
+        flash("未知错误，重定向回主页", "warning")
         return redirect(url_for("auth.login"))
 
     user = User.get(user_id)
 
     if not (user and user.fido_enabled()):
-        flash("Only user with security key linked should go to this page", "warning")
+        flash("只有链接了安全密钥的用户才能访问此页面", "warning")
         return redirect(url_for("auth.login"))
 
     auto_activate = True
@@ -59,7 +59,7 @@ def fido():
         browser = MfaBrowser.get_by(token=request.cookies.get("mfa"))
         if browser and not browser.is_expired() and browser.user_id == user.id:
             login_user(user)
-            flash(f"Welcome back!", "success")
+            flash(f"欢迎回来", "success")
             # Redirect user to correct page
             return redirect(next_url or url_for("dashboard.index"))
         else:
@@ -71,7 +71,7 @@ def fido():
         try:
             sk_assertion = json.loads(fido_token_form.sk_assertion.data)
         except Exception:
-            flash("Key verification failed. Error: Invalid Payload", "warning")
+            flash("密钥验证失败。错误：有效负载无效", "warning")
             return redirect(url_for("auth.login"))
 
         challenge = session["fido_challenge"]
@@ -95,8 +95,8 @@ def fido():
             )
             new_sign_count = webauthn_assertion_response.verify()
         except Exception as e:
-            LOG.warning(f"An error occurred in WebAuthn verification process: {e}")
-            flash("Key verification failed.", "warning")
+            LOG.warning(f"WebAuthn验证过程中发生错误: {e}")
+            flash("密钥验证失败。", "warning")
             # Trigger rate limiter
             g.deduct_limit = True
             auto_activate = False
@@ -106,7 +106,7 @@ def fido():
             del session[MFA_USER_ID]
 
             login_user(user)
-            flash(f"Welcome back!", "success")
+            flash(f"欢迎回来！", "success")
 
             # Redirect user to correct page
             response = make_response(redirect(next_url or url_for("dashboard.index")))

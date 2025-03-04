@@ -3,16 +3,16 @@
 {% set active_page = "dashboard" %}
 
 {% block title %}
-  Lifetime Licence
+  终生许可
 {% endblock %}
 
 {% block default_content %}
   <div class="row">
     <div class="col">
-      <h1 class="h3">Lifetime Licence</h1>
+      <h1 class="h3">终生许可</h1>
 
       <div class="mb-4">
-        If you have a lifetime licence, please paste it here. <br>
+        如果您拥有终身许可证，请将其粘贴在此处。 <br>
       </div>
 
       <form method="post">
@@ -20,7 +20,7 @@
 
         {{ coupon_form.code(class="form-control", placeholder="Licence Code") }}
         {{ render_field_errors(coupon_form.code) }}
-        <button class="btn btn-success mt-2">Apply</button>
+        <button class="btn btn-success mt-2">应用</button>
       </form>
     </div>
   </div>

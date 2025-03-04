@@ -102,7 +102,7 @@ def mailbox_route():
                     send_verification_email(current_user, new_mailbox)
 
                     flash(
-                        f"You are going to receive an email to confirm {mailbox_email}.",
+                        f"您将收到一封确认电子邮件 {mailbox_email}.",
                         "success",
                     )
 

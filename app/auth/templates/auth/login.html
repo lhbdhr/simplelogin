@@ -1,43 +1,43 @@
 {% extends "single.html" %}
 
 {% block title %}
-  Login
+  登陆
 {% endblock %}
 
 {% block single_content %}
 
   {% if show_resend_activation %}
     <div class="text-center text-muted small mb-4">
-      You haven't received the activation email?
-      <a href="{{ url_for('auth.resend_activation') }}">Resend</a>
+      您还没有收到激活电子邮件？
+      <a href="{{ url_for('auth.resend_activation') }}">重新发送</a>
     </div>
   {% endif %}
 
   <form class="card" style="border-radius: 2%" method="post">
     {{ form.csrf_token }}
     <div class="card-body p-6">
-      <div class="card-title">Welcome back!</div>
+      <div class="card-title">欢迎回来！</div>
       <div class="form-group">
-        <label class="form-label">Email address</label>
+        <label class="form-label">登陆邮箱</label>
         {{ form.email(class="form-control", type="email", autofocus="true") }}
         {{ render_field_errors(form.email) }}
       </div>
 
       <div class="form-group">
         <label class="form-label">
-          Password
+          密码
         </label>
         {{ form.password(class="form-control", type="password") }}
         {{ render_field_errors(form.password) }}
         <div class="text-muted">
           <a href="{{ url_for('auth.forgot_password') }}" class="small">
-            I forgot my password
+            我忘了密码
           </a>
         </div>
       </div>
 
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        <button type="submit" class="btn btn-primary btn-block">登陆</button>
       </div>
 
 
@@ -45,7 +45,7 @@
   </form>
 
   <div class="text-center text-muted mt-2">
-    Don't have an account yet? <a href="{{ url_for('auth.register') }}">Sign up</a>
+    还没有账号？ <a href="{{ url_for('auth.register') }}">注册</a>
   </div>
 
 {% endblock %}

@@ -68,7 +68,7 @@ def mailbox_detail_route(mailbox_id):
                         )
                     else:
                         flash(
-                            f"You are going to receive an email to confirm {new_email}.",
+                            f"您将收到一封确认电子邮件 {new_email}.",
                             "success",
                         )
                     return redirect(

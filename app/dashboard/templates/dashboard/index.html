@@ -188,8 +188,8 @@
             <div class="col-8">
               <span class="clipboard cursor mb-0"
                   {% if loop.index ==1 %}
-                    data-intro="This is your first <em>alias</em>. <br><br>
-          Emails sent to an alias are <em>forwarded</em> to your <em>real</em> email address. <br><br>"
+                    data-intro="这是您的第一个<em>别名</em>。<br><br>
+                    发送到别名的电子邮件将<em>转发</em>到您的<em>真实</em>电子邮件地址。<br><br>"
                     data-step="2"
                   {% endif %}
                   {% if alias.enabled %}
@@ -264,7 +264,7 @@
                     {{ email_log.created_at | dt }}
                   {% endif %}
                 {% else %}
-                  无活动。别名创建于 {{ alias.created_at | dt }} 之前
+                  无活动。别名创建于 {{ alias.created_at | dt }}
                 {% endif %}
 
               </div>
@@ -305,7 +305,7 @@
 
             {% if alias_info.latest_email_log != None %}
               <div style="font-size: 12px">
-                别名创建于 {{ alias.created_at | dt }} 之前
+                别名创建于 {{ alias.created_at | dt }}
               </div>
             {% endif %}
 

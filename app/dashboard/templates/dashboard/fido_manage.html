@@ -1,7 +1,7 @@
 {% extends 'default.html' %}
 {% set active_page = "setting" %}
 {% block title %}
-  Manage Security Key
+  管理安全密钥
 {% endblock %}
 
 {% block head %}
@@ -11,8 +11,8 @@
 {% block default_content %}
   <div class="card">
     <div class="card-body">
-      <h1 class="h2">Manage Your Security Key</h1>
-      <p>Unlink all keys will also disable WebAuthn 2FA.</p>
+      <h1 class="h2">管理您的安全密钥</h1>
+      <p>取消链接所有密钥也将禁用 WebAuthn 2FA。</p>
 
       <form id="formManageKey" method="post">
         {{ fido_manage_form.csrf_token }}

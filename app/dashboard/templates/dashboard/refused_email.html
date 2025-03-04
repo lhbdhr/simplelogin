@@ -8,23 +8,23 @@
 
 {% block default_content %}
   <div class="col">
-    <h1 class="h3 mb-5"> Quarantine </h1>
+    <h1 class="h3 mb-5"> 隔离 </h1>
 
     <div class="alert alert-info">
-      This page shows all emails that are potentially spams or malicious.
-      Usually these emails have been <b>refused</b> (or bounced) by your mailbox. <br>
+      此页面显示所有可能为垃圾邮件或恶意的电子邮件。
+      通常这些电子邮件已被您的邮箱<b>拒绝</b>（或退回）。<br>
 
-      - If an email is indeed spam, this means the alias is now in the hands of a spammer,
-      in this case you should <b>disable</b> this alias. <br>
+      - 如果电子邮件确实是垃圾邮件，则意味着别名现在已落入垃圾邮件发送者的手中，
+      在这种情况下，您应该<b>禁用</b>此别名。<br>
 
-      - Otherwise, you should create a <b>filter</b> to avoid your email provider from blocking these emails. <br>
-      <a href="mailto:hi@simplelogin.io">Contact us↗</a> if you need any help.
+      - 否则，您应该创建一个<b>过滤器</b>，以避免您的电子邮件提供商阻止这些电子邮件。<br>
+      如果您需要任何帮助，请<a href="mailto:{{SUPPORT_EMAIL}}">联系我们↗</a>。
 
     </div>
 
     {% if email_logs|length == 0 %}
       <div class="my-4 p-4 card">
-        You don't have any emails in Quarantine.
+        您没有任何处于隔离状态的电子邮件。
       </div>
     {% endif %}
 
@@ -35,7 +35,7 @@
 
       <div class="card p-4 shadow-sm {% if email_log.id == highlight_id %} highlight-row {% endif %}">
         <div class="small-text">
-          Sent {{ refused_email.created_at | dt }}
+          邮件发送于 {{ refused_email.created_at | dt }}
         </div>
 
         {% if email_log.is_reply %}
@@ -47,18 +47,18 @@
           <span>
           To: {{ alias.email }}
           <a href='{{ url_for("dashboard.index", highlight_alias_id=alias.id) }}'
-             class="btn btn-sm btn-outline-danger">Disable Alias</a>
+             class="btn btn-sm btn-outline-danger">禁用别名</a>
         </span>
         {% endif %}
 
         {% if refused_email.deleted %}
           <div>
-            Email deleted {{ refused_email.delete_at | dt }}
+            邮件删除于 {{ refused_email.delete_at | dt }}
           </div>
         {% else %}
           <a href="{{ refused_email.get_url() }}" download
-             class="mt-4">Download →</a>
-          <div class="small-text">This will download a ".eml" file that you can open in your email client</div>
+             class="mt-4">下载邮件副本 →</a>
+          <div class="small-text">这将下载一个“.eml”文件，您可以在电子邮件客户端中打开该文件。</div>
         {% endif %}
 
       </div>

@@ -5,45 +5,17 @@
         <div class="row align-items-center">
           <div class="col-auto">
             <ul class="list-inline list-inline-dots mb-0">
-              <li class="list-inline-item"><a href="https://github.com/simple-login/app/discussions" target="_blank" rel="noopener">
-                Forum <i class="fe fe-external-link"></i>
-              </a></li>
-
-              <li class="list-inline-item">
-                <a href="https://addons.mozilla.org/firefox/addon/simplelogin/" target="_blank" rel="noopener">
-                  Firefox Add-on<i class="fe fe-external-link"></i>
-                </a>
-              </li>
-
-              <li class="list-inline-item">
-                <a href="https://chrome.google.com/webstore/detail/dphilobhebphkdjbpfohgikllaljmgbn" target="_blank" rel="noopener">
-                Chrome Extension<i class="fe fe-external-link"></i>
-                </a>
-              </li>
-
-              <li class="list-inline-item">
-                <a href="https://apps.apple.com/app/id1494359858" target="_blank" rel="noopener">
-                  App Store<i class="fe fe-external-link"></i>
-                </a>
-              </li>
-
-              <li class="list-inline-item">
-                <a href="https://play.google.com/store/apps/details?id=io.simplelogin.android" target="_blank" rel="noopener">
-                  Play Store<i class="fe fe-external-link"></i>
-                </a>
-              </li>
-
-              <li class="list-inline-item"><a href="{{STATUS_PAGE_URL}}" target="_blank" rel="noopener">
-                Status <i class="fe fe-external-link"></i>
+              <li class="list-inline-item">PoweredBy <a href="https://github.com/simple-login/app" target="_blank" rel="noopener">
+                SimpleLogin<i class="fe fe-external-link"></i>
               </a></li>
               <li class="list-inline-item"><a href="mailto:{{SUPPORT_EMAIL}}">Contact Us
                 <i class="fe fe-external-link"></i></a></li>
               <li class="list-inline-item intro-step-0">
                 <a onclick="startIntro()"
-                   data-intro="Welcome to SimpleLogin! <br><br>
-  It seems that this is the first time you are here,
-  let's walk through some SimpleLogin features together! <br><br>
-             You can always show this tutorial again any time by clicking on this <i class='fe fe-help-circle'></i> icon below 👇"
+                   data-intro="欢迎使用 原邮邮箱！<br><br>
+                   似乎这是您第一次来这里，
+                   让我们一起了解一些 原邮邮箱 功能！<br><br>
+                   您可以随时通过单击下面的 <i class='fe fe-help-circle'></i> 图标再次显示本教程👇"
                    data-step="1"
                 ><i class="fe fe-help-circle"></i></a></li>
             </ul>
@@ -52,7 +24,7 @@
       </div>
       <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
         © {{ YEAR }}
-        <a href="https://simplelogin.io" target="_blank" rel="noopener">SimpleLogin</a>.
+        <a href="https://app.yuanyou.de" target="_blank" rel="noopener">原邮邮箱</a>.
       </div>
     </div>
   </div>
@@ -97,7 +69,7 @@
         });
 
         if (!res.ok) {
-          toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+          toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
         }
       },
 

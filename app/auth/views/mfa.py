@@ -22,7 +22,7 @@ from app.models import User, MfaBrowser
 class OtpTokenForm(FlaskForm):
     token = StringField("Token", validators=[validators.DataRequired()])
     remember = BooleanField(
-        "attr", default=False, description="Remember this browser for 30 days"
+        "attr", default=False, description="记住此浏览器 30 天"
     )
 
 
@@ -36,13 +36,13 @@ def mfa():
 
     # user access this page directly without passing by login page
     if not user_id:
-        flash("Unknown error, redirect back to main page", "warning")
+        flash("未知错误，重定向回主页", "warning")
         return redirect(url_for("auth.login"))
 
     user = User.get(user_id)
 
     if not (user and user.enable_otp):
-        flash("Only user with MFA enabled should go to this page", "warning")
+        flash("只有启用了 MFA 的用户才应访问此页面", "warning")
         return redirect(url_for("auth.login"))
 
     otp_token_form = OtpTokenForm()
