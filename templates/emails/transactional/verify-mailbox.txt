@@ -1,10 +1,10 @@
-Hi
+您好
 
-You have added {{mailbox_email}} as an additional mailbox.
+您已将 {{ mailbox_email }} 添加为附加邮箱。
 
-To confirm, please click on this link:
+要确认，请点击此链接：
 
-{{link}}
+{{ link }}
 
-Regards,
-SimpleLogin Team.
+此致，
+原邮邮箱

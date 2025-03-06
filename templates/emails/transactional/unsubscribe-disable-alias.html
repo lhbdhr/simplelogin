@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-
 {% block content %}
   {{ render_text("Hi") }}
-  {{ render_text("Your alias <b>"+ alias +"</b> has been disabled successfully.") }}
-  {{ render_text("If this is a mistake, you can re-enable the alias on the dashboard.") }}
-  {{ render_button("Enable Alias", enable_alias_url) }}
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
+  {{ render_text("您的别名 <b>"+ alias +"</b> 已成功禁用。") }}
+  {{ render_text("如果这是一个错误，您可以在仪表板上重新启用别名。") }}
+  {{ render_button("启用别名", enable_alias_url) }}
+  {{ render_text('祝好，
+  <br />
+  原邮邮箱') }}
   {{ raw_url(enable_alias_url) }}
-{% endblock %}
-
+{% endblock content %}

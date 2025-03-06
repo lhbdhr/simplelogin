@@ -1,16 +1,19 @@
-Hi
+您好
 
-Your subscription will end on {{ next_bill_date }}.
+您的订阅将于 {{ next_bill_date }} 结束。
 
-When the subscription ends:
+订阅结束时：
 
-- All aliases/domains/directories you have created are kept and continue working.
-- You cannot create new aliases if you exceed the free plan limit, i.e. have more than {{MAX_NB_EMAIL_FREE_PLAN}} aliases.
-- As features like "catch-all" or "directory" allow you to create aliases on-the-fly,
-    those aliases cannot be automatically created if you have more than {{MAX_NB_EMAIL_FREE_PLAN}} aliases.
-- You cannot add new domain or directory.
+- 您创建的所有别名/域/目录都将保留并继续工作。
 
-You can upgrade today to continue using all these Premium features (and much more coming).
+如果您超出免费计划限制，即拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，则无法创建新别名。
 
-Best,
-SimpleLogin Team.
+由于“catch-all”或“directory”等功能允许您即时创建别名，
+如果您拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，则无法自动创建这些别名。
+
+您无法添加新域或目录。
+
+您可以立即升级以继续使用所有这些高级功能（以及即将推出的更多功能）。
+
+祝好，
+原邮邮箱

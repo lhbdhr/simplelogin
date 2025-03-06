@@ -1,10 +1,10 @@
-Hi
+您好
 
-You recently requested to change mailbox {{mailbox_email}} to {{mailbox_new_email}}
+您最近请求将邮箱 {{ mailbox_email }} 更改为 {{ mailbox_new_email }}
 
-To confirm, please click on this link:
+要确认，请点击此链接：
 
-{{link}}
+{{ link }}
 
-Regards,
-SimpleLogin Team.
+此致，
+原邮邮箱

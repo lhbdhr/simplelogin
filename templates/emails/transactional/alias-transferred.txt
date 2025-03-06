@@ -1,6 +1,6 @@
-{{ alias.email }} has been transferred.
+{{ alias.email }} 已转移。
 
-Your (previously) alias {{  alias.email }} has been received by another user.
+您的（先前）别名 {{ alias.email }} 已经转移给他人。
 
-Best,
-SimpleLogin Team.
+祝好，
+原邮邮箱

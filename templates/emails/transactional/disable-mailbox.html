@@ -1,31 +1,22 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
-    <h1>
-      {{ mailbox.email }} is disabled.
-    </h1>
+    <h1>{{ mailbox.email }} 已禁用。</h1>
   {% endcall %}
-
   {% call text() %}
-    We have detected that your mailbox can't reliably receive emails from SimpleLogin for a consecutive period of time. <br>
-    The mailbox has been therefore disabled.
+    我们检测到您的邮箱在连续一段时间内无法可靠地接收来自 原邮邮箱 的电子邮件。
+    <br/>
+    因此，邮箱已被禁用。
   {% endcall %}
-
   {% call text() %}
-    Please note that a mailbox can't be a disposable or forwarding email address.
+    请注意，邮箱不能是一次性或转发电子邮件地址。
   {% endcall %}
-
   {% call text() %}
-    If you have any question, you can reach out to us by replying to this email.
+    如果您有任何问题，可以通过回复此电子邮件与我们联系。
   {% endcall %}
-
   {% call text() %}
-    Best, <br/>
-    SimpleLogin Team.
+    祝好，
+    <br/>
+    原邮邮箱
   {% endcall %}
-
-
-{% endblock %}
-
-
+{% endblock content %}

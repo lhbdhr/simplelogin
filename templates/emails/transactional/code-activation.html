@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-
 {% block content %}
-  {{ render_text("Hi") }}
-  {{ render_text("Thank you for choosing SimpleLogin.") }}
-  {{ render_text("To get started, please activate your account by entering the following code into the application:") }}
-  {{ render_text("<h1>" + code + "</h1>")}}
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
-{% endblock %}
-
+  {{ render_text("嗨") }}
+  {{ render_text("感谢您选择 原邮邮箱") }}
+  {{ render_text("要开始使用，请在应用程序中输入以下代码来激活您的帐户：") }}
+  {{ render_text("
+  <h1>" + code + "</h1>
+  ")}}
+  {{ render_text('祝好，
+  <br />
+  原邮团队') }}
+{% endblock content %}

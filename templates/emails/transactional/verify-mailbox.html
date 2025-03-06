@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-
 {% block content %}
   {{ render_text("Hi") }}
-  {{ render_text("You have added <b>"+ mailbox_email +"</b> as an additional mailbox.") }}
-  {{ render_text("To confirm, please click on the button below.") }}
-  {{ render_button("Confirm email", link) }}
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
+  {{ render_text("您已将 <b>"+ mailbox_email +"</b> 添加为附加邮箱。") }}
+  {{ render_text("要确认，请点击下面的按钮。") }}
+  {{ render_button("确认电子邮件", link) }}
+  {{ render_text('谢谢，
+  <br />
+  SimpleLogin 团队。') }}
   {{ raw_url(link) }}
-{% endblock %}
-
+{% endblock content %}

@@ -1,13 +1,13 @@
-{{alias.email}} is disabled.
+{{ alias.email }} 已禁用。
 
-There are several emails sent to your alias {{alias.email}} that have been bounced by your mailbox {{mailbox_email}}.
+有几封电子邮件发送到您的别名 {{ alias.email }}，但已被您的邮箱 {{ mailbox_email }} 退回。
 
-You can view this email here:
-{{ refused_email_url }}
+您可以在此处查看被退回的电子邮件：
+{{ reffused_email_url }}
 
-As security measure, we have disabled the alias {{alias.email}}.
+作为安全措施，我们已禁用 {{ alias.email }} 别名 。
 
-Please let us know if you have any question.
+如果您有任何问题，请告诉我们。
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱。

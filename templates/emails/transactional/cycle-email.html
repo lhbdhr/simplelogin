@@ -1,27 +1,24 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
     <h1>
-      An email was sent to your alias <b>{{ alias.email }}</b> from its own mailbox
-      <b>{{ mailbox.email }}</b>.
+      一封电子邮件已从其自己的邮箱发送到您的别名 <b>{{ alias.email }}</b>
+      <b>{{ mailbox.email }}</b>
     </h1>
   {% endcall %}
-
   {% call text() %}
-    SimpleLogin doesn't send this email <b>back</b> to your mailbox as it would be refused or hidden anyway by your email service. <br>
-    So no worries, there's nothing you need to do :).
+    原邮邮箱 不会将此电子邮件<b>发回</b>到您的邮箱，因为它无论如何都会被您的电子邮件服务拒绝或隐藏。
+    <br/>
+    所以不用担心，您无需执行任何操作 :)。
   {% endcall %}
-
-  {{ render_button("View the email", refused_email_url) }}
-
+  {{ render_button("查看电子邮件", rejection_email_url) }}
   {% call text() %}
-    The email is automatically deleted in 7 days.
+    该电子邮件将在 7 天内自动删除。
   {% endcall %}
-
   {% call text() %}
-    If you have any question, please reply to this email.
+    如果您有任何问题，请回复此电子邮件。
   {% endcall %}
-
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
-{% endblock %}
+  {{ render_text('祝好，
+  <br />
+  原邮邮箱') }}
+{% endblock content %}

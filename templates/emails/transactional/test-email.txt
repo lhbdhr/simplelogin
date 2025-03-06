@@ -1,8 +1,8 @@
-Hi {{name}}
+嗨 {{ name }}
 
-This is a test to make sure that you receive emails sent to your alias {{alias}}.
+这是一次测试，以确保您收到发送到您的别名 {{ alias }} 的电子邮件。
 
-If you have any questions, feel free to reply to this email.
+如果您有任何疑问，请随时回复此电子邮件。
 
-Have a nice day!
-SimpleLogin Team.
+祝好，
+原邮邮箱

@@ -1,15 +1,15 @@
-An email was sent to your alias {{ alias.email }} from its own mailbox {{ mailbox.email }}.
+一封电子邮件已从其自己的邮箱 {{ mailbox.email }} 发送到您的别名 {{ alias.email }}。
 
-SimpleLogin doesn't send this email back to your mailbox as it would be refused or hidden anyway by your email service.
+原邮邮箱 不会将此电子邮件发送回您的邮箱，因为它无论如何都会被您的电子邮件服务拒绝或隐藏。
 
-So no worries, there's nothing you need to do :).
+所以不用担心，您无需执行任何操作 :)。
 
-You can view this email here:
-{{ refused_email_url }}
+您可以在此处查看此电子邮件：
+{{ rejection_email_url }}
 
-The email is automatically deleted in 7 days.
+该电子邮件将在 7 天内自动删除。
 
-Please let us know if you have any question.
+如果您有任何问题，请告诉我们。
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

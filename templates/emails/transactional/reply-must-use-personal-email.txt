@@ -1,12 +1,11 @@
-We have recorded an attempt to send an email from your alias {{ alias.email }} using {{ sender }}.
+我们记录了一次使用 {{ sender }} 从您的别名 {{ alias.email }} 发送电子邮件的尝试。
 
-Please note that sending from this alias only works from alias's owning mailboxes, that are
-    {{ mailbox_emails|join(", ") }}
+请注意，从此别名发送仅从别名所属的邮箱有效，即
+{{ mailbox_emails|join(", ") }}
 
-This is to protect against "email spoofing", i.e. someone else sending emails from your mailbox.
-If {{ sender }} can indeed send emails from your alias, you can add it to the allow list on {{authorize_address_link}}
-If you think this is a wrong alert, please let us know by replying to this email.
+这是为了防止“电子邮件欺骗”，即其他人从您的邮箱发送电子邮件。
+如果 {{ sender }} 确实可以从您的别名发送电子邮件，您可以将其添加到 {{ authorize_address_link }} 上的允许列表中
+如果您认为这是一个错误的警报，请通过回复此电子邮件告知我们。
 
-
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

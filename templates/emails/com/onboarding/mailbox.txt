@@ -1,26 +1,26 @@
-This email is sent to {{ to_email }} and is part of our onboarding series.
-Unsubscribe from our emails on {{URL}}/dashboard/setting#notification
+这封电子邮件已发送至 {{ to_email }}，是我们新手教程系列的一部分。
+在 {{ URL }}/dashboard/setting#notification 上取消订阅我们的电子邮件
 ----------------
 
-Hi
+嗨
 
-If you have several email addresses, e.g. Gmail for work and Protonmail for personal stuffs, you can add them into SimpleLogin and create aliases for them.
+如果您有多个电子邮件地址，例如用于工作的 Gmail 和用于个人事务的 Protonmail，您可以将它们添加到 原邮邮箱 中并为它们创建别名。
 
-A (real) email address is called *mailbox* in SimpleLogin.
+在 原邮邮箱 中，（真实）电子邮件地址称为 *mailbox*。
 
-When creating an alias, you can choose which mailbox that *owns* this alias, meaning:
+创建别名时，您可以选择哪个邮箱*拥有*此别名，这意味着：
 
-- emails sent to this alias are *forwarded* to the owning mailbox.
+- 发送到此别名的电子邮件将*转发*到拥有这个别名的邮箱。
 
-- the owning mailbox can *send* or reply emails from this alias.
+- 拥有这个别名的邮箱可以*发送*或回复来自此别名的电子邮件。
 
-You can also change the owning mailbox for an existing alias.
+您还可以为现有的别名更改拥有它的邮箱。
 
-The mailbox doesn't have to be your personal email: you can also create aliases for your friend by adding his/her email as a mailbox.
+邮箱不必是您的个人电子邮件：您还可以通过添加朋友的电子邮件作为邮箱来为您的朋友创建别名。
 
-Start create you mailbox on {{URL}}/dashboard/mailbox
+开始在 {{ URL }}/dashboard/mailbox 上创建您的邮箱
 
-As usual, let us know if you have any question by replying to this email.
+与往常一样，如果您有任何问题，请通过回复此电子邮件告知我们。
 
-Best regards,
-SimpleLogin team.
+祝好，
+原邮邮箱

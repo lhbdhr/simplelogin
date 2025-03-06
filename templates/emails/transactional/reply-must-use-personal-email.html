@@ -1,34 +1,25 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
     <h1>
-      An attempt to send an email from your alias <b>{{ alias.email }}</b> using <b>{{ sender }}</b> is blocked.
+      尝试使用 <b>{{ sender }}</b> 从您的别名 <b>{{ alias.email }}</b> 发送电子邮件已被阻止。
     </h1>
   {% endcall %}
-
   {% call text() %}
-    As a measure to protect against <b>email spoofing</b>, we have blocked an attempt to send an email from your alias <b>{{ alias.email }}</b> using <b>{{ sender }}</b>.
+    为防止<b>电子邮件欺骗</b>，我们已阻止尝试使用 <b>{{ sender }}</b> 从您的别名 <b>{{ alias.email }}</b> 发送电子邮件。
   {% endcall %}
-
   {% call text() %}
-    Please note that sending from this alias only works from alias's owning mailboxes, that are
+    请注意，从此别名发送邮件仅可从别名所属的邮箱发送，即
     {{ mailbox_emails|join(", ") }}
   {% endcall %}
-
   {% call text() %}
-    If {{ sender }} can indeed send emails from your alias, you can add it to the allow list:
+    如果 {{ sender }} 确实可以从您的别名发送电子邮件，您可以将其添加到允许列表中：
   {% endcall %}
-
-  {{ render_button("Allow " + sender, authorize_address_link) }}
-
+  {{ render_button("允许 " + sender, authorize_address_link) }}
   {% call text() %}
-    Best, <br/>
-    SimpleLogin Team.
+    祝好，
+    <br/>
+    原邮邮箱
   {% endcall %}
-
   {{ raw_url(authorize_address_link) }}
-
-{% endblock %}
-
-
+{% endblock content %}

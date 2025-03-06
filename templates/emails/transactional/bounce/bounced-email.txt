@@ -1,21 +1,22 @@
-An email sent to your alias {{alias.email}} from {{website_email}} was bounced by your mailbox {{mailbox_email}}.
+从 {{ website_email }} 发送到您的别名 {{ alias.email }} 的电子邮件被您的邮箱 {{ mailbox_email }} 退回。
 
-This is usually because your mailbox service thinks the email is a spam.
+这通常是因为您的邮箱服务认为该电子邮件是垃圾邮件。
 
-You can view this email on {{ refused_email_url }}
-The email is automatically deleted in 7 days.
+您可以在 {{ rejection_email_url }} 上查看此电子邮件
 
-Please consider the following options:
+该电子邮件将在 7 天内自动删除。
 
-1. If the email is not spam at all, you can create a "filter" to explicitly allow this email
-    or simply all emails from SimpleLogin.
-    How to create the filter depends on your mailbox service.
+请考虑以下选项：
 
-2. If this email is spam, it means your alias {{alias}} is now in the hands of a spammer.
-    You should disable or delete the alias immediately.
-    We'll automatically disable this alias the second time the email is refused.
+1. 如果该电子邮件根本不是垃圾邮件，您可以创建一个“过滤器”以明确允许此电子邮件
+或只是允许来自 SimpleLogin 的所有电子邮件。
+如何创建过滤器取决于您的邮箱服务。
 
-{{disable_alias_link}}
+2. 如果这封电子邮件是垃圾邮件，则意味着您的别名 {{ alias }} 现在落入了垃圾邮件发送者的手中。
+您应该立即禁用或删除该别名。
+当电子邮件第二次被拒绝时，我们将自动禁用此别名。
 
-Thanks,
-SimpleLogin team.
+{{ disable_alias_link }}
+
+谢谢，
+原邮邮箱

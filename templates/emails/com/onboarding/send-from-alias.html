@@ -1,47 +1,19 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
-    <h1>
-      Send emails from your alias.
-    </h1>
+    <h1>从您的别名发送电子邮件。</h1>
   {% endcall %}
-
   {% call text() %}
-    If you want to reply to an email, just hit "Reply"
-    and the response will come from your alias. Your personal email address stays hidden.
-
+    如果您想回复电子邮件，只需点击“回复”
+    然后回复将来自您的别名。您的个人电子邮件地址保持隐藏状态。
   {% endcall %}
-
   {% call text() %}
-    To send an email to a <b>new contact</b>, please follow the steps below.
-    You can also watch this <a href="https://youtu.be/VsypF-DBaow">Youtube video</a>
-    that quickly walks you through the steps.
+    要向<b>新联系人</b>发送电子邮件，请按照以下步骤操作。
+    您还可以观看此<a href="https://www.nodeseek.com/post-279791-1">原邮邮箱基础使用教程</a>
+    快速引导您完成这些步骤。
   {% endcall %}
-
-  {% call text() %}
-    1. First click <b>Send Email</b> on the alias you want to send emails from. <br>
-    <img src="https://static.simplelogin.io/send-from-alias/1.png" style="max-width: 500px">
-  {% endcall %}
-
-  {% call text() %}
-    2. Enter your contact email, this will create a <b>reverse-alias</b> for the contact. <br>
-    <img src="https://static.simplelogin.io/send-from-alias/2.png" style="max-width: 500px">
-  {% endcall %}
-
-  {% call text() %}
-    3. Send the email to this reverse-alias <b>instead of the contact email</b>. <br>
-    <img src="https://static.simplelogin.io/send-from-alias/3.png" style="max-width: 500px">
-  {% endcall %}
-
-  {% call text() %}
-    And voilà, your contact will receive this email sent from your alias! <br>
-    <img src="https://static.simplelogin.io/send-from-alias/4.png" style="max-width: 500px">
-  {% endcall %}
-
-{% endblock %}
-
+{% endblock content %}
 {% block footer %}
-  This email is sent to {{ to_email }} and is part of our onboarding series. Unsubscribe on
-  <a href="{{ URL }}/dashboard/setting#notification">Settings</a>
-{% endblock %}
+  这封电子邮件已发送至 {{ to_email }}，是我们入职系列的一部分。取消订阅
+  <a href="{{ URL }}/dashboard/setting#notification">设置</a>
+{% endblock footer %}

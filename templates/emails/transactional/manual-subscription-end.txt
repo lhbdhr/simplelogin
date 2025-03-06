@@ -1,6 +1,6 @@
-Your subscription will end on {{ manual_sub.end_at.format("YYYY-MM-DD") }}
+您的订阅将于 {{ manual_sub.end_at.format("YYYY-MM-DD") }} 结束
 
-Please contact us at hi@simplelogin.io to renew your subscription.
+请通过 hi@yuanyou.de 联系我们以续订您的订阅。
 
-Best,
-SimpleLogin Team.
+祝好，
+原邮邮箱

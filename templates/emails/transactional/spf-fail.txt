@@ -1,16 +1,17 @@
-We have recorded an attempt to send the following email from your alias {{ alias }} from an unknown IP address {{ ip }}.
+我们记录了一次尝试从您的别名 {{ alias }} 从未知 IP 地址 {{ ip }} 发送以下电子邮件的尝试。
 
-- From: {{alias}}
-- To: {{to_email}}
-- Subject: {{subject}}
-- Time: {{ time.humanize() }}
+- 发件人：{{ alias }}
+- 收件人：{{ to_email }}
+- 主题：{{ subject }}
+- 时间：{{ time.humanize(locale='zh_CN') }}
 
-To prevent email-spoofing, SimpleLogin enforces the SPF (Sender Policy Framework).
-Emails sent from an IP address that is unknown by your email service are refused by default.
+为防止电子邮件欺骗，SimpleLogin 强制执行 SPF（发件人策略框架）。
 
-However you can turn off this option by going to {{mailbox_url}}.
+默认情况下，从您的电子邮件服务未知的 IP 地址发送的电子邮件会被拒绝。
 
-Please only turn this protection off this if you know what you're doing :).
+但是，您可以通过转到 {{ mailbox_url }} 关闭此选项。
 
-Best,
-SimpleLogin team.
+如果您知道自己在做什么，请仅关闭此保护 :)。
+
+祝好，
+原邮邮箱

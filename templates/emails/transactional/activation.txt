@@ -1,6 +1,6 @@
-Thank you for choosing SimpleLogin.
+感谢您选择 原邮邮箱
 
-To get started, please confirm that {{email}} is your email address using this link {{activation_link}} within 1 hour.
+要开始使用，请在 1 小时内使用此链接 {{ activation_link }} 确认 {{ email }} 是您的电子邮件地址。
 
-Thanks,
-SimpleLogin Team.
+谢谢，
+原邮邮箱

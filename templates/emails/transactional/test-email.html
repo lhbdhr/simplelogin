@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
   {{ render_text("Hi " + name) }}
-  {{ render_text("This is a test to make sure that you receive emails sent to your alias <b>" + alias + "</b>.") }}
-  {{ render_text("If you have any questions, feel free to reply to this email.") }}
-{% endblock %}
-
+  {{ render_text("这是一个测试，以确保您收到发送到您的别名 <b>" + alias + "</b> 的电子邮件。") }}
+  {{ render_text("如果您有任何疑问，请随时回复此电子邮件。") }}
+{% endblock content %}

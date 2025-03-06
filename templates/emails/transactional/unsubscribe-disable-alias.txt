@@ -1,12 +1,12 @@
-Hi
+您好
 
-Your alias {{alias}} has been disabled successfully.
+您的别名 {{ alias }} 已成功禁用。
 
-If this is a mistake, you can re-enable the alias on the dashboard via
+如果这是一个错误，您可以通过
 
-{{ enable_alias_url }}
+{{ enable_alias_url }} 在仪表板上重新启用别名
 
-Please let us know if you have any question.
+如果您有任何问题，请告诉我们。
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

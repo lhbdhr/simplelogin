@@ -1,8 +1,8 @@
-An email has been sent to the alias {{alias}} that would be created automatically as you own the directory {{directory}}.
+已向别名 {{ alias }} 发送了一封电子邮件，由于您拥有目录 {{ directory }}，因此该别名将自动创建。
 
-As the directory has the on-the-fly alias creation disabled, the alias isn't created.
+由于目录已禁用即时别名创建功能，因此不会创建别名。
 
-If you aren't aware of this alias, that probably means someone has discovered about your directory and is abusing it.
+如果您不知道这个别名，则可能意味着有人发现了您的目录并正在滥用它。
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

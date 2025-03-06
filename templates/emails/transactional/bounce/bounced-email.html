@@ -1,40 +1,38 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
     <h1>
-      An email sent to your alias {{ alias.email }} from {{ website_email }} was <b>bounced</b> by your mailbox
+      一封从 {{ website_email }} 发送至您的别名 {{ alias.email }} 的电子邮件被您的邮箱<b>退回</b>
       {{ mailbox_email }}
     </h1>
   {% endcall %}
-
   {% call text() %}
-    This is usually because your mailbox service thinks the email is a <b>spam</b>.
+    这通常是因为您的邮箱服务认为该电子邮件是<b>垃圾邮件</b>。
   {% endcall %}
-
-  {{ render_button("View the bounced email", refused_email_url) }}
-
-  {{ render_text('The email is automatically deleted in 7 days.') }}
-
+  {{ render_button("查看退回的电子邮件", refused_email_url) }}
+  {{ render_text('该电子邮件将在 7 天后自动删除。') }}
   {% call text() %}
-    Please consider the following options: <br>
-
+    请考虑以下选项：
+    <br />
     <ol>
-      <li>If the email is not spam at all, you can create a <b>filter</b> to explicitly allow this email
-        or simply all emails from SimpleLogin. <br>
-        How to create the filter depends on your mailbox service.
-      </li>
-
       <li>
-        If this email is indeed a spam, it means your alias {{alias.email}} is now in the hands of a spammer. <br>
-        You should <b>disable</b> the alias immediately. <br>
-        We'll <b>automatically</b> disable this alias when too many emails sent to it are bounced.
+        如果该电子邮件根本不是垃圾邮件，您可以创建一个<b>过滤器</b>以明确允许此电子邮件
+        或仅允许来自 原邮邮箱 的所有电子邮件。
+        <br />
+        如何创建过滤器取决于您的邮箱服务。
+      </li>
+      <li>
+        如果该电子邮件确实是垃圾邮件，则意味着您的别名 {{ alias.email }} 现在落入了垃圾邮件发送者的手中。
+        <br />
+        您应该立即<b>禁用</b>该别名。
+        <br />
+        当发送到该别名的太多电子邮件被退回时，我们将<b>自动</b>禁用该别名。
       </li>
     </ol>
   {% endcall %}
-
-  {{ render_button("Disable alias", disable_alias_link) }}
-
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
+  {{ render_button("禁用别名", disable_alias_link) }}
+  {{ render_text('祝好,
+  <br />
+  原邮邮箱') }}
   {{ raw_url(disable_alias_link) }}
-{% endblock %}
+{% endblock content %}

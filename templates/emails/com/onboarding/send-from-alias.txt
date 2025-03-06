@@ -1,21 +1,22 @@
-This email is sent to {{ to_email }} and is part of our onboarding series.
-Unsubscribe from our emails on {{URL}}/dashboard/setting#notification
+此电子邮件已发送至 {{ to_email }}，是我们入职系列的一部分。
+在 {{ URL }}/dashboard/setting#notification 上取消订阅我们的电子邮件
 ----------------
 
-Hi
+嗨
 
-Do you know you can send an email to anyone from your alias?
-This below Youtube video walks you quickly through the steps:
+您知道您可以从别名向任何人发送电子邮件吗？
 
-https://youtu.be/VsypF-DBaow
+下面的 Youtube 视频将快速引导您完成这些步骤：
 
-Here are the steps:
-1. First click "Send Email" on your alias you want to send email from
-2. Enter your contact email, this will generate an "reverse-alias"
-3. Use this reverse-alias instead of your contact email
-4. Your contact will receive this email from your alias.
+https://www.nodeseek.com/post-279791-1
 
-As usual, let me know if you have any question by replying to this email.
+步骤如下：
+1. 首先在您要发送电子邮件的别名上单击“发送电子邮件”
+2. 输入您的联系人电子邮件，这将生成一个“反向别名”
+3. 使用此反向别名代替您的联系人电子邮件
+4. 您的联系人将从您的别名收到此电子邮件。
 
-Best regards,
-SimpleLogin Team.
+像往常一样，如果您有任何问题，请通过回复此电子邮件告知我。
+
+祝好，
+原邮邮箱

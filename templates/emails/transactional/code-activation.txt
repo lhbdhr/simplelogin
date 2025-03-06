@@ -1,10 +1,10 @@
-Hi,
+您好，
 
-Thank you for choosing SimpleLogin.
+感谢您选择 原邮邮箱
 
-To get started, please activate your account by entering the following code into the application:
+要开始使用，请在应用程序中输入以下代码来激活您的帐户：
 
-{{code}}
+{{ code }}
 
-Thanks,
-SimpleLogin Team.
+祝好，
+原邮邮箱

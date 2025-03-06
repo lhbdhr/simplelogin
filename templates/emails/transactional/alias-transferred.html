@@ -1,21 +1,14 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
-    <h1>
-      {{ alias.email }} has been transferred.
-    </h1>
+    <h1>{{ alias.email }} 已经被转移.</h1>
   {% endcall %}
-
   {% call text() %}
-    Your (previously) alias {{  alias.email }} has been received by another user.
+    您的（先前的）别名 {{ alias.email }} 已经转移给他人。
   {% endcall %}
-
   {% call text() %}
-    Best, <br/>
-    SimpleLogin Team.
+    祝好,
+    <br/>
+    原邮邮箱
   {% endcall %}
-
-{% endblock %}
-
-
+{% endblock content %}

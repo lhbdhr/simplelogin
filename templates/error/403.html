@@ -1,15 +1,12 @@
 {% extends "error.html" %}
-
 {% block error_name %}
   403
-{% endblock %}
-
+{% endblock error_name %}
 {% block error_description %}
-  We are sorry but you do not have permission to access this page
-{% endblock %}
-
+  很抱歉，您无权访问此页面
+{% endblock error_description %}
 {% block suggestion %}
   <a class="btn btn-primary" href="/">
-    <i class="fe fe-home mr-2"></i>Home Page
+    <i class="fe fe-home mr-2"></i>回到主页
   </a>
-{% endblock %}
+{% endblock suggestion %}

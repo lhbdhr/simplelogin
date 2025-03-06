@@ -1,5 +1,6 @@
-An email has been sent to the alias {{alias}} that would be created automatically as you own the domain {{domain}}. However as your plan is no longer premium, this creation cannot happen.
+已向别名 {{ alias }} 发送了一封电子邮件，由于您拥有域 {{ domain }}，因此将自动创建该别名。但是，由于您的计划不再是高级计划，因此无法创建。
 
-Please upgrade to premium plan in order to use this feature.
-Best,
-SimpleLogin team.
+请升级到高级计划才能使用此功能。
+
+祝好，
+SimpleLogin 团队。

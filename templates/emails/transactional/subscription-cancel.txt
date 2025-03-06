@@ -1,16 +1,12 @@
-Hi,
+嗨，
 
-This is Son, SimpleLogin founder. I saw that you have canceled your subscription.
+我是 原邮邮箱 网站站长。我看到您已取消订阅。
 
-Your subscription will end at {{end_date}}.
+您的订阅将于 {{ end_date }} 结束。
 
-I would appreciate if you could tell me what we can do to improve the product or what is missing?
+如果您能告诉我我们可以做些什么来改进产品或缺少什么，我将不胜感激。
 
-Thanks for giving SimpleLogin a try!
+感谢您尝试 原邮邮件
 
-Best,
-Son.
-
------------------------------------------
-Son NK - SimpleLogin founder.
-https://simplelogin.io
+祝好，
+原邮邮箱网站站长

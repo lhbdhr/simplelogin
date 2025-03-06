@@ -1,16 +1,12 @@
-{{ mailbox.email }} is disabled.
+{{ mailbox.email }} 已禁用。
 
-We have detected that your mailbox cannot reliably receive emails from SimpleLogin for a consecutive period of time.
-The mailbox has been therefore disabled.
-You can re-enable it by going to the mailbox page.
+我们检测到您的邮箱在连续一段时间内无法可靠地接收来自 原邮邮箱 的电子邮件。
+因此，邮箱已被禁用。
+您可以通过转到邮箱页面重新启用它。
 
-Please note that a mailbox can't be a disposable or forwarding email address.
+请注意，邮箱不能是一次性或转发的电子邮件地址。
 
-If you have any question, you can reach out to us by replying to this email.
+如果您有任何问题，您可以通过回复此电子邮件与我们联系。
 
-Best,
-SimpleLogin Team.
-
-
-
-
+祝好，
+原邮邮箱

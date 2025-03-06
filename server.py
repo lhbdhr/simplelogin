@@ -684,7 +684,7 @@ def setup_paddle_callback(app: Flask):
 
                 send_email(
                     user.email,
-                    "SimpleLogin - what can we do to improve the product?",
+                    "原邮邮箱 - 我们能做什么来提高用户体验？",
                     render(
                         "transactional/subscription-cancel.txt",
                         end_date=request.form.get("cancellation_effective_date"),
@@ -777,7 +777,7 @@ def handle_coinbase_event(event) -> bool:
         )
         send_email(
             user.email,
-            "Your SimpleLogin account has been upgraded",
+            "您的原邮邮箱 高级会员计划 已激活",
             render(
                 "transactional/coinbase/new-subscription.txt",
                 coinbase_subscription=coinbase_subscription,
@@ -801,7 +801,7 @@ def handle_coinbase_event(event) -> bool:
 
         send_email(
             user.email,
-            "Your SimpleLogin account has been extended",
+            "您的原邮邮箱 高级会员计划 已续订",
             render(
                 "transactional/coinbase/extend-subscription.txt",
                 coinbase_subscription=coinbase_subscription,

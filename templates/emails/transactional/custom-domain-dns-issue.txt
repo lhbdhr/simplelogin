@@ -1,9 +1,9 @@
-We have detected that your domain {{ custom_domain.domain }} does not have the DNS set up correctly.
+我们检测到您的域名 {{ custom_domain.domain }} 没有正确设置 DNS。
 
-Please make sure to set up your domain following the instructions on your domain DNS page at:
+请确保按照域名 DNS 页面上的说明设置您的域名：
 {{ domain_dns_url }}
 
-Feel free reply to this email if you have any question.
+如果您有任何问题，请随时回复此电子邮件。
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

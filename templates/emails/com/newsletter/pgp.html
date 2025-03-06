@@ -1,40 +1,30 @@
 {% extends "base.html" %}
-
 {% block content %}
   {{ render_text("Hi") }}
-  {{ render_text("If you happen to use Gmail, Yahoo, Outlook, etc, do you know these services can read your emails?") }}
-
-  {{ render_text("If you want to keep your emails only readable by you, Pretty Good Privacy (PGP) is maybe the solution.") }}
-
-  {{ render_text('Highly recommended, open source and free, PGP is unfortunately not widely supported. However with SimpleLogin most recent PGP support, you can now enable PGP on emails sent to your aliases easily.') }}
-
-  {{ render_text('Without PGP the emails sent to an alias are forwarded by SimpleLogin as-is to your mailbox, leaving anyone in-between or your email service able to read your emails:') }}
-
-  <img src="https://simplelogin.io/blog/without-pgp.png" alt="Without PGP" style="max-width: 100%">
-
-  {{ render_text("With PGP enabled, all emails arrived at SimpleLogin are encrypted with your public key before being forwarded to your mailbox:") }}
-
-  <img src="https://simplelogin.io/blog/with-pgp.png" alt="Without PGP" style="max-width: 100%">
-
-  {{ render_text("You can find more info on our announcement post on https://simplelogin.io/blog/introducing-pgp/") }}
-
-
-  {{ render_text("You can create and manage your PGP keys when adding or editing your mailboxes. Check it out on your mailbox dashboard.") }}
-
-  {{ render_button("Add your PGP key", URL ~ "/dashboard/mailbox") }}
-
-  {{ render_text("Our next important feature is the coming of an iOS app. If you use iPhone or iPad want to help us testing out the app, please reply to this email so we can add you into the TestFlight program.
-") }}
-
-  {{ render_text("For Android users, don't worry: the Android version is already in progress.
-") }}
-
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
-  {{ render_text('<strong>P.S.</strong> Need immediate help getting started? Just reply to this email, the SimpleLogin support team is always ready to help!.') }}
-
+  {{ render_text("如果您碰巧使用 Gmail/Yahoo/Outlook 等，您知道这些服务可以阅读您的电子邮件吗？") }}
+  {{ render_text("如果您想让电子邮件只有您自己可以阅读，Pretty Good Privacy (PGP) 可能是解决方案。") }}
+  {{ render_text('强烈推荐、开源且免费，但遗憾的是 PGP 并未得到广泛支持。但是，借助 SimpleLogin 最新的 PGP 支持，您现在可以轻松地在发送到别名的电子邮件上启用 PGP。') }}
+  {{ render_text('如果没有 PGP，SimpleLogin 会将发送到别名的电子邮件按原样转发到您的邮箱，中间的任何人或您的电子邮件服务都可以阅读您的电子邮件：') }}
+  <img src="https://simplelogin.io/blog/without-pgp.png"
+       alt="不使用 PGP"
+       style="max-width: 100%">
+  {{ render_text("启用 PGP 后，到达 SimpleLogin 的所有电子邮件都会使用您的公钥加密，然后转发到您的邮箱：") }}
+  <img src="https://simplelogin.io/blog/with-pgp.png"
+       alt="不使用 PGP"
+       style="max-width: 100%">
+  {{ render_text("您可以在 https://simplelogin.io/blog/introducing-pgp/ 上的公告帖子中找到更多信息") }}
+  {{ render_text("您可以在添加或编辑邮箱时创建和管理 PGP 密钥。在您的邮箱仪表板上查看。) }}
+  {{ render_button("添加您的 PGP 密钥", URL ~ "/dashboard/mailbox") }}
+  {{ render_text("我们的下一个重要功能是 iOS 应用程序的到来。如果您使用 iPhone 或 iPad 想要帮助我们测试应用程序，请回复此电子邮件，以便我们将您添加到 TestFlight 程序中。
+  ") }}
+  {{ render_text("对于 Android 用户，不用担心：Android 版本已经在进行中。
+  ") }}
+  {{ render_text('谢谢，
+  <br />
+  SimpleLogin 团队。') }}
+  {{ render_text('<strong>P.S.</strong> 需要立即帮助入门？只需回复此电子邮件，SimpleLogin 支持团队随时准备提供帮助！。') }}
 {% endblock %}
-
 {% block footer %}
-  This email is sent to {{ user.email }}. Unsubscribe on
-  <a href="{{URL}}/dashboard/setting#notification">Settings</a>
+  此电子邮件已发送至 {{ user.email }}。取消订阅
+  <a href="{{ URL }}/dashboard/setting#notification">设置</a>
 {% endblock %}

@@ -1,35 +1,23 @@
 {% extends "base.html" %}
-
 {% block content %}
   {{ render_text("Hi") }}
-
-  {{ render_text("Your subscription will end on " + next_bill_date + ".") }}
-
-  {{ render_text("When the subscription ends:") }}
-
-  {{ render_text("- All aliases/domains/directories you have created are <b>kept</b> and continue working normally.") }}
-
+  {{ render_text("您的订阅将于 " + next_bill_date + "结束。") }}
+  {{ render_text("订阅结束时：") }}
+  {{ render_text("- 您创建的所有别名/域/目录均<b>保留</b>并继续正常工作。") }}
   {% call text() %}
-    - You cannot create new aliases if you exceed the free plan limit, i.e. have more than {{MAX_NB_EMAIL_FREE_PLAN}} aliases.
+    - 如果您超出免费计划限制，即拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，则无法创建新的别名。
   {% endcall %}
-
   {% call text() %}
-    - As features like <b>catch-all</b> or <b>directory</b> allow you to create aliases on-the-fly,
-    those aliases cannot be automatically created if you have more than {{MAX_NB_EMAIL_FREE_PLAN}} aliases.
+    - 由于 <b>catch-all</b> 或 <b>目录</b> 等功能允许您即时创建别名，
+    如果您拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，则无法自动创建这些别名。
   {% endcall %}
-
-  {{ render_text("- You cannot add new domain or directory.") }}
-
-  {{ render_text('You can upgrade today to continue using all these Premium features (and much more coming).') }}
-
-  {{ render_button("Upgrade your account", URL ~ "/dashboard/pricing") }}
-
-  {{ render_text('Regardless of your choice, we want to say thank you for trying SimpleLogin. We know the product
-  requires an investment of your time, and we appreciate you giving us a chance.') }}
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
-  {{ render_text('P.S. If you have any questions or need any help, please don\'t hesitate to reach out. You can simply reply to this email or reach us via Twitter/Github.') }}
+  {{ render_text("- 您无法添加新域或目录。") }}
+  {{ render_text('您今天可以升级以继续使用所有这些高级功能（以及即将推出的更多功能）。') }}
+  {{ render_button("升级您的帐户", URL ~ "/dashboard/pricing") }}
+  {{ render_text('无论您选择哪种方式，我们都想感谢您尝试 原邮邮箱。我们知道该产品需要您投入时间，我们感谢您给我们一个机会。') }}
+  {{ render_text('谢谢，
+  <br />
+  原邮邮箱') }}
+  {{ render_text('附言：如果您有任何问题或需要任何帮助，请随时与我们联系。您只需回复此电子邮件或通过 原邮邮箱官方Telegram频道 联系我们。') }}
   {{ raw_url(URL ~ "/dashboard/pricing") }}
-
-
-{% endblock %}
-
+{% endblock content %}

@@ -1,35 +1,31 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
-    <h1>
-      Secure your emails with PGP.
-    </h1>
+    <h1>使用 PGP 保护您的电子邮件。</h1>
   {% endcall %}
-
   {% call text() %}
-    If you use Gmail, Yahoo, Outlook, etc, you might want to use
+    如果您使用 Gmail/Yahoo/Outlook 等，您可能需要使用
     <a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a> (Pretty Good Privacy)
-    to make sure your emails can't be read by these email providers.
+    以确保这些电子邮件提供商无法阅读您的电子邮件。
   {% endcall %}
-
   {% call text() %}
-    Without PGP, emails are stored <b>in plaintext</b> leaving your email service able to read your emails.
+    如果没有 PGP，电子邮件将以<b>纯文本</b>形式存储，从而使您的电子邮件服务能够阅读您的电子邮件。
   {% endcall %}
-
-  <img src="https://simplelogin.io/blog/without-pgp.png" alt="Without PGP" style="max-width: 100%; margin-bottom: 10px">
-
+  <img src="https://simplelogin.io/blog/without-pgp.png"
+       alt="Without PGP"
+       style="max-width: 100%;
+              margin-bottom: 10px"/>
   {% call text() %}
-    With PGP enabled, SimpleLogin <b>encrypts</b> your emails with your public key before forwarding to your mailbox.
+    启用 PGP，原邮邮箱 会先使用您的公钥<b>加密</b>您的电子邮件，然后再转发到您的邮箱。
   {% endcall %}
-
-  <img src="https://simplelogin.io/blog/with-pgp.png" alt="Without PGP" style="max-width: 100%; margin-bottom: 20px">
-
-  {{ render_button("Enable PGP on your mailbox", URL ~ "/dashboard/mailbox/" ~ user.default_mailbox_id) }}
+  <img src="https://simplelogin.io/blog/with-pgp.png"
+       alt="Without PGP"
+       style="max-width: 100%;
+              margin-bottom: 20px"/>
+  {{ render_button("在您的邮箱上启用 PGP", URL ~ "/dashboard/mailbox/" ~ user.default_mailbox_id) }}
   {{ raw_url(URL ~ "/dashboard/mailbox/" ~ user.default_mailbox_id) }}
-{% endblock %}
-
+{% endblock content %}
 {% block footer %}
-  This email is sent to {{ to_email }} and is part of our onboarding series. Unsubscribe on
-  <a href="{{ URL }}/dashboard/setting#notification">Settings</a>
-{% endblock %}
+  此电子邮件已发送至 {{ to_email }}，是我们入职系列的一部分。取消订阅
+  <a href="{{ URL }}/dashboard/setting#notification">设置</a>
+{% endblock footer %}

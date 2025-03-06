@@ -1,15 +1,12 @@
 {% extends "error.html" %}
-
 {% block error_name %}
-  400
-{% endblock %}
-
+  403
+{% endblock error_name %}
 {% block error_description %}
-  We are sorry but your request contains bad syntax and cannot be fulfilled
-{% endblock %}
-
+  很抱歉，您的请求包含错误的语法，无法满足
+{% endblock error_description %}
 {% block suggestion %}
   <a class="btn btn-primary" href="/">
-    <i class="fe fe-home mr-2"></i>Home Page
+    <i class="fe fe-home mr-2"></i>回到主页
   </a>
-{% endblock %}
+{% endblock suggestion %}

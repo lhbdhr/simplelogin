@@ -89,7 +89,7 @@ def send_welcome_email(user):
 
     send_email(
         to_email,
-        f"Welcome to SimpleLogin",
+        f"欢迎加入原邮邮箱",
         render("com/welcome.txt", user=user, alias=alias),
         render("com/welcome.html", user=user, alias=alias),
         unsubscribe_link,
@@ -109,7 +109,7 @@ def send_trial_end_soon_email(user):
 def send_activation_email(email, activation_link):
     send_email(
         email,
-        f"Just one more step to join SimpleLogin",
+        f"只差一步，激活您的原邮邮箱账户",
         render(
             "transactional/activation.txt",
             activation_link=activation_link,
@@ -126,7 +126,7 @@ def send_activation_email(email, activation_link):
 def send_reset_password_email(email, reset_password_link):
     send_email(
         email,
-        "Reset your password on SimpleLogin",
+        "重置你的原邮邮箱密码",
         render(
             "transactional/reset-password.txt",
             reset_password_link=reset_password_link,
@@ -141,7 +141,7 @@ def send_reset_password_email(email, reset_password_link):
 def send_change_email(new_email, current_email, link):
     send_email(
         new_email,
-        "Confirm email update on SimpleLogin",
+        "确认修改 原邮邮箱 上的收件箱",
         render(
             "transactional/change-email.txt",
             link=link,
@@ -160,7 +160,7 @@ def send_change_email(new_email, current_email, link):
 def send_test_email_alias(email, name):
     send_email(
         email,
-        f"This email is sent to {email}",
+        f"这是一封发给 {email} 的邮件",
         render("transactional/test-email.txt", name=name, alias=email),
         render("transactional/test-email.html", name=name, alias=email),
     )
@@ -172,7 +172,7 @@ def send_cannot_create_directory_alias(user, alias_address, directory_name):
     """
     send_email(
         user.email,
-        f"Alias {alias_address} cannot be created",
+        f"别名 {alias_address} 创建失败，您的高级计划订阅还在吗？",
         render(
             "transactional/cannot-create-alias-directory.txt",
             alias=alias_address,
@@ -194,7 +194,7 @@ def send_cannot_create_directory_alias_disabled(user, alias_address, directory_n
         user,
         ALERT_DIRECTORY_DISABLED_ALIAS_CREATION,
         user.email,
-        f"Alias {alias_address} cannot be created",
+        f"别名 {alias_address} 创建失败，您的目录 {directory_name} 已被禁用",
         render(
             "transactional/cannot-create-alias-directory-disabled.txt",
             alias=alias_address,
@@ -214,7 +214,7 @@ def send_cannot_create_domain_alias(user, alias, domain):
     """
     send_email(
         user.email,
-        f"Alias {alias} cannot be created",
+        f"别名 {alias} 创建失败，您的高级计划订阅还在吗？",
         render(
             "transactional/cannot-create-alias-domain.txt",
             alias=alias,
@@ -1072,7 +1072,7 @@ def spf_pass(
                     user,
                     ALERT_SPF,
                     mailbox.email,
-                    f"SimpleLogin Alert: attempt to send emails from your alias {alias.email} from unknown IP Address",
+                    f"原邮邮箱 警报：一个陌生的IP正在尝试从您的别名 {alias.email} 发送电子邮件",
                     render(
                         "transactional/spf-fail.txt",
                         alias=alias.email,

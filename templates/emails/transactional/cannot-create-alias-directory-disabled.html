@@ -1,24 +1,18 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
-    <h1>
-      Cannot create {{ alias }} on-the-fly
-    </h1>
+    <h1>无法动态创建 {{ alias }}</h1>
   {% endcall %}
-
   {% call text() %}
-    An email has been sent to the alias <b>{{ alias }}</b> that would be created automatically as you own the directory <b>{{ directory }}</b>
+    一封电子邮件已发送至别名 <b>{{ alias }}</b>，该别名将自动创建，因为您拥有目录 <b>{{ directory }}</b>
   {% endcall %}
-
   {% call text() %}
-    As <b>on-the-fly alias creation is disabled</b> on this directory, the alias isn't created.
+    由于此目录上的<b>动态别名创建功能被禁用</b>，因此不会创建别名。
   {% endcall %}
-
   {% call text() %}
-    If you aren't aware of this alias, that probably means someone has discovered about your directory and is abusing it.
+    如果您不知道这个别名，那可能意味着有人发现了您的目录并且正在滥用它。
   {% endcall %}
-
-
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
-{% endblock %}
+  {{ render_text('祝好,
+  <br />
+  原邮邮箱') }}
+{% endblock content %}

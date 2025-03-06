@@ -1,18 +1,14 @@
 {% extends "base.html" %}
-
 {% block content %}
   {% call text() %}
     <h1>
-      Your subscription will end on <b>{{ manual_sub.end_at.format("YYYY-MM-DD") }}</b>
+      您的订阅将于 <b>{{ manual_sub.end_at.format("YYYY-MM-DD") }}</b> 结束
     </h1>
   {% endcall %}
-
   {% call text() %}
-    Please contact us at <a href="mailto:hi@simplelogin.io">hi@simplelogin.io</a> to renew your subscription.
+    请通过 <a href="mailto:hi@yuanyou.de">hi@yuanyou.de</a> 联系我们以续订您的订阅。
   {% endcall %}
-
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
-
-
-{% endblock %}
-
+  {{ render_text('祝好，
+  <br/>
+  原邮邮箱') }}
+{% endblock content %}

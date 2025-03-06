@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-
 {% block content %}
-  {{ render_text("Thank you for choosing SimpleLogin.") }}
-  {{ render_text("To get started, please confirm that <b>" + email + "</b> is your email address by clicking on the button below within 1 hour.") }}
-  {{ render_button("Verify email", activation_link) }}
-  {{ render_text('Thanks, <br />SimpleLogin Team.') }}
+  {{ render_text("感谢您选择 原邮邮箱") }}
+  {{ render_text("要开始使用，请在 1 小时内使用此链接，请确认 <b>" + email + "</b> 是您的电子邮件地址。") }}
+  {{ render_button("激活账户", activation_link) }}
+  {{ render_text('谢谢，
+  <br />
+  原邮邮箱') }}
   {{ raw_url(activation_link) }}
-{% endblock %}
-
+{% endblock content %}

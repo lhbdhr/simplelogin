@@ -1,15 +1,12 @@
 {% extends "error.html" %}
-
 {% block error_name %}
   405
-{% endblock %}
-
+{% endblock error_name %}
 {% block error_description %}
-  Client used wrong method when accessing resource.
-{% endblock %}
-
-{% block suggestion %}
+  客户端访问资源时使用了错误的方法。
+{% endblock error_description %}
+{% block suggestions %}
   <a class="btn btn-primary" href="javascript:history.back()">
-    <i class="fe fe-arrow-left mr-2"></i>Go Back
+    <i class="fe fe-arrow-left mr-2"></i>返回
   </a>
-{% endblock %}
+{% endblock suggestions %}

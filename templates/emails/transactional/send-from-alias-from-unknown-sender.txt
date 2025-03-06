@@ -1,13 +1,14 @@
-Hi,
+您好，
 
-This is an automated email from SimpleLogin.
+这是来自 SimpleLogin 的自动电子邮件。
 
-We have recorded an attempt to send an email from your email ({{sender}}) to {{reply_email}}.
+我们记录了一次尝试从您的电子邮件（{{ sender }}）向 {{ reply_email }} 发送电子邮件的尝试。
 
-{{reply_email}} is a special email address that only receives emails from its authorized user.
-This user has been also informed of this incident.
+{{ reply_email }} 是一个特殊的电子邮件地址，仅接收来自其授权用户的电子邮件。
 
-If you have any question, you can contact us by replying to this email or consult our website at {{LANDING_PAGE_URL}}.
+此用户也已被告知此事件。
 
-Regards,
-SimpleLogin team.
+如果您有任何疑问，您可以通过回复此电子邮件与我们联系，或访问我们的网站 {{ LANDING_PAGE_URL }}。
+
+祝好，
+原邮邮箱
