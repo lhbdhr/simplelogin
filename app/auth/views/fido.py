@@ -26,9 +26,7 @@ from app.models import User, Fido, MfaBrowser
 
 class FidoTokenForm(FlaskForm):
     sk_assertion = HiddenField("sk_assertion", validators=[validators.DataRequired()])
-    remember = BooleanField(
-        "attr", default=False, description="记住此浏览器 30 天"
-    )
+    remember = BooleanField("attr", default=False, description="记住此浏览器 30 天")
 
 
 @auth_bp.route("/fido", methods=["GET", "POST"])

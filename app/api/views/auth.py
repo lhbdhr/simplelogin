@@ -1,7 +1,7 @@
 import random
 
 import facebook
-import google.oauth2.credentialse
+import google.oauth2.credentials
 import googleapiclient.discovery
 from flask import jsonify, request, g
 from flask_login import login_user
@@ -57,15 +57,15 @@ def auth_login():
     if not user or not user.check_password(password):
         # Trigger rate limiter
         g.deduct_limit = True
-        return jsonify(error="账号或者密码错误"), 400
+        return jsonify(error="Email or password incorrect"), 400
     elif user.disabled:
-        return jsonify(error="账户已被关闭"), 400
+        return jsonify(error="Account disabled"), 400
     elif not user.activated:
-        return jsonify(error="账户未激活"), 400
+        return jsonify(error="Account not activated"), 400
     elif user.fido_enabled():
         # allow user who has TOTP enabled to continue using the mobile app
         if not user.enable_otp:
-            return jsonify(error="目前我们还不支持移动设备上的 FIDO"), 403
+            return jsonify(error="Currently we don't support FIDO on mobile yet"), 403
 
     return jsonify(**auth_payload(user, device)), 200
 
@@ -89,12 +89,12 @@ def auth_register():
     password = data.get("password")
 
     if DISABLE_REGISTRATION:
-        return jsonify(error="注册已经关闭，暂不允许注册"), 400
+        return jsonify(error="registration is closed"), 400
     if not email_can_be_used_as_mailbox(email) or personal_email_already_used(email):
-        return jsonify(error=f"您的邮箱 {email} 已经被添加为转发邮箱，或者您已经有一个账户了。"), 400
+        return jsonify(error=f"cannot use {email} as personal inbox"), 400
 
     if not password or len(password) < 8:
-        return jsonify(error="密码过短，至少8个字符"), 400
+        return jsonify(error="password too short"), 400
 
     LOG.debug("create user %s", email)
     user = User.create(email=email, name="", password=password)
@@ -107,12 +107,13 @@ def auth_register():
 
     send_email(
         email,
-        "只差一步，激活您的账户吧！",
+        "Just one more step to join SimpleLogin",
         render("transactional/code-activation.txt", code=code),
         render("transactional/code-activation.html", code=code),
     )
 
-    return jsonify(msg="您需要验证账户邮箱"), 200
+    return jsonify(msg="User needs to confirm their account"), 200
+
 
 @api_bp.route("/auth/activate", methods=["POST"])
 @limiter.limit(
@@ -143,13 +144,13 @@ def auth_activate():
     if not user or user.activated:
         # Trigger rate limiter
         g.deduct_limit = True
-        return jsonify(error="激活代码错误，激活失败"), 400
+        return jsonify(error="Wrong email or code"), 400
 
     account_activation = AccountActivation.get_by(user_id=user.id)
     if not account_activation:
         # Trigger rate limiter
         g.deduct_limit = True
-        return jsonify(error="激活代码错误，激活失败"), 400
+        return jsonify(error="Wrong email or code"), 400
 
     if account_activation.code != code:
         # decrement nb tries
@@ -161,16 +162,16 @@ def auth_activate():
         if account_activation.tries == 0:
             AccountActivation.delete(account_activation.id)
             db.session.commit()
-            return jsonify(error="您尝试太多次了"), 410
+            return jsonify(error="Too many wrong tries"), 410
 
-        return jsonify(error="激活代码错误，激活失败"), 400
+        return jsonify(error="Wrong email or code"), 400
 
     LOG.debug("activate user %s", user)
     user.activated = True
     AccountActivation.delete(account_activation.id)
     db.session.commit()
 
-    return jsonify(msg="账户已激活，您现在可以登陆了"), 200
+    return jsonify(msg="Account is activated, user can login now"), 200
 
 
 @api_bp.route("/auth/reactivate", methods=["POST"])
@@ -206,12 +207,12 @@ def auth_reactivate():
 
     send_email(
         email,
-        "只差一步，激活您的账户吧！",
+        "Just one more step to join SimpleLogin",
         render("transactional/code-activation.txt", code=code),
         render("transactional/code-activation.html", code=code),
     )
 
-    return jsonify(msg="您需要验证账户邮箱"), 200
+    return jsonify(msg="User needs to confirm their account"), 200
 
 
 @api_bp.route("/auth/facebook", methods=["POST"])

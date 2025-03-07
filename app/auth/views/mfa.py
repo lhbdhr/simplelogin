@@ -21,9 +21,7 @@ from app.models import User, MfaBrowser
 
 class OtpTokenForm(FlaskForm):
     token = StringField("Token", validators=[validators.DataRequired()])
-    remember = BooleanField(
-        "attr", default=False, description="记住此浏览器 30 天"
-    )
+    remember = BooleanField("attr", default=False, description="记住此浏览器 30 天")
 
 
 @auth_bp.route("/mfa", methods=["GET", "POST"])
