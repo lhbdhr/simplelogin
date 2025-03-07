@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/peotry.lock') }}
