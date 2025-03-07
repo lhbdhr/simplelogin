@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       max-parallel: 4
       matrix:
@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/peotry.lock') }}
@@ -42,7 +42,7 @@ jobs:
           pytest --cov=. --cov-report=term:skip-covered --cov-report=html:htmlcov --cov-fail-under=60
 
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
           path: htmlcov
@@ -55,19 +55,3 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tag_with_ref: true
-
-      - name: Create Sentry release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-
-      - name: Send Telegram message
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: Docker image pushed on ${{ github.ref }}
