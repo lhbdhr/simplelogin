@@ -452,7 +452,7 @@ def handle_email_sent_to_ourself(alias, mailbox, msg: Message, user):
         user,
         ALERT_SEND_EMAIL_CYCLE,
         mailbox.email,
-        f"Email sent to {alias.email} from its own mailbox {mailbox.email}",
+        f"邮件发送失败，您不能从您的别名邮箱 {alias.email} 发给它的收件箱 {mailbox.email}",
         render(
             "transactional/cycle-email.txt",
             alias=alias,
@@ -571,7 +571,7 @@ def forward_email_to_mailbox(
             user,
             ALERT_MAILBOX_IS_ALIAS,
             user.email,
-            f"Your mailbox {mailbox.email} and alias {alias.email} use the same domain",
+            f"您的收件箱 {mailbox.email} 和别名 {alias.email} 使用同一个域名",
             render(
                 "transactional/mailbox-invalid.txt",
                 mailbox=mailbox,
@@ -963,7 +963,7 @@ def handle_reply(envelope, msg: Message, rcpt_to: str) -> (bool, str):
         LOG.w("Cannot send email from %s to %s", alias, contact)
         send_email(
             mailbox.email,
-            f"Email cannot be sent to {contact.email} from {alias.email}",
+            f"您的电子邮件无法从别名 {alias.email} 发送至 {contact.email}",
             render(
                 "transactional/reply-error.txt",
                 user=user,
@@ -1025,7 +1025,7 @@ def handle_unknown_mailbox(
         user,
         ALERT_REVERSE_ALIAS_UNKNOWN_MAILBOX,
         user.email,
-        f"Attempt to use your alias {alias.email} from {envelope.mail_from}",
+        f"有人尝试使用 {envelope.mail_from} 向您的别名 {alias.email} 发送电子邮件，已被阻止",
         render(
             "transactional/reply-must-use-personal-email.txt",
             alias=alias,
@@ -1047,7 +1047,7 @@ def handle_unknown_mailbox(
         user,
         ALERT_REVERSE_ALIAS_UNKNOWN_MAILBOX,
         envelope.mail_from,
-        f"Your email ({envelope.mail_from}) is not allowed to send emails to {reply_email}",
+        f"您不能从 ({envelope.mail_from}) 发送邮件到 {reply_email}",
         render(
             "transactional/send-from-alias-from-unknown-sender.txt",
             sender=envelope.mail_from,
@@ -1135,7 +1135,7 @@ def handle_bounce_forward_phase(msg: Message, email_log: EmailLog):
             user,
             ALERT_BOUNCE_EMAIL,
             user.email,
-            f"Email from {contact.website_email} to {alias.email} cannot be delivered to your mailbox",
+            f"从 {contact.website_email} 发送至您的别名 {alias.email} 没有被转发成功，请登录原邮邮箱官网查看详情",
             render(
                 "transactional/bounce/bounced-email.txt",
                 alias=alias,
@@ -1166,7 +1166,7 @@ def handle_bounce_forward_phase(msg: Message, email_log: EmailLog):
             user,
             ALERT_BOUNCE_EMAIL,
             user.email,
-            f"Alias {alias.email} has been disabled due to multiple bounces",
+            f"别名 {alias.email} 已经被禁用，因为您的收件箱不接收从 原邮邮箱 发送的邮件",
             render(
                 "transactional/bounce/automatic-disable-alias.txt",
                 alias=alias,
@@ -1238,7 +1238,7 @@ def handle_bounce_reply_phase(envelope, msg: Message, email_log: EmailLog):
         user,
         ALERT_BOUNCE_EMAIL_REPLY_PHASE,
         mailbox.email,
-        f"Email cannot be sent to { contact.email } from your alias { alias.email }",
+        f"电子邮件不能从您的别名 { alias.email } 发送至 { contact.email }",
         render(
             "transactional/bounce/bounce-email-reply-phase.txt",
             alias=alias,
@@ -1305,7 +1305,7 @@ def handle_spam(
             user,
             ALERT_SPAM_EMAIL,
             mailbox.email,
-            f"Email from {alias.email} to {contact.website_email} is detected as spam",
+            f"从您的别名 {alias.email} 发送至 {contact.website_email} 的电子邮件被检测为垃圾邮件",
             render(
                 "transactional/spam-email-reply-phase.txt",
                 alias=alias,
@@ -1334,7 +1334,7 @@ def handle_spam(
             user,
             ALERT_SPAM_EMAIL,
             mailbox.email,
-            f"Email from {contact.website_email} to {alias.email} is detected as spam",
+            f"从 {contact.website_email} 发送至您的别名 {alias.email} 的电子邮件被检测为垃圾邮件",
             render(
                 "transactional/spam-email.txt",
                 alias=alias,
@@ -1394,7 +1394,7 @@ def handle_unsubscribe(envelope: Envelope, msg: Message) -> str:
     for mailbox in alias.mailboxes:
         send_email(
             mailbox.email,
-            f"Alias {alias.email} has been disabled successfully",
+            f"别名 {alias.email} 禁用成功",
             render(
                 "transactional/unsubscribe-disable-alias.txt",
                 user=user,
@@ -1428,7 +1428,7 @@ def handle_unsubscribe_user(user_id: int, mail_from: str) -> str:
 
     send_email(
         user.email,
-        "You have been unsubscribed from SimpleLogin newsletter",
+        "您已经成功取消 原邮邮箱 官方的消息订阅",
         render(
             "transactional/unsubscribe-newsletter.txt",
             user=user,

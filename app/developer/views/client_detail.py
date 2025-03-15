@@ -73,7 +73,7 @@ def client_detail(client_id):
 
         send_email(
             ADMIN_EMAIL,
-            subject=f"{client.name} {client.id} submits for approval",
+            subject=f"{client.name} {client.id} 申请已被允许",
             plaintext="",
             html=f"""
             name: {client.name} <br>

@@ -46,7 +46,7 @@ def onboarding_send_from_alias(user):
 
     send_email(
         to_email,
-        "SimpleLogin Tip: Send emails from your alias",
+        "原邮邮箱使用教程: 从您的别名邮箱发送邮件",
         render("com/onboarding/send-from-alias.txt", user=user, to_email=to_email),
         render("com/onboarding/send-from-alias.html", user=user, to_email=to_email),
         unsubscribe_link,
@@ -61,7 +61,7 @@ def onboarding_pgp(user):
 
     send_email(
         to_email,
-        "SimpleLogin Tip: Secure your emails with PGP",
+        "原邮邮箱使用教程: 使用 PGP 加密您的邮件",
         render("com/onboarding/pgp.txt", user=user, to_email=to_email),
         render("com/onboarding/pgp.html", user=user, to_email=to_email),
         unsubscribe_link,
@@ -76,7 +76,7 @@ def onboarding_browser_extension(user):
 
     send_email(
         to_email,
-        "SimpleLogin Tip: Chrome/Firefox/Safari extensions and Android/iOS apps",
+        "原邮邮箱使用教程: 如何使用浏览器插件和移动应用",
         render("com/onboarding/browser-extension.txt", user=user, to_email=to_email),
         render("com/onboarding/browser-extension.html", user=user, to_email=to_email),
         unsubscribe_link,
@@ -91,7 +91,7 @@ def onboarding_mailbox(user):
 
     send_email(
         to_email,
-        "SimpleLogin Tip: Multiple mailboxes",
+        "原邮邮箱使用教程: 多个收件箱",
         render("com/onboarding/mailbox.txt", user=user, to_email=to_email),
         render("com/onboarding/mailbox.html", user=user, to_email=to_email),
         unsubscribe_link,

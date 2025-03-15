@@ -53,7 +53,7 @@ def transfer(alias, new_user, new_mailboxes: [Mailbox]):
     old_user = alias.user
     send_email(
         old_user.email,
-        f"Alias {alias.email} has been received",
+        f"别名 {alias.email} 已经被接收",
         render(
             "transactional/alias-transferred.txt",
             alias=alias,

@@ -206,7 +206,7 @@ def verify_mailbox_change(user, mailbox, new_email):
 
     send_email(
         new_email,
-        "Confirm mailbox change on SimpleLogin",
+        "收件箱修改确认",
         render(
             "transactional/verify-mailbox-change.txt",
             user=user,

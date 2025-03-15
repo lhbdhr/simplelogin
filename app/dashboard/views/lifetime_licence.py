@@ -44,7 +44,7 @@ def lifetime_licence():
             # notify admin
             send_email(
                 ADMIN_EMAIL,
-                subject=f"User {current_user} used lifetime coupon. Coupon nb_used: {coupon.nb_used}",
+                subject=f"用户 {current_user} 已使用终生VIP兑换码. 兑换码: {coupon.nb_used}",
                 plaintext="",
                 html="",
             )

@@ -127,7 +127,7 @@ def send_verification_email(user, mailbox):
     )
     send_email(
         mailbox.email,
-        f"Please confirm your email {mailbox.email}",
+        f"添加收件箱确认： {mailbox.email}",
         render(
             "transactional/verify-mailbox.txt",
             user=user,
@@ -151,12 +151,12 @@ def mailbox_verify():
     try:
         r_id = int(s.unsign(mailbox_id))
     except Exception:
-        flash("Invalid link. Please delete and re-add your mailbox", "error")
+        flash("无效网址，请删除并重新添加你的收件箱", "error")
         return redirect(url_for("dashboard.mailbox_route"))
     else:
         mailbox = Mailbox.get(r_id)
         if not mailbox:
-            flash("Invalid link", "error")
+            flash("无效网址", "error")
             return redirect(url_for("dashboard.mailbox_route"))
 
         mailbox.verified = True

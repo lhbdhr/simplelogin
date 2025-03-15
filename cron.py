@@ -108,7 +108,7 @@ def notify_premium_end():
 
             send_email(
                 user.email,
-                f"Your subscription will end soon",
+                f"您的高级会员订阅即将结束",
                 render(
                     "transactional/subscription-end.txt",
                     user=user,
@@ -135,7 +135,7 @@ def notify_manual_sub_end():
             LOG.debug("Remind user %s that their manual sub is ending soon", user)
             send_email(
                 user.email,
-                f"Your subscription will end soon",
+                f"您的高级会员订阅即将结束",
                 render(
                     "transactional/manual-subscription-end.txt",
                     user=user,
@@ -171,7 +171,7 @@ def notify_manual_sub_end():
             )
             send_email(
                 user.email,
-                "Your SimpleLogin subscription will end soon",
+                "您的高级会员订阅即将结束",
                 render(
                     "transactional/coinbase/reminder-subscription.txt",
                     coinbase_subscription=coinbase_subscription,
@@ -526,7 +526,7 @@ nb_referred_user_upgrade: {stats_today.nb_referred_user_paid} - {increase_percen
 
     send_email(
         ADMIN_EMAIL,
-        subject=f"SimpleLogin Stats for {today}, {nb_user_increase} users, {nb_alias_increase} aliases, {nb_forward_increase} forwards",
+        subject=f"原有邮箱运行状态： {today}, {nb_user_increase} 新增用户, {nb_alias_increase} 新增别名, {nb_forward_increase} 转发",
         plaintext="",
         html=html,
     )
@@ -565,7 +565,7 @@ def sanity_check():
                 if mailbox.user.email != mailbox.email:
                     send_email(
                         mailbox.user.email,
-                        f"Mailbox {mailbox.email} is disabled",
+                        f"收件箱 {mailbox.email} 已被禁用",
                         render(
                             "transactional/disable-mailbox-warning.txt", mailbox=mailbox
                         ),
@@ -582,7 +582,7 @@ def sanity_check():
                 if mailbox.user.email != mailbox.email:
                     send_email(
                         mailbox.user.email,
-                        f"Mailbox {mailbox.email} is disabled",
+                        f"收件箱 {mailbox.email} 已被禁用",
                         render("transactional/disable-mailbox.txt", mailbox=mailbox),
                         render("transactional/disable-mailbox.html", mailbox=mailbox),
                     )
@@ -675,7 +675,7 @@ def check_custom_domain():
                     user,
                     AlERT_WRONG_MX_RECORD_CUSTOM_DOMAIN,
                     user.email,
-                    f"Please update {custom_domain.domain} DNS on SimpleLogin",
+                    f"请更新您在 原邮邮箱 上的 {custom_domain.domain}  DNS 记录",
                     render(
                         "transactional/custom-domain-dns-issue.txt",
                         custom_domain=custom_domain,

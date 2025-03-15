@@ -226,11 +226,11 @@ def delete_domain(custom_domain_id: CustomDomain):
 
         send_email(
             user.email,
-            f"Your domain {domain_name} has been deleted",
-            f"""Domain {domain_name} along with its aliases are deleted successfully.
+            f"您的域名 {domain_name} 已经被删除",
+            f"""域名 {domain_name} 以及属于这个域的别名邮箱已被删除.
 
-Regards,
-SimpleLogin team.
+祝好,
+原邮邮箱.
         """,
         )
 

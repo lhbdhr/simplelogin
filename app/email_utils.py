@@ -100,7 +100,7 @@ def send_welcome_email(user):
 def send_trial_end_soon_email(user):
     send_email(
         user.email,
-        f"Your trial will end soon",
+        f"您的 原邮邮箱 高级订阅试用期即将结束",
         render("transactional/trial-end.txt", user=user),
         render("transactional/trial-end.html", user=user),
     )
