@@ -4,7 +4,7 @@ WORKDIR /code
 COPY ./static/package*.json /code/static/
 RUN cd /code/static && npm ci
 
-FROM --platform=linux/amd64 ubuntu:22.04
+FROM ubuntu:22.04
 
 ARG UV_VERSION="0.5.21"
 ARG UV_HASH="e108c300eafae22ad8e6d94519605530f18f8762eb58d2b98a617edfb5d088fc"
