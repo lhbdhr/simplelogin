@@ -3,7 +3,7 @@ name: SimpleLogin actions
 on:
   push:
     branches:
-      - master
+      - build
     tags:
       - v*
   pull_request:
@@ -161,7 +161,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64
+          platforms: linux/arm64/v8
           push: true
           tags: ${{ steps.meta.outputs.tags }}
 
