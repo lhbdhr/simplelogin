@@ -1,11 +1,11 @@
-Your account has been upgraded!
+您的帐户已升级！
 
-Your payment with cryptocurrency has been successfully processed.
+您的加密货币支付已成功处理。
 
-Your account has been upgraded to premium plan until
+您的帐户已升级到高级计划，有效期至
 {{ coinbase_subscription.end_at.format("YYYY-MM-DD") }}
 
-Thank you a lot for your support!
+非常感谢您的支持！
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

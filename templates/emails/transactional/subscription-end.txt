@@ -1,18 +1,17 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Hi
+您好
 
-Your subscription will end on {{ next_bill_date }}.
+您的订阅将于 {{ next_bill_date }} 到期。
 
-When the subscription ends:
+当订阅结束时:
 
-- All aliases/domains/directories you have created are kept and continue working.
-- You cannot create new aliases if you exceed the free plan limit, i.e. have more than {{MAX_NB_EMAIL_FREE_PLAN}} aliases.
-- You cannot create new reverse aliases.
-- As features like "catch-all" or "directory" allow you to create aliases on-the-fly,
-    those aliases cannot be automatically created if you have more than {{MAX_NB_EMAIL_FREE_PLAN}} aliases.
-- You cannot add new domain or directory.
+- 您创建的所有别名/域名/目录将保留并继续正常工作。
+- 如果您超过免费计划的限制，即拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，您将无法创建新的别名。
+- 您无法创建新的反向别名。
+- 由于“Catch-All”或“目录”等功能允许您即时创建别名，因此如果您拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，则无法自动创建这些别名。
+- 您无法添加新的域名或目录。
 
-You can upgrade today to continue using all these Premium features (and much more coming).
+您可以今天升级以继续使用所有这些高级功能（以及更多即将推出的功能）。
 {% endblock %}

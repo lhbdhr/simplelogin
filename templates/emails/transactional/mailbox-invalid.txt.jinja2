@@ -1,14 +1,14 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Your mailbox {{ mailbox.email }} and alias {{alias.email}} cannot have the same domain.
+您的邮箱 {{ mailbox.email }} 和别名 {{ alias.email }} 不能拥有相同的域名。
 
-The alias domain should point to SimpleLogin servers so emails sent to it are forwarded by SimpleLogin.
+别名域名应指向 原邮邮箱 服务器，以便 原邮邮箱 转发发送到它的电子邮件。
 
-The mailbox domain should be your "final" email address that can receive emails from SimpleLogin
-    and cannot point to SimpleLogin.
+邮箱域名应是您的 "最终" 电子邮件地址，可以接收来自 原邮邮箱 的电子邮件，
+并且不能指向 原邮邮箱。
 
-Please either
-- update the mailbox to a final email address on {{ mailbox_url }}
-- remove {{alias.email}} domain from your custom domains
+请执行以下操作之一：
+- 在 {{ mailbox_url }} 上将邮箱更新为最终电子邮件地址
+- 从您的自定义域中移除 {{ alias.email }} 域名
 {% endblock %}

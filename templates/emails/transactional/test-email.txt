@@ -1,9 +1,8 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Hi {{name}}
+您好 {{ name }}
 
-This is a test to make sure that you receive emails sent to your alias {{alias}}.
+这是一个测试，以确保您能收到发送到您的别名 {{ alias }} 的电子邮件。
 
 {% endblock %}
-

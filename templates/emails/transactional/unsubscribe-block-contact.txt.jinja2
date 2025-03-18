@@ -1,17 +1,17 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Hi
+您好
 
-{{ contact.website_email }} can no longer send emails to {{ alias.email }}
+{{ contact.website_email }} 不再能向 {{ alias.email }} 发送电子邮件
 
-{{ contact.website_email }} is blocked thanks to the "One-click unsubscribe" provided by your mailbox service.
+感谢您的邮箱服务提供的“一键退订”功能，{{ contact.website_email }} 已被阻止。
 
-When you click on this button on a forwarded email, the sender will be automatically blocked.
+当您在转发的电子邮件上点击此按钮时，发件人将被自动阻止。
 
-If this is a mistake, you can unblock {{ contact.website_email }} on
+如果这是一个错误，您可以在以下地址取消阻止 {{ contact.website_email }}：
 
 {{ unblock_contact_url }}
 
-Please let us know if you have any question.
+如果您有任何问题，请告诉我们。
 {% endblock %}

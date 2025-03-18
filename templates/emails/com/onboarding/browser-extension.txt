@@ -1,11 +1,11 @@
-This email is sent to {{ to_email }} and is part of our onboarding series.
-Unsubscribe from our emails on {{URL}}/dashboard/setting#notification
+这封邮件已发送至 {{ to_email }}，是我们入门系列的一部分。
+若要取消订阅，请访问 {{URL}}/dashboard/setting#notification
 ----------------
 
-Hi
+您好，
 
-If you want to quickly create aliases without going to SimpleLogin website, you can do that with
-SimpleLogin Chrome (or other Chromium-based browsers like Brave or Vivaldi), Firefox and Safari extension.
+如果您想快速创建别名而无需访问 原邮邮箱 网站，可以通过以下方式实现：
+SimpleLogin Chrome 扩展（或其他基于 Chromium 的浏览器，如 Brave 或 Vivaldi）、Firefox 和 Safari 扩展。
 
 Chrome: https://chrome.google.com/webstore/detail/dphilobhebphkdjbpfohgikllaljmgbn
 
@@ -13,11 +13,10 @@ Firefox: https://addons.mozilla.org/firefox/addon/simplelogin/
 
 Safari: https://apps.apple.com/app/id6475835429
 
-You can also manage your aliases using SimpleLogin mobile apps, available at
-- Play Store https://play.google.com/store/apps/details?id=io.simplelogin.android
-- App Store https://apps.apple.com/app/id1494359858
+浏览器插件使用教程，强烈推荐观看下。插件非常方便易用。
+https://www.nodeseek.com/post-281885-1
 
-As usual, let us know if you have any question by replying to this email.
+如有任何问题，欢迎通过回复此邮件告知我们。
 
-Best regards,
-SimpleLogin team.
+此致，
+原邮邮箱

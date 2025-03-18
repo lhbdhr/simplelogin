@@ -73,7 +73,7 @@ def handle_coinbase_event(event) -> bool:
         )
         send_email(
             user.email,
-            "Your SimpleLogin account has been upgraded",
+            "您的 原邮邮箱 帐户已升级",
             render(
                 "transactional/coinbase/new-subscription.txt",
                 user=user,
@@ -104,7 +104,7 @@ def handle_coinbase_event(event) -> bool:
 
         send_email(
             user.email,
-            "Your SimpleLogin account has been extended",
+            "您的原邮邮箱高级计划账号订阅时间已延长",
             render(
                 "transactional/coinbase/extend-subscription.txt",
                 user=user,

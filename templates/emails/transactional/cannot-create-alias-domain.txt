@@ -1,9 +1,9 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-An email has been sent to the alias {{alias}} that would be created automatically as you own the domain {{domain}}.
+已发送电子邮件到别名 {{alias}}，因为您拥有域 {{domain}}，该别名将自动创建。
 
-However you have reached the alias limit in your current plan, this creation cannot happen.
+但是，您的当前计划已达到别名限制，因此无法创建此别名。
 
-Please upgrade to premium plan in order to use this feature.
+请升级到高级计划以使用此功能。
 {% endblock %}

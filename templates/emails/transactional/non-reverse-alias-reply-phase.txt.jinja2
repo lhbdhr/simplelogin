@@ -1,19 +1,18 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Hi
+你好
 
-Your email sent to {{ destination }} from {{ alias }} ({{ subject }}) contains an address
-which isn't a reverse-alias in the To: or Cc: field.
+您从 {{ alias }} 发送到 {{ destination }} 的电子邮件 ({{ subject }}) 在收件人或抄送字段中包含
+一个不是反向别名的地址。
 
-The email was then directly sent to this recipient and doesn't pass by SimpleLogin.
-Unfortunately, it reveals your real mailbox address to the recipient.
-Please create a reverse alias for each recipient to make sure your mailbox stays hidden and re-send the email.
+邮件已直接发送给该收件人，没有通过 原邮邮箱。
+不幸的是，这暴露了您的真实邮箱地址给收件人。
+请为每个收件人创建一个反向别名，以确保您的邮箱保持隐藏，并重新发送电子邮件。
 
-In case some reverse aliases are also present in To: or Cc:, SimpleLogin won't deliver this email to the
-corresponding contacts to avoid any potential side effect. Please remove the non reverse-alias addresses and
-re-send the email.
+如果在收件人或抄送字段中也存在一些反向别名，原邮邮箱 将不会将此邮件发送给相应的联系人，
+以避免任何潜在的副作用。请删除非反向别名地址，并重新发送电子邮件。
 
-More info about reverse-alias can be found on https://simplelogin.io/docs/getting-started/reverse-alias/
-and how to send an email from your alias on https://simplelogin.io/docs/getting-started/send-email/
+有关反向别名的更多信息，请访问 https://www.nodeseek.com/post-279791-1
+以及如何从您的别名发送电子邮件，请访问 https://www.nodeseek.com/post-279791-1
 {% endblock %}

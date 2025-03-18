@@ -1,11 +1,8 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-An email from {{ from_header }} to {{ alias.email }} is put into Quarantine as it fails anti-phishing check.
+一封从 {{ from_header }} 发送到 {{ alias.email }} 的电子邮件已被隔离，因为它未通过反钓鱼检查。
 
-
-You can view the email at {{ refused_email_url }}.
-This email is automatically deleted in 7 days.
-
-More info about the anti-phishing measure on https://simplelogin.io/docs/getting-started/anti-phishing/
+您可以在 {{ refused_email_url }} 查看这封邮件。
+这封邮件将在7天内自动删除。
 {% endblock %}

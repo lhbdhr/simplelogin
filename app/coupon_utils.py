@@ -104,7 +104,7 @@ def redeem_lifetime_coupon(coupon_code: str, user: User) -> Optional[Coupon]:
     partner_sub = (
         Session.query(PartnerSubscription)
         .join(PartnerUser, PartnerUser.id == PartnerSubscription.partner_user_id)
-        .filter(PartnerUser.user_id == user.id, PartnerSubscription.lifetime == True)  # noqa: E712
+        .filter(PartnerUser.user_id == user.id, PartnerSubscription.lifetime is True)
         .first()
     )
     if partner_sub is not None:
@@ -141,7 +141,7 @@ def redeem_lifetime_coupon(coupon_code: str, user: User) -> Optional[Coupon]:
     # notify admin
     send_email(
         ADMIN_EMAIL,
-        subject=f"User {user} used lifetime coupon({coupon.comment}). Coupon nb_used: {coupon.nb_used}",
+        subject=f"用户 {user} 使用了终身优惠券({coupon.comment})。优惠券使用次数: {coupon.nb_used}",
         plaintext="",
         html="",
     )

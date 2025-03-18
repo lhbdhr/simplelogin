@@ -3,38 +3,33 @@
 {% block content %}
 
   {% call text() %}
-    This is SimpleLogin team.
+    这里是 原邮邮箱 。
   {% endcall %}
 
   {% call text() %}
-    {{ provider }} has informed us about an email sent to <b>{{ email }}</b> that might have been considered as spam,
-    either by you or by {{ provider }} spam filter.
+    {{ provider }} 已通知我们，一封发送到 <b>{{ email }}</b> 的电子邮件可能被您或 {{ provider }} 的垃圾邮件过滤器认为是垃圾邮件。
   {% endcall %}
 
   {% call text() %}
-    Please note that explicitly marking a SimpleLogin's forwarded email as Spam affects SimpleLogin email delivery,
-    has a negative effect for all users and is a violation of our terms and condition.
+    请注意，明确将 原邮邮箱 转发的电子邮件标记为垃圾邮件会影响 原邮邮箱 的电子邮件传递，对所有用户产生负面影响，并且违反我们的条款和条件。
   {% endcall %}
 
   {% call text() %}
-    If somehow {{ provider }} considers a forwarded email as Spam, it helps us if you can move the email
-    out of the Spam folder. You can also set up a filter to avoid this
-    from happening in the future using this guide at
-    https://simplelogin.io/docs/getting-started/troubleshooting/
+    如果 {{ provider }} 认为转发的电子邮件是垃圾邮件，如果您能将电子邮件移出垃圾邮件文件夹，这对我们很有帮助。
   {% endcall %}
 
   {% call text() %}
-    Please don't put our emails into the Spam folder. This can end up in your account being disabled on SimpleLogin.
+    请不要将我们的电子邮件放入垃圾邮件文件夹。这可能会导致您的 原邮邮箱 账户被禁用。
   {% endcall %}
 
   {% call text() %}
-    Don't hesitate to get in touch with us if you need more information.
+    如果您需要更多信息，请随时与我们联系。
   {% endcall %}
 
   {% call text() %}
-    Best,
+祝好
     <br />
-    SimpleLogin Team.
+原邮邮箱
   {% endcall %}
 
 {% endblock %}

@@ -2,13 +2,13 @@
 
 {% block content %}
 
-  {{ render_text("Hi") }}
-  {{ render_text("You recently requested to change mailbox <b>"+ mailbox_email +"</b> to <b>" + mailbox_new_email + "</b>.") }}
-  {{ render_text("To confirm, please click on the button below.") }}
-  {{ render_button("Confirm mailbox change", link) }}
-  {{ render_text("This email will only be valid for the next 15 minutes.") }}
-  {{ render_text('Thanks,
+  {{ render_text("您好") }}
+  {{ render_text("您最近请求将邮箱 <b>" + mailbox_email + "</b> 更改为 <b>" + mailbox_new_email + "</b>。") }}
+  {{ render_text("请点击下面的按钮进行确认。") }}
+  {{ render_button("确认邮箱更改", link) }}
+  {{ render_text("此邮件仅在接下来的 15 分钟内有效。") }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
   {{ raw_url(link) }}
 {% endblock %}

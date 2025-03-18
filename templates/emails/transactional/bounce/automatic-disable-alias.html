@@ -3,22 +3,21 @@
 {% block content %}
 
   {% call text() %}
-    <h1>{{ alias.email }} is disabled</h1>
+    <h1>{{ alias.email }} 已被禁用</h1>
   {% endcall %}
 
   {% call text() %}
-    There are several emails sent to your alias {{ alias.email }} that have been bounced
-    by your mailbox {{ mailbox_email }}.
+    有几封发送到您的别名 {{ alias.email }} 的电子邮件被您的邮箱 {{ mailbox_email }} 拒收。
   {% endcall %}
 
-  {{ render_button("View the refused email", refused_email_url) }}
+  {{ render_button("查看被拒收的电子邮件", refused_email_url) }}
   {% call text() %}
-    As security measure, we have disabled the alias.
+    作为安全措施，我们已禁用该别名。
   {% endcall %}
 
-  {{ render_text("Please let us know if you have any question.") }}
-  {{ render_text('Thanks,
+  {{ render_text("如果您有任何问题，请告诉我们。") }}
+  {{ render_text('谢谢，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
   {{ raw_url(refused_email_url) }}
 {% endblock %}

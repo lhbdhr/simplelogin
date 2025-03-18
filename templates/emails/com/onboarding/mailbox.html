@@ -3,37 +3,37 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Add other mailboxes to SimpleLogin.</h1>
+    <h1>将其他邮箱添加到 原邮邮箱</h1>
   {% endcall %}
 
   {% call text() %}
-    If you have several email inboxes, say Gmail and Proton Mail,
-    you can add them into SimpleLogin as <b>mailboxes</b>.
+    如果您有多个邮箱账户，例如 Gmail 和 Proton Mail，您可以将它们作为 <b>邮箱</b> 添加到 原邮邮箱
   {% endcall %}
 
   <img src="https://simplelogin.io/images/multiple-mailboxes.png"
-       alt="Multiple Mailboxes"
+       alt="多个邮箱"
        style="max-width: 100%;
               margin: auto;
               border: 1px solid">
+
   {% call text() %}
-    When creating an alias, you can choose the mailbox(es) that
-    <b>owns</b> this alias, meaning:
+    在创建别名时，您可以选择哪个邮箱（或多个邮箱）<b>拥有</b>这个别名，这意味着：
     <br />
-    1. Emails sent to this alias are forwarded to the owning mailbox(es).
+    1. 发送到此别名的邮件将被转发到拥有该别名的邮箱。
     <br />
-    2. The owning mailbox(es) can send emails from this alias.
+    2. 拥有该别名的邮箱可以通过该别名发送邮件。
   {% endcall %}
 
   {% call text() %}
-    Please note that adding additional mailboxes is only available in the Premium plan.
+    请注意，添加其他邮箱仅适用于高级计划用户。
   {% endcall %}
 
-  {{ render_button("Create mailbox", URL ~ "/dashboard/mailbox") }}
+  {{ render_button("创建邮箱", URL ~ "/dashboard/mailbox") }}
   {{ raw_url(URL ~ "/dashboard/mailbox") }}
 {% endblock %}
+
 {% block footer %}
 
-  This email is sent to {{ to_email }} and is part of our onboarding series. Unsubscribe on
-  <a href="{{ URL }}/dashboard/setting#notification">Settings</a>
+  这封邮件已发送至 {{ to_email }}，是我们入门系列的一部分。若要取消订阅，请访问
+  <a href="{{ URL }}/dashboard/setting#notification">设置</a>
 {% endblock %}

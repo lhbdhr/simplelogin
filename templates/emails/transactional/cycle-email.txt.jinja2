@@ -1,16 +1,16 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-An email was sent to your alias {{ alias.email }} from its own mailbox {{ from_addr }}.
+一封电子邮件从其自己的邮箱 {{ from_addr }} 发送到您的别名 {{ alias.email }}。
 
-SimpleLogin doesn't send this email back to your mailbox as it would be refused or hidden anyway by your email service.
+原邮邮箱 不会将此电子邮件返回到您的邮箱，因为您的电子邮件服务会拒绝或隐藏它。
 
-So no worries, there's nothing you need to do :).
+所以不用担心，您无需执行任何操作 :).
 
-You can view this email here:
+您可以在这里查看此电子邮件：
 {{ refused_email_url }}
 
-The email is automatically deleted in 7 days.
+电子邮件将在7天内自动删除。
 
-Please let us know if you have any question.
+如有任何问题，请告知我们。
 {% endblock %}

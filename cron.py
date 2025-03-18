@@ -170,7 +170,7 @@ def notify_premium_end():
 
             send_email(
                 user.email,
-                "Your subscription will end soon",
+                "你的订阅即将结束",
                 render(
                     "transactional/subscription-end.txt",
                     user=user,
@@ -227,7 +227,7 @@ def notify_manual_sub_end():
             LOG.d("Remind user %s that their manual sub is ending soon", user)
             send_email(
                 user.email,
-                "Your subscription will end soon",
+                "你的订阅即将结束",
                 render(
                     "transactional/manual-subscription-end.txt",
                     user=user,
@@ -267,7 +267,7 @@ def notify_manual_sub_end():
             )
             send_email(
                 user.email,
-                "Your SimpleLogin subscription will end soon",
+                "你的订阅即将结束",
                 render(
                     "transactional/coinbase/reminder-subscription.txt",
                     user=user,
@@ -590,7 +590,7 @@ nb_referred_user_upgrade: {stats_today.nb_referred_user_paid} - {increase_percen
 
     send_email(
         config.ADMIN_EMAIL,
-        subject=f"SimpleLogin Growth Stats for {today}",
+        subject=f"原邮邮箱今日增长数据 {today}",
         plaintext=growth_stats,
         retries=3,
     )
@@ -632,7 +632,7 @@ nb_total_bounced_last_24h: {stats_today.nb_total_bounced_last_24h} - {increase_p
 
     send_email(
         config.MONITORING_EMAIL,
-        subject=f"SimpleLogin Monitoring Report for {today}",
+        subject=f"今日监控报告 {today}",
         plaintext=monitoring_report,
         retries=3,
     )
@@ -837,7 +837,7 @@ def check_mailbox_valid_domain():
                 if mailbox.user.email != mailbox.email:
                     send_email(
                         mailbox.user.email,
-                        f"Mailbox {mailbox.email} is disabled",
+                        f"收件箱 {mailbox.email} 已禁用",
                         render(
                             "transactional/disable-mailbox-warning.txt.jinja2",
                             user=mailbox.user,
@@ -858,7 +858,7 @@ def check_mailbox_valid_domain():
                 if mailbox.user.email != mailbox.email:
                     send_email(
                         mailbox.user.email,
-                        f"Mailbox {mailbox.email} is disabled",
+                        f"收件箱 {mailbox.email} 已禁用",
                         render(
                             "transactional/disable-mailbox.txt.jinja2", mailbox=mailbox
                         ),
@@ -897,7 +897,7 @@ def check_mailbox_valid_pgp_keys():
             LOG.i(f"{mailbox} PGP key invalid")
             send_email(
                 mailbox.user.email,
-                f"Mailbox {mailbox.email}'s PGP Key is invalid",
+                f"收件箱 {mailbox.email} 的 PGP 密钥无效",
                 render(
                     "transactional/invalid-mailbox-pgp-key.txt.jinja2",
                     user=mailbox.user,
@@ -958,7 +958,7 @@ def check_single_custom_domain(custom_domain: CustomDomain):
                 user,
                 config.AlERT_WRONG_MX_RECORD_CUSTOM_DOMAIN,
                 user.email,
-                f"Please update {custom_domain.domain} DNS on SimpleLogin",
+                f"请更新您在原邮邮箱上的 DNS {custom_domain.domain}",
                 render(
                     "transactional/custom-domain-dns-issue.txt.jinja2",
                     user=user,
@@ -1231,7 +1231,7 @@ def notify_hibp():
 
         send_email(
             user.email,
-            "You were in a data breach",
+            "您的数据发生了泄露",
             render(
                 "transactional/hibp-new-breaches.txt.jinja2",
                 user=user,

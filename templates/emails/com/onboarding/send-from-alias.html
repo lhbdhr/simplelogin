@@ -3,50 +3,47 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Send emails from your alias.</h1>
+    <h1>通过您的别名发送邮件。</h1>
   {% endcall %}
 
   {% call text() %}
-    If you want to reply to an email, just hit "Reply"
-    and the response will come from your alias. Your personal email address stays hidden.
+    如果您想回复邮件，只需点击“回复”，
+    回复将通过您的别名发送，您的个人邮箱地址将保持隐藏。
   {% endcall %}
 
   {% call text() %}
-    To send an email to a <b>new contact</b>, please follow the steps below.
-    You can also watch this
-    <a href="https://youtu.be/GN060XMt6Pc">Youtube video</a>
-    that quickly walks you through the steps.
+    要向<b>新联系人</b>发送邮件，请按照以下步骤操作。
   {% endcall %}
 
   {% call text() %}
-    1. Click the <b>Contacts</b> button on the alias you want to send emails from
+    1. 点击您希望通过其发送邮件的别名下的<b>联系人</b>按钮。
     <br />
     <img src="https://simplelogin.io/docs/getting-started/send-email/contacts.png"
          style="max-width: 500px">
   {% endcall %}
 
   {% call text() %}
-    2. Enter your contact email, this will create a <b>reverse-alias</b> for the contact.
+    2. 输入您联系人的邮箱，这将为该联系人创建一个<b>反向别名</b>。
     <br />
     <img src="https://simplelogin.io/docs/getting-started/send-email/new-contact.png"
          style="max-width: 500px">
   {% endcall %}
 
   {% call text() %}
-    3. Send the email to this reverse-alias <b>instead of the contact email</b>.
+    3. 向此反向别名<b>而不是联系人的邮箱</b>发送邮件。
     <br />
     <img src="https://simplelogin.io/docs/getting-started/send-email/reverse-alias.png"
          style="max-width: 500px">
   {% endcall %}
 
   {% call text() %}
-    And voilà, your contact will receive this email sent from your alias!
-    Your real mailbox address will stay hidden.
+    就这样，您的联系人将收到从您的别名发送的邮件！
+    您的真实邮箱地址将保持隐藏。
   {% endcall %}
 
 {% endblock %}
 {% block footer %}
 
-  This email is sent to {{ to_email }} and is part of our onboarding series. Unsubscribe on
-  <a href="{{ URL }}/dashboard/setting#notification">Settings</a>
+  此邮件发送至 {{ to_email }}，是我们入门系列的一部分。在
+  <a href="{{ URL }}/dashboard/setting#notification">设置</a>中取消订阅
 {% endblock %}

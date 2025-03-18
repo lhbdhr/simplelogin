@@ -4,41 +4,38 @@
 
   {% call text() %}
     <h1>
-      An email sent to your alias {{ alias.email }} from {{ website_email }} was <b>bounced</b> by your mailbox
-      {{ mailbox_email }}
+      发送到您的别名 {{ alias.email }} 的电子邮件从 {{ website_email }} 被您的邮箱
+      {{ mailbox_email }} 拒收了。
     </h1>
   {% endcall %}
 
   {% call text() %}
-    This is usually because your mailbox service thinks the email is <b>spam</b>.
+    这通常是因为您的邮箱服务认为该电子邮件是<b>垃圾邮件</b>。
   {% endcall %}
 
-  {{ render_button("View the bounced email", refused_email_url) }}
-  {{ render_text("The email is automatically deleted in 7 days.") }}
+  {{ render_button("查看被拒收的电子邮件", refused_email_url) }}
+  {{ render_text("该电子邮件将在 7 天内自动删除。") }}
   {% call text() %}
-    Please consider the following options:
+    请考虑以下选项：
     <br />
     <ol>
       <li>
-        If the email is not spam, you can create a
-        <a href="https://simplelogin.io/docs/getting-started/troubleshooting/">filter</a>
-        to explicitly allow all emails from SimpleLogin.
+        如果该电子邮件不是垃圾邮件，您可以将原邮邮箱的发件人设置为白名单来允许所有来自 原邮邮箱 的电子邮件。
         <br />
       </li>
       <li>
-        If this email is indeed spam, it means your alias {{ alias.email }} is now in the hands of a spammer.
-        You can either
-        <a href="{{ disable_alias_link }}">disable the alias</a>
-        or
-        <a href="{{ block_sender_link }}">block the sender</a>
-        if they send too many spam emails.
+        如果这封电子邮件确实是垃圾邮件，这意味着您的别名 {{ alias.email }} 现在落入了垃圾邮件发送者的手中。
+        如果他们发送了太多垃圾邮件，您可以
+        <a href="{{ disable_alias_link }}">禁用别名</a>
+        或者
+        <a href="{{ block_sender_link }}">阻止发件人</a>。
       </li>
     </ol>
     <br />
-    Please note that the alias can be automatically disabled if too many emails sent to it are bounced.
+    请注意，如果发送到别名的电子邮件被拒收次数过多，别名可能会自动禁用。
   {% endcall %}
 
-  {{ render_text('Thanks,
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
 {% endblock %}

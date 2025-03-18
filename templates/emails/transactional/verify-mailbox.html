@@ -2,18 +2,18 @@
 
 {% block content %}
 
-  {{ render_text("Hi") }}
-  {{ render_text("You have added <b>"+ mailbox_email +"</b> as an additional mailbox.") }}
+  {{ render_text("您好") }}
+  {{ render_text("您已添加 <b>" + mailbox_email + "</b> 作为附加邮箱。") }}
   {% if link %}
 
-    {{ render_text("To confirm, please click on the button below.") }}
-    {{ render_button("Confirm mailbox", link) }}
+    {{ render_text("请点击下面的按钮进行确认。") }}
+    {{ render_button("确认邮箱", link) }}
   {% else %}
-    {{ render_text("Please enter <b>"+code+"</b> as your verification code") }}
+    {{ render_text("请输入 <b>" + code + "</b> 作为您的验证码") }}
   {% endif %}
-  {{ render_text("This email will only be valid for the next 15 minutes.") }}
-  {{ render_text('Thanks,
+  {{ render_text("此邮件仅在接下来的 15 分钟内有效。") }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
   {{ raw_url(link) }}
 {% endblock %}

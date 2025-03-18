@@ -1,16 +1,16 @@
-This email is sent to {{ user.email }}.
-Unsubscribe from our emails on {{URL}}/dashboard/setting#notification
+此邮件已发送至 {{ user.email }}。
+若想取消订阅我们的邮件，请访问 {{ URL }}/dashboard/setting#notification
 ----------------
 
-Hi
+你好，
 
-If you use Safari on a MacBook or iMac, you should check out our new Safari extension.
+如果你在 MacBook 或 iMac 上使用 Safari，应该尝试一下我们的新 Safari 扩展。
 
-It can be installed on:
+你可以通过以下链接进行安装：
 
 https://apps.apple.com/app/id6475835429
 
-As usual, let me know if you have any question by replying to this email.
+如有任何问题，欢迎通过回复邮件与我们联系。
 
-Best regards,
-SimpleLogin Team.
+此致，
+原邮邮箱

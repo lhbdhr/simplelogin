@@ -1,18 +1,18 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Your trial will end {{ user.trial_end.humanize() }}.
+您的试用将在 {{ user.trial_end.humanize() }} 结束。
 
-When the trial ends:
+当试用结束时:
 
-- All aliases/domains/directories you have created are kept and continue working.
-- You cannot create new aliases if you exceed the free plan limit, i.e. have more than {{MAX_NB_EMAIL_FREE_PLAN}} aliases.
-- You cannot add new domain or directory.
-- You cannot create new reverse aliases.
-- You cannot add new mailbox.
-- If you enable PGP Encryption, forwarded emails are not encrypted anymore.
+- 您创建的所有别名/域名/目录将保留并继续正常工作。
+- 如果您超过免费计划的限制，即拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，您将无法创建新的别名。
+- 您无法添加新的域名或目录。
+- 您无法创建新的反向别名。
+- 您无法添加新的邮箱。
+- 如果您启用了 PGP 加密，转发的电子邮件将不再加密。
 
-You can upgrade today to continue using all these Premium features (and much more coming).
+您可以今天升级以继续使用所有这些高级功能（以及更多即将推出的功能）。
 
-Let me know if you need to extend your trial period.
+如果您需要延长试用期，请告诉我。
 {% endblock %}

@@ -3,24 +3,22 @@
 {% block content %}
 
   {% call text() %}
-    <h1>An email from {{ from_header }} to {{ alias.email }} is put into Quarantine</h1>
+    <h1>一封从 {{ from_header }} 发送到 {{ alias.email }} 的电子邮件已被隔离</h1>
   {% endcall %}
 
   {% call text() %}
-    An email from {{ from_header }} to {{ alias.email }} is put into Quarantine as it fails
-    <a href="https://simplelogin.io/docs/getting-started/anti-phishing/">anti-phishing measure</a>
-    check.
+    一封从 {{ from_header }} 发送到 {{ alias.email }} 的电子邮件已被隔离，因为它未通过反钓鱼措施检查。
   {% endcall %}
 
-  {{ render_button("View the original email", refused_email_url) }}
+  {{ render_button("查看原始邮件", refused_email_url) }}
   {% call text() %}
-    This email is automatically deleted in 7 days.
+    这封邮件将在7天内自动删除。
   {% endcall %}
 
   {% call text() %}
-    Best,
+祝好
     <br />
-    SimpleLogin Team.
+原邮邮箱
   {% endcall %}
 
 {% endblock %}

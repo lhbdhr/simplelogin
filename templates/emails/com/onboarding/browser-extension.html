@@ -3,33 +3,30 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Download SimpleLogin browser extensions and mobile apps to create aliases on-the-fly.</h1>
+    <h1>下载 SimpleLogin 浏览器扩展和移动应用，即可随时创建别名。</h1>
   {% endcall %}
 
   {% call text() %}
-    If you want to quickly create aliases <b>without</b> going to SimpleLogin website, you can do that with SimpleLogin
+    如果你想快速创建别名 <b>无需</b> 访问 原邮邮箱 网站，你可以使用 SimpleLogin 的
     <a href="https://chrome.google.com/webstore/detail/dphilobhebphkdjbpfohgikllaljmgbn">Chrome</a>
-    (or other Chromium-based browsers like Brave or Vivaldi),
+    （或其他基于 Chromium 的浏览器，如 Brave 或 Vivaldi）、
     <a href="https://addons.mozilla.org/firefox/addon/simplelogin/">Firefox</a>
-    and
-    <a href="https://apps.apple.com/app/id6475835429 ">Safari</a>
-    extension.
-  {% endcall %}
-
-  {% call text() %}
-    You can also manage your aliases using SimpleLogin
-    <a href="https://play.google.com/store/apps/details?id=io.simplelogin.android">Android App</a>
-    or
-    <a href="https://apps.apple.com/app/id1494359858">iOS app</a>
-    .
+    和
+    <a href="https://apps.apple.com/app/id6475835429">Safari</a>
+    扩展。
+    <br/>
+    浏览器插件使用教程，强烈推荐观看下。插件非常方便易用。
+    <br/>
+    <a href="https://www.nodeseek.com/post-281885-1">浏览器插件使用教程</a>
   {% endcall %}
 
   <img src="https://simplelogin.io/images/everywhere.png"
-       alt="Available Everywhere"
+       alt="随处可用"
        style="max-width: 100%">
 {% endblock %}
+
 {% block footer %}
 
-  This email is sent to {{ to_email }} and is part of our onboarding series. Unsubscribe on
-  <a href="{{ URL }}/dashboard/setting#notification">Settings</a>
+  这封邮件已发送至 {{ to_email }}，是我们入门系列的一部分。若要取消订阅，请访问
+  <a href="{{ URL }}/dashboard/setting#notification">设置</a>
 {% endblock %}

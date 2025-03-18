@@ -3,14 +3,14 @@
 {% block content %}
 
   {% call text() %}
-    <h1>{{ breached_aliases|count }} of your aliases are found in data breaches.</h1>
+    <h1>您的 {{ breached_aliases|count }} 个别名在数据泄露中被发现。</h1>
   {% endcall %}
 
   <ol>
     {%- for alias in breached_aliases[:10] %}
       <li>
         {% call text() %}
-          <b>{{ alias.email }}</b> was found in {{ alias.hibp_breaches|count }} data breaches.
+          <b>{{ alias.email }}</b> 在 {{ alias.hibp_breaches|count }} 次数据泄露中被发现。
           <br />
           <ul>
             {% set breaches = alias.hibp_breaches|sort(attribute='date', reverse=True) %}
@@ -22,26 +22,23 @@
               </li>
             {%- endfor %}
           </ul>
-          {% if  breaches|length > 4 %}And {{ breaches|length - 4 }} more data breaches...{% endif %}
+          {% if breaches|length > 4 %}还有 {{ breaches|length - 4 }} 次数据泄露...{% endif %}
         {% endcall %}
-
       </li>
     {%- endfor %}
   </ol>
-  {% if  breached_aliases|length > 10 %}
-
+  {% if breached_aliases|length > 10 %}
     {% call text() %}
-      And {{ breached_aliases|length - 10 }} more aliases...
+      还有 {{ breached_aliases|length - 10 }} 个别名...
     {% endcall %}
-
   {% endif %}
   {% call text() %}
-    For more information, check
+    更多信息，请查看
     <a href='https://haveibeenpwned.com/'>HaveIBeenPwned.com</a>
-    .
+    。
   {% endcall %}
 
-  {{ render_text('Best,
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
 {% endblock %}

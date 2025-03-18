@@ -1,9 +1,9 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-There has been an unsuccessful attempt to login to your SimpleLogin account.
-An invalid {{type}} code was provided but the email and password were correct.
+有未成功的尝试登录到您的 原邮邮箱 账户。
+提供了无效的 {{type}} 代码，但电子邮件和密码是正确的。
 
-This request has been blocked. However, if this was not you, please change your password immediately.
+此请求已被阻止。但是，如果这不是您，请立即更改您的密码。
 {{URL}}/dashboard/setting#change_password
 {% endblock %}

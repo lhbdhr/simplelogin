@@ -1,10 +1,9 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-We have detected that your domain {{ custom_domain.domain }} doesn't have the DNS MX records correctly set up.
+我们检测到您的域 {{ custom_domain.domain }} 的 DNS MX 记录未正确设置。
 
-Please re-run the MX check on {{ domain_dns_url }} and update them if needed.
+请重新运行 {{ domain_dns_url }} 上的 MX 检查，并在需要时进行更新。
 
-Without the MX records correctly set up, emails sent to the {{ custom_domain.domain }}'s aliases
-  aren't properly and reliably handled.
+如果未正确设置 MX 记录，发送到 {{ custom_domain.domain }} 别名的电子邮件将无法正确和可靠地处理。
 {% endblock %}

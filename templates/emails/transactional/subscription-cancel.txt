@@ -2,8 +2,8 @@
 
 {% block content %}
 
-Your subscription will end at {{end_date}}.
+您的订阅将在 {{ end_date }} 结束。
 
-Thanks for giving SimpleLogin a try!
+感谢您尝试 原邮邮箱！
 
 {% endblock %}

@@ -159,9 +159,11 @@ def delete_mailbox(
         name=JobType.DELETE_MAILBOX.value,
         payload={
             "mailbox_id": mailbox.id,
-            "transfer_mailbox_id": transfer_mailbox_id
-            if transfer_mailbox_id and transfer_mailbox_id > 0
-            else None,
+            "transfer_mailbox_id": (
+                transfer_mailbox_id
+                if transfer_mailbox_id and transfer_mailbox_id > 0
+                else None
+            ),
             "send_mail": send_mail,
         },
         run_at=arrow.now(),
@@ -298,7 +300,7 @@ def send_verification_email(
 
     send_email(
         mailbox.email,
-        f"Please confirm your mailbox {mailbox.email}",
+        f"请确认你的收件箱 {mailbox.email}",
         render(
             "transactional/verify-mailbox.txt.jinja2",
             user=user,
@@ -321,7 +323,7 @@ def send_change_email(user: User, mailbox: Mailbox, activation: MailboxActivatio
 
     send_email(
         mailbox.new_email,
-        "Confirm mailbox change on SimpleLogin",
+        "确认邮箱地址更改",
         render(
             "transactional/verify-mailbox-change.txt.jinja2",
             user=user,

@@ -2,32 +2,26 @@
 
 {% block content %}
 
-  {{ render_text("Hi") }}
-  {{ render_text("If you happen to use Gmail, Yahoo, Outlook, etc, do you know these services can read your emails?") }}
-  {{ render_text("If you want to keep your emails only readable by you, Pretty Good Privacy (PGP) is maybe the solution.") }}
-  {{ render_text("Highly recommended, open source and free, PGP is unfortunately not widely supported. However with SimpleLogin most recent PGP support, you can now enable PGP on emails sent to your aliases easily.") }}
-  {{ render_text("Without PGP the emails sent to an alias are forwarded by SimpleLogin as-is to your mailbox, leaving anyone in-between or your email service able to read your emails:") }}
+  {{ render_text("你好") }}
+  {{ render_text("如果你使用 Gmail/Yahoo/Outlook 等邮箱服务，你知道这些服务可能会读取你的邮件吗？") }}
+  {{ render_text("如果你希望邮件只有你自己能阅读，Pretty Good Privacy（PGP）或许是个不错的解决方案。") }}
+  {{ render_text("PGP 是强烈推荐的开源免费加密工具，但遗憾的是，它并未被广泛支持。不过，借助 原邮邮箱 最新的 PGP 支持，你现在可以轻松为发送到别名的邮件启用 PGP 加密。") }}
+  {{ render_text("在没有启用 PGP 的情况下，发送到别名的邮件会被 原邮邮箱 原样转发到你的邮箱，这意味着任何在传输过程中或你的邮件服务商都可能读取你的邮件：") }}
   <img src="https://simplelogin.io/blog/without-pgp.png"
-       alt="Without PGP"
+       alt="未启用 PGP"
        style="max-width: 100%">
-  {{ render_text("With PGP enabled, all emails arrived at SimpleLogin are encrypted with your public key before being forwarded to your mailbox:") }}
+  {{ render_text("启用 PGP 后，所有到达 原邮邮箱 的邮件在转发到你的邮箱之前，都会使用你的公钥进行加密：") }}
   <img src="https://simplelogin.io/blog/with-pgp.png"
-       alt="Without PGP"
+       alt="启用 PGP"
        style="max-width: 100%">
-  {{ render_text("You can find more info on our announcement post on https://simplelogin.io/blog/introducing-pgp/") }}
-  {{ render_text("You can create and manage your PGP keys when adding or editing your mailboxes. Check it out on your mailbox dashboard.") }}
-  {{ render_button("Add your PGP key", URL ~ "/dashboard/mailbox") }}
-  {{ render_text("Our next important feature is the coming of an iOS app. If you use iPhone or iPad want to help us testing out the app, please reply to this email so we can add you into the TestFlight program.
-    ") }}
-  {{ render_text("For Android users, don't worry: the Android version is already in progress.
-    ") }}
-  {{ render_text('Thanks,
-    <br />
-    SimpleLogin Team.') }}
-  {{ render_text("<strong>P.S.</strong> Need immediate help getting started? Just reply to this email, the SimpleLogin support team is always ready to help!.") }}
+  {{ render_text("在添加或编辑邮箱时，你可以创建和管理你的 PGP 密钥。在邮箱仪表盘上查看吧！") }}
+  {{ render_button("添加你的 PGP 密钥", URL ~ "/dashboard/mailbox") }}
+  {{ render_text('感谢使用，<br />原邮邮箱 团队') }}
+  {{ render_text("<strong>附言：</strong> 需要立即帮助以快速上手？只需回复此邮件，原邮邮箱 随时为你提供帮助！") }}
+
 {% endblock %}
 {% block footer %}
 
-  This email is sent to {{ user.email }}. Unsubscribe on
-  <a href="{{ URL }}/dashboard/setting#notification">Settings</a>
+  此邮件发送至 {{ user.email }}。取消订阅请前往
+  <a href="{{ URL }}/dashboard/setting#notification">设置</a>
 {% endblock %}

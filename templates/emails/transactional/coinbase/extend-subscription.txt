@@ -1,11 +1,11 @@
-Your subscription has been extended!
+您的订阅已延长！
 
-Your payment with cryptocurrency has been successfully processed.
+您的加密货币支付已成功处理。
 
-Your subscription has been extended to
+您的订阅已延长至
 {{ coinbase_subscription.end_at.format("YYYY-MM-DD") }}
 
-Thank you a lot for your support!
+非常感谢您的支持！
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

@@ -41,7 +41,7 @@ def onboarding_send_from_alias(user):
 
     send_email(
         comm_email,
-        "SimpleLogin Tip: Send emails from your alias",
+        "原邮邮箱提示：使用您的别名发送电子邮件",
         render(
             "com/onboarding/send-from-alias.txt.j2",
             user=user,
@@ -62,7 +62,7 @@ def onboarding_pgp(user):
 
     send_email(
         comm_email,
-        "SimpleLogin Tip: Secure your emails with PGP",
+        "原邮邮箱提示：使用 PGP 保护您的电子邮件安全",
         render("com/onboarding/pgp.txt", user=user, to_email=comm_email),
         render("com/onboarding/pgp.html", user=user, to_email=comm_email),
         unsubscribe_link,
@@ -79,7 +79,7 @@ def onboarding_browser_extension(user):
 
     send_email(
         comm_email,
-        "SimpleLogin Tip: Chrome/Firefox/Safari extensions and Android/iOS apps",
+        "原邮邮箱提示：Chrome/Firefox/Safari 扩展和 Android/iOS 应用程序",
         render(
             "com/onboarding/browser-extension.txt",
             user=user,
@@ -104,7 +104,7 @@ def onboarding_mailbox(user):
 
     send_email(
         comm_email,
-        "SimpleLogin Tip: Multiple mailboxes",
+        "原邮邮箱提示：多个邮箱",
         render("com/onboarding/mailbox.txt", user=user, to_email=comm_email),
         render("com/onboarding/mailbox.html", user=user, to_email=comm_email),
         unsubscribe_link,
@@ -178,21 +178,21 @@ def delete_mailbox_job(job: Job):
     if alias_transferred_to:
         send_email(
             user.email,
-            f"Your mailbox {mailbox_email} has been deleted",
-            f"""Mailbox {mailbox_email} and its alias have been transferred to {alias_transferred_to}.
-Regards,
-SimpleLogin team.
-""",
+            f"您的邮箱 {mailbox_email} 已被删除",
+            f"""邮箱 {mailbox_email} 及其别名已转移到 {alias_transferred_to}.
+            祝好,
+            原邮邮箱
+            """,
             retries=3,
         )
     else:
         send_email(
             user.email,
-            f"Your mailbox {mailbox_email} has been deleted",
-            f"""Mailbox {mailbox_email} along with its aliases have been deleted successfully.
-Regards,
-SimpleLogin team.
-""",
+            f"您的邮箱 {mailbox_email} 已被删除",
+            f"""邮箱 {mailbox_email} 及其别名已成功删除.
+            祝好,
+            原邮邮箱
+            """,
             retries=3,
         )
 
@@ -248,7 +248,7 @@ def process_job(job: Job):
         LOG.w("Delete user %s", user)
         send_email(
             user_email,
-            "Your SimpleLogin account has been deleted",
+            "您的 SimpleLogin 账户已被删除",
             render("transactional/account-delete.txt", user=user),
             render("transactional/account-delete.html", user=user),
             retries=3,
@@ -287,12 +287,11 @@ def process_job(job: Job):
         if custom_domain_partner_id is None:
             send_email(
                 user.email,
-                f"Your domain {domain_name} has been deleted",
-                f"""Domain {domain_name} along with its aliases are deleted successfully.
-
-    Regards,
-    SimpleLogin team.
-    """,
+                f"您的域 {domain_name} 已被删除",
+                f"""域 {domain_name} 及其别名已成功删除.
+                祝好,
+                原邮邮箱.
+                """,
                 retries=3,
             )
     elif job.name == JobType.SEND_USER_REPORT.value:

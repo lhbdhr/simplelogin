@@ -171,7 +171,8 @@ class ProviderComplaintHotmail(ProviderComplaintOrigin):
     ) -> Optional[OriginalMessageInformation]:
         """
         Try to get the proper recipient from original x-simplelogin-envelope-to header we add on delivery.
-        If we can't find the header, use the first address in the original message from"""
+        If we can't find the header, use the first address in the original message from
+        """
         original = cls.get_original_message(message)
         rcpt_header = original[headers.SL_ENVELOPE_TO]
         return cls.sanitize_addresses_and_extract_mailbox_id(rcpt_header, original)
@@ -261,7 +262,7 @@ def report_complaint_to_user_in_reply_phase(
         alias.user,
         f"{ALERT_COMPLAINT_REPLY_PHASE}_{origin.name()}",
         mailbox_email,
-        f"Abuse report from {capitalized_name}",
+        f"滥用报告来自 {capitalized_name}",
         render(
             "transactional/provider-complaint-reply-phase.txt.jinja2",
             user=alias.user,
@@ -282,7 +283,7 @@ def report_complaint_to_user_in_transactional_phase(
         user,
         f"{ALERT_COMPLAINT_TRANSACTIONAL_PHASE}_{origin.name()}",
         msg_info.mailbox_address or user.email,
-        f"Abuse report from {capitalized_name}",
+        f"滥用报告来自 {capitalized_name}",
         render(
             "transactional/provider-complaint-to-user.txt.jinja2",
             user=user,
@@ -316,7 +317,7 @@ def report_complaint_to_user_in_forward_phase(
         user,
         f"{ALERT_COMPLAINT_FORWARD_PHASE}_{origin.name()}",
         mailbox_email,
-        f"Abuse report from {capitalized_name}",
+        f"滥用报告来自 {capitalized_name}",
         render(
             "transactional/provider-complaint-forward-phase.txt.jinja2",
             user=user,

@@ -3,15 +3,15 @@
 {% block content %}
 
   {% call text() %}
-    Hello,
+    您好，
   {% endcall %}
 
   {% call text() %}
-    You have tried to register multiple times to {{ service }}, and this is against the terms of service of SimpleLogin. Please don't do that anymore.
+    您多次尝试注册 {{ service }}，这违反了 原邮邮箱 的服务条款。请不要再这样做。
   {% endcall %}
 
   {% call text() %}
-    If you continue registering multiple accounts to a single service we will have to disable your account.
+    如果您继续为同一个服务注册多个账户，我们将不得不禁用您的账户。
   {% endcall %}
 
 {% endblock %}

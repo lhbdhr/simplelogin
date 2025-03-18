@@ -2,10 +2,10 @@
 
 {% block content %}
 
-We have detected that your mailbox {{ mailbox.email }}'s PGP key is invalid.
+我们检测到您的邮箱 {{ mailbox.email }} 的 PGP 密钥无效。
 
-A potential cause is the PGP key is already expired.
+可能的原因是 PGP 密钥已过期。
 
-Please update your PGP key on {{URL}}/dashboard/mailbox/{{ mailbox.id }}/ so forwarded emails can be properly encrypted.
+请在 {{URL}}/dashboard/mailbox/{{ mailbox.id }}/ 上更新您的 PGP 密钥，以便转发的电子邮件可以正确加密。
 
 {% endblock %}

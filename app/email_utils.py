@@ -104,7 +104,7 @@ def send_welcome_email(user):
 
     send_email(
         comm_email,
-        "Welcome to SimpleLogin",
+        "欢迎来到原邮邮箱",
         render("com/welcome.txt", user=user, alias=alias),
         render("com/welcome.html", user=user, alias=alias),
         unsubscribe_link,
@@ -115,7 +115,7 @@ def send_welcome_email(user):
 def send_trial_end_soon_email(user):
     send_email(
         user.email,
-        "Your trial will end soon",
+        "您的试用期即将结束",
         render("transactional/trial-end.txt.jinja2", user=user),
         render("transactional/trial-end.html", user=user),
         ignore_smtp_error=True,
@@ -125,7 +125,7 @@ def send_trial_end_soon_email(user):
 def send_activation_email(user: User, activation_link):
     send_email(
         user.email,
-        "Just one more step to join SimpleLogin",
+        "只差一步，激活您的原邮邮箱",
         render(
             "transactional/activation.txt",
             user=user,
@@ -144,7 +144,7 @@ def send_activation_email(user: User, activation_link):
 def send_reset_password_email(user: User, reset_password_link):
     send_email(
         user.email,
-        "Reset your password on SimpleLogin",
+        "重置您的原邮邮箱密码",
         render(
             "transactional/reset-password.txt",
             user=user,
@@ -161,7 +161,7 @@ def send_reset_password_email(user: User, reset_password_link):
 def send_change_email(user: User, new_email, link):
     send_email(
         new_email,
-        "Confirm email update on SimpleLogin",
+        "确认您的新邮箱地址",
         render(
             "transactional/change-email.txt",
             user=user,
@@ -184,7 +184,7 @@ def send_invalid_totp_login_email(user, totp_type):
         user,
         config.ALERT_INVALID_TOTP_LOGIN,
         user.email,
-        "Unsuccessful attempt to login to your SimpleLogin account",
+        "未能成功登录您的 原邮邮箱 帐户",
         render(
             "transactional/invalid-totp-login.txt",
             user=user,
@@ -202,7 +202,7 @@ def send_invalid_totp_login_email(user, totp_type):
 def send_test_email_alias(user: User, email: str):
     send_email(
         email,
-        f"This email is sent to {email}",
+        f"这个邮件是发给 {email} 的测试邮件",
         render(
             "transactional/test-email.txt",
             user=user,
@@ -224,7 +224,7 @@ def send_cannot_create_directory_alias(user, alias_address, directory_name):
     """
     send_email(
         user.email,
-        f"Alias {alias_address} cannot be created",
+        f"别名邮箱 {alias_address} 不能被创建",
         render(
             "transactional/cannot-create-alias-directory.txt",
             user=user,
@@ -248,7 +248,7 @@ def send_cannot_create_directory_alias_disabled(user, alias_address, directory_n
         user,
         config.ALERT_DIRECTORY_DISABLED_ALIAS_CREATION,
         user.email,
-        f"Alias {alias_address} cannot be created",
+        f"别名邮箱 {alias_address} 不能被创建",
         render(
             "transactional/cannot-create-alias-directory-disabled.txt",
             user=user,
@@ -270,7 +270,7 @@ def send_cannot_create_domain_alias(user, alias, domain):
     """
     send_email(
         user.email,
-        f"Alias {alias} cannot be created",
+        f"别名邮箱 {alias} 不能被创建",
         render(
             "transactional/cannot-create-alias-domain.txt",
             user=user,
@@ -1293,7 +1293,7 @@ def spf_pass(
                     user,
                     config.ALERT_SPF,
                     mailbox.email,
-                    f"SimpleLogin Alert: attempt to send emails from your alias {alias.email} from unknown IP Address",
+                    f"原邮邮箱警报：尝试从未知 IP 地址发送您的别名 {alias.email} 的邮件",
                     render(
                         "transactional/spf-fail.txt",
                         user=user,

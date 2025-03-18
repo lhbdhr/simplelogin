@@ -111,7 +111,7 @@ class UnsubscribeHandler:
         for mailbox in alias.mailboxes:
             send_email(
                 mailbox.email,
-                f"Alias {alias.email} has been disabled successfully",
+                f"别名 {alias.email} 已成功禁用",
                 render(
                     "transactional/unsubscribe-disable-alias.txt",
                     user=alias.user,
@@ -152,7 +152,7 @@ class UnsubscribeHandler:
         for mailbox in alias.mailboxes:
             send_email(
                 mailbox.email,
-                f"Emails from {contact.website_email} to {alias.email} are now blocked",
+                f"来自 {contact.website_email} 发送到 {alias.email} 的邮件现已被阻止",
                 render(
                     "transactional/unsubscribe-block-contact.txt.jinja2",
                     user=alias.user,
@@ -180,7 +180,7 @@ class UnsubscribeHandler:
 
         send_email(
             user.email,
-            "You have been unsubscribed from SimpleLogin newsletter",
+            "您已取消订阅 原邮邮箱 的新闻通讯",
             render(
                 "transactional/unsubscribe-newsletter.txt",
                 user=user,

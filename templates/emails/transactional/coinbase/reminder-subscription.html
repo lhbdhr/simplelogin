@@ -3,16 +3,16 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Your subscription is ending soon.</h1>
+    <h1>您的订阅即将结束。</h1>
   {% endcall %}
 
   {% call text() %}
-    Your subscription ends on
-    <b>{{ coinbase_subscription.end_at.format("YYYY-MM-DD") }}</b>
+    您的订阅将于
+    <b>{{ coinbase_subscription.end_at.format("YYYY-MM-DD") }}</b> 结束。
   {% endcall %}
 
-  {{ render_button("Extend your subscription", extend_subscription_url) }}
-  {{ render_text('Best,
+  {{ render_button("延长您的订阅", extend_subscription_url) }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
 {% endblock %}

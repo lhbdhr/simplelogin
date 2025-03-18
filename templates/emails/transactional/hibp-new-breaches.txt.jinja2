@@ -1,10 +1,10 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-{{ breached_aliases|count }} of your aliases are found in data breaches.
+您的 {{ breached_aliases|count }} 个别名在数据泄露中被发现。
 
 {% for alias in breached_aliases[:10] %}
-  {{ loop.index }} )  {{ alias.email }} was found in {{ alias.hibp_breaches|count }} data breaches.
+  {{ loop.index }} )  {{ alias.email }} 在 {{ alias.hibp_breaches|count }} 次数据泄露中被发现。
 
   {%- set breaches = alias.hibp_breaches|sort(attribute='date', reverse=True) %}
   {% for breach in breaches[:4] %}
@@ -12,13 +12,13 @@
   {%- endfor %}
 
   {%- if  breaches|length > 4 %}
-    And {{ breaches|length - 4 }} more data breaches...
+    还有 {{ breaches|length - 4 }} 次数据泄露...
   {% endif %}
 {% endfor %}
 
 {%- if  breached_aliases|length > 10 %}
-  And {{ breached_aliases|length - 10 }} more aliases...
+  还有 {{ breached_aliases|length - 10 }} 个别名...
 {%- endif %}
 
-For more information, please check https://haveibeenpwned.com/.
+更多信息，请查看 https://haveibeenpwned.com/。
 {% endblock %}

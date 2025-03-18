@@ -1,11 +1,11 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-You have asked to change your email to {{new_email}}.
+您已请求将电子邮件更改为 {{new_email}}。
 
-Your current email is {{current_email}}.
+您当前的电子邮件是 {{current_email}}。
 
-To confirm, please click on this link:
+要确认，请点击此链接：
 
 {{link}}
 {% endblock %}

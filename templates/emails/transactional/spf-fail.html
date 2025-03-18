@@ -4,40 +4,38 @@
 
   {% call text() %}
     <h1>
-      Attempt to send an email from your alias <b>{{ alias }}</b> from an unknown IP address
+      尝试从未知 IP 地址发送电子邮件使用您的别名 <b>{{ alias }}</b>
     </h1>
   {% endcall %}
 
   {% call text() %}
-    We have recorded an attempt to send the following email from your alias <b>{{ alias }}</b> from an unknown IP
-    address
-    <b>{{ ip }}</b>.
+    我们记录了一次尝试从未知 IP 地址 <b>{{ ip }}</b> 使用您的别名 <b>{{ alias }}</b> 发送以下电子邮件的行为。
   {% endcall %}
 
   {% call text() %}
-    - From: <b>{{ alias }}</b>
+    - 发件人: <b>{{ alias }}</b>
     <br />
-    - To: <b>{{ to_email }}</b>
+    - 收件人: <b>{{ to_email }}</b>
     <br />
-    - Subject: <b>{{ subject }}</b>
+    - 主题: <b>{{ subject }}</b>
     <br />
-    - Time: <b>{{ time.humanize() }}</b>
+    - 时间: <b>{{ time.humanize() }}</b>
   {% endcall %}
 
   {% call text() %}
-    To prevent email-spoofing, SimpleLogin enforces the SPF (Sender Policy Framework).
-    Emails sent from an IP address that is <b>unknown</b> by your email service are refused by default.
+    为了防止电子邮件欺骗，原邮邮箱 强制执行 SPF（发件人策略框架）。
+    从您的电子邮件服务未知的 IP 地址发送的电子邮件默认被拒绝。
   {% endcall %}
 
   {% call text() %}
-    However you can turn off this option by going to {{ mailbox_url }}.
+    但是，您可以通过访问 {{ mailbox_url }} 来关闭此选项。
   {% endcall %}
 
   {% call text() %}
-    Please only turn this protection off this if you know what you're doing :).
+    请仅在您知道自己在做什么的情况下关闭此保护功能 :).
   {% endcall %}
 
-  {{ render_text('Thanks,
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
 {% endblock %}

@@ -1,10 +1,8 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Unauthorized attempt to send an email to {{ contact.email }} from your alias {{ alias.email }} using
-{{ sender }} has been blocked.
+未经授权的尝试使用 {{ sender }} 从您的别名 {{ alias.email }} 向 {{ contact.email }} 发送电子邮件已被阻止。
 
-To protect against email spoofing, only your mailbox can send emails on behalf of your alias.
-SimpleLogin also refuses emails that claim to come from your mailbox but fail DMARC.
+为了防止电子邮件欺骗，只有您的邮箱可以代表您的别名发送电子邮件。
+原邮邮箱 也会拒绝那些声称来自您的邮箱但未通过 DMARC 的电子邮件。
 {% endblock %}
-

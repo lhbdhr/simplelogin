@@ -3,36 +3,34 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Your trial will end {{ user.trial_end.humanize() }}</h1>
+    <h1>您的试用将在 {{ user.trial_end.humanize() }} 结束</h1>
   {% endcall %}
 
-  {{ render_text("When the trial ends:") }}
-  {{ render_text("- All aliases/domains/directories you have created are <b>kept</b> and continue working normally.") }}
+  {{ render_text("当试用结束时:") }}
+  {{ render_text("- 您创建的所有别名/域名/目录将<b>保留</b>并继续正常工作。") }}
   {% call text() %}
-    - You cannot create new aliases if you exceed the free plan limit, i.e. have more than {{ MAX_NB_EMAIL_FREE_PLAN }} aliases.
+    - 如果您超过免费计划的限制，即拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，您将无法创建新的别名。
   {% endcall %}
 
-  {{ render_text("- You cannot add new domain or directory.") }}
-  {{ render_text("- You cannot add new mailbox.") }}
-  {{ render_text("- You cannot create new reverse aliases.") }}
-  {{ render_text("- If you enable PGP Encryption, forwarded emails are not encrypted anymore.") }}
-  {{ render_text("You can upgrade today to continue using all these Premium features (and much more coming).") }}
-  {{ render_button("Upgrade your account", URL ~ "/dashboard/pricing") }}
-  {{ render_text("If you're not ready to upgrade to a paying account, you have a few other options available to you:") }}
+  {{ render_text("- 您无法添加新的域名或目录。") }}
+  {{ render_text("- 您无法添加新的邮箱。") }}
+  {{ render_text("- 您无法创建新的反向别名。") }}
+  {{ render_text("- 如果您启用了 PGP 加密，转发的电子邮件将不再加密。") }}
+  {{ render_text("您可以今天升级以继续使用所有这些高级功能（以及更多即将推出的功能）。") }}
+  {{ render_button("升级您的账户", URL ~ "/dashboard/pricing") }}
+  {{ render_text("如果您还不准备升级到付费账户，您还有其他几个可用选项:") }}
   {{ grey_section([
-    "<b>Continue with the Free Plan</b> - In the free plan you are limited to " ~ MAX_NB_EMAIL_FREE_PLAN ~ " aliases but there's no cap on bandwidth or
-    number of emails forwarded/sent.",
-    "<b>Share feedback</b> - If SimpleLogin isn't right for you, let us know what you were looking for and we might be able to suggest some alternatives that might be a better fit.",
-    "<b>Export your data</b> - If SimpleLogin wasn't a good fit, you can export your data for use elsewhere. ",
-    "<b>Close your account</b> - You can close your account and delete your data if SimpleLogin is not useful to you."
+    "<b>继续使用免费计划</b> - 在免费计划中，您最多可使用 " ~ MAX_NB_EMAIL_FREE_PLAN ~ " 个别名，但没有带宽或转发/发送电子邮件数量的限制。",
+    "<b>分享反馈</b> - 如果 原邮邮箱 不适合您，请告诉我们您在寻找什么，我们可能会建议一些更适合的替代方案。",
+    "<b>导出您的数据</b> - 如果 原邮邮箱 不适合您，您可以导出数据以供其他地方使用。",
+    "<b>关闭您的账户</b> - 如果 原邮邮箱 对您没有用，您可以关闭账户并删除数据。"
     ]) }}
-  {{ render_text('Regardless of your choice, we want to say thank you for trying SimpleLogin. We know the product
-    requires an investment of your time, and we appreciate you giving us a chance.') }}
-  {{ render_text('Thanks,
+  {{ render_text('无论您的选择如何，我们都感谢您尝试 原邮邮箱。我们知道这个产品需要您投入时间，我们感谢您给我们一个机会。') }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
-  {{ render_text('P.S. If you have any questions or need any help, please don\'t hesitate to
-    <a href="https://app.simplelogin.io/dashboard/support">reach out</a>
+    原邮邮箱') }}
+  {{ render_text('P.S. 如果您有任何问题或需要任何帮助，请不要犹豫，
+    <a href="https://t.me/yuanyou_official">联系我们</a>
     ') }}
   {{ raw_url(URL ~ "/dashboard/pricing") }}
 {% endblock %}

@@ -2,12 +2,12 @@
 
 {% block content %}
 
-  {{ render_text("You recently requested to change your email on SimpleLogin to <b>"+ new_email +"</b>.") }}
-  {{ render_text("Your current email is " + current_email + ".") }}
-  {{ render_text("Use the button below to confirm within the next 12 hours.") }}
-  {{ render_button("Change email", link) }}
-  {{ render_text('Thanks,
+  {{ render_text("您最近请求将 原邮邮箱 上的电子邮件更改为 <b>"+ new_email +"</b>。") }}
+  {{ render_text("您当前的电子邮件是 " + current_email + "。") }}
+  {{ render_text("请在接下来的 12 小时内点击下面的按钮确认。") }}
+  {{ render_button("更改电子邮件", link) }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
   {{ raw_url(link) }}
 {% endblock %}

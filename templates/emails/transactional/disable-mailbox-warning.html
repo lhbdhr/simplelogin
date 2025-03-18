@@ -3,27 +3,27 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Issues with {{ mailbox.email }}.</h1>
+    <h1>{{ mailbox.email }} 存在问题</h1>
   {% endcall %}
 
   {% call text() %}
-    We have detected that your mailbox can't reliably receive emails from SimpleLogin for a consecutive period of time.
+    我们检测到您的邮箱在一段连续时间内无法可靠地接收来自 原邮邮箱 的电子邮件。
     <br />
-    The mailbox will be disabled in 5 days if the problem isn't solved by then.
+    如果问题在5天内未解决，该邮箱将被禁用。
   {% endcall %}
 
   {% call text() %}
-    Please note that a mailbox can't be a disposable or forwarding email address.
+    请注意，邮箱不能是一次性或转发的电子邮件地址。
   {% endcall %}
 
   {% call text() %}
-    If you have any question, you can reach out to us by replying to this email.
+    如有任何问题，您可以通过回复此电子邮件联系我们。
   {% endcall %}
 
   {% call text() %}
-    Best,
+祝好
     <br />
-    SimpleLogin Team.
+原邮邮箱
   {% endcall %}
 
 {% endblock %}

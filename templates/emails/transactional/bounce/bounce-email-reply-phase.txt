@@ -1,15 +1,15 @@
-Email cannot be sent to {{ contact.email }} from your alias {{ alias.email }}
+无法从您的别名 {{ alias.email }} 向 {{ contact.email }} 发送电子邮件
 
-This might mean {{ contact.email }}
-- is not a valid address, or
-- doesn't exist, or
-- its mail server refuses your email.
+这可能意味着 {{ contact.email }}：
+- 不是一个有效的地址，或
+- 不存在，或
+- 其邮件服务器拒绝了您的电子邮件。
 
-You can view the email at {{refused_email_url}}.
-This email is automatically deleted in 7 days.
+您可以在 {{ refused_email_url }} 查看这封电子邮件。
+此邮件将在 7 天内自动删除。
 
-Best,
-SimpleLogin Team.
+祝好，
+原邮邮箱
 
 
 

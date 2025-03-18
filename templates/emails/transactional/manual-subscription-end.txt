@@ -1,7 +1,7 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Your subscription will end on {{ manual_sub.end_at.format("YYYY-MM-DD") }}
+您的订阅将于 {{ manual_sub.end_at.format("YYYY-MM-DD") }} 结束
 
-Please contact us on https://app.simplelogin.io/dashboard/support to renew your subscription.
+请通过 https://t.me/yuanyou_official 联系我们以续订您的订阅。
 {% endblock %}

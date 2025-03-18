@@ -2,12 +2,12 @@
 
 {% block content %}
 
-  {{ render_text("There has been an unsuccessful attempt to login to your SimpleLogin account.") }}
-  {{ render_text("An invalid " ~ type ~ " code was provided <b>but the email and password were correct.</b>") }}
-  {{ render_text("This request has been blocked. However, if this was <b>not</b> you, please <b>change your password immediately.</b>") }}
-  {{ render_button("Change your password", URL ~ "/dashboard/setting#change_password") }}
-  {{ render_text('Thanks,
+  {{ render_text("有未成功的尝试登录到您的 原邮邮箱 账户。") }}
+  {{ render_text("提供了无效的 " ~ type ~ " 代码，<b>但电子邮件和密码是正确的。</b>") }}
+  {{ render_text("此请求已被阻止。但是，如果这<b>不是</b>您，请<b>立即更改您的密码。</b>") }}
+  {{ render_button("更改您的密码", URL ~ "/dashboard/setting#change_password") }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
   {{ raw_url(URL ~ "/dashboard/setting#change_password") }}
 {% endblock %}

@@ -1,9 +1,9 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-An email has been sent to the alias {{alias}} that would be created automatically as you own the directory {{directory}}.
+已发送电子邮件到别名 {{alias}}，因为您拥有目录 {{directory}}，该别名将自动创建。
 
-As the directory has the on-the-fly alias creation disabled, the alias isn't created.
+由于目录已禁用即时别名创建，因此未创建别名。
 
-If you aren't aware of this alias, that probably means someone has discovered about your directory and is abusing it.
+如果您不知道此别名，这可能意味着有人发现了您的目录并滥用了它。
 {% endblock %}

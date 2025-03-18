@@ -1,7 +1,6 @@
-Your subscription ends on {{ coinbase_subscription.end_at.format("YYYY-MM-DD") }}
+您的订阅将于 {{ coinbase_subscription.end_at.format("YYYY-MM-DD") }} 结束。
 
-You can extend your subscription on
-{{ extend_subscription_url }}
+您可以在 {{ extend_subscription_url }} 延长您的订阅。
 
-Best,
-SimpleLogin team.
+祝好，
+原邮邮箱

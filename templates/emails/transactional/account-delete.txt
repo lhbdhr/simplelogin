@@ -1,7 +1,7 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Your SimpleLogin account has been deleted successfully.
+您的 原邮邮箱 帐户已成功删除。
 
-Thank you for having used SimpleLogin.
+感谢您使用 原邮邮箱。
 {% endblock %}

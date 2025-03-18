@@ -3,22 +3,22 @@
 {% block content %}
 
   {% call text() %}
-    <h1>{{ alias }} has been disabled successfully.</h1>
+    <h1>{{ alias }} 已成功禁用。</h1>
   {% endcall %}
 
   {% call text() %}
-    The alias has been disabled thanks to the "One-click unsubscribe” provided by your mailbox service.
+    别名已被禁用，感谢您的邮箱服务提供的“一键退订”功能。
     <br />
-    When you click on this button on a forwarded email, the alias will be disabled automatically.
+    当您在转发的电子邮件上点击此按钮时，别名将自动禁用。
   {% endcall %}
 
   {% call text() %}
-    If this is a mistake, you can re-enable the alias on the dashboard.
+    如果这是一个错误，您可以在仪表板上重新启用别名。
   {% endcall %}
 
-  {{ render_button("Enable Alias", enable_alias_url) }}
-  {{ render_text('Thanks,
+  {{ render_button("启用别名", enable_alias_url) }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
   {{ raw_url(enable_alias_url) }}
 {% endblock %}

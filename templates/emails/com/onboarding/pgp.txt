@@ -1,28 +1,30 @@
-This email is sent to {{ to_email }} and is part of our onboarding series.
-Unsubscribe from our emails on {{URL}}/dashboard/setting#notification
+此邮件发送至 {{ to_email }}，是我们入门系列的一部分。
+在 {{URL}}/dashboard/setting#notification 中取消订阅
 ----------------
 
-Hi
+你好
 
-If you happen to use Gmail, Yahoo, Outlook, etc, do you know these services can read your emails?
+如果你正在使用 Gmail/Yahoo/Outlook 等服务，你知道这些服务能够读取你的邮件吗？
 
-If you want to keep your emails only readable by you, Pretty Good Privacy (PGP) is maybe the solution.
+如果你想让只有你自己能读取邮件，Pretty Good Privacy (PGP) 可能是一个解决方案。
 
-Highly recommended, open source and free, PGP is unfortunately not widely supported. However with SimpleLogin most recent PGP support, you can now enable PGP on emails sent to your aliases easily.
+PGP 是开源且免费的，并且强烈推荐使用，但遗憾的是它的支持并不广泛。
+不过，随着 原邮邮箱 最近对 PGP 的支持，你现在可以轻松在发送到你别名的邮件上启用 PGP 加密。
 
-Without PGP the emails sent to an alias are forwarded by SimpleLogin as-is to your mailbox, leaving anyone in-between or your email service able to read your emails:
+在没有启用 PGP 的情况下，发送到别名的邮件将被 原邮邮箱 原样转发到你的邮箱，
+这意味着任何中间环节或你的邮件服务都能读取你的邮件：
 
 https://simplelogin.io/blog/without-pgp.png
 
-With PGP enabled, all emails arrived at SimpleLogin are encrypted with your public key before being forwarded to your mailbox:
+启用 PGP 后，所有到达 原邮邮箱 的邮件都会在转发到你的邮箱之前，使用你的公钥进行加密：
 
 https://simplelogin.io/blog/with-pgp.png
 
-You can find more info on our announcement post on https://simplelogin.io/blog/introducing-pgp/
+你可以在添加或编辑邮箱时创建和管理你的 PGP 密钥。
 
-You can create and manage your PGP keys when adding or editing your mailboxes. Check it out on your mailbox dashboard at {{URL}}/dashboard/mailbox
+请在邮箱仪表板上查看：{{URL}}/dashboard/mailbox
 
-As usual, let us know if you have any question by replying to this email.
+如有任何问题，请直接回复此邮件，我们会尽快为你解答。
 
-Best regards,
-SimpleLogin team.
+此致，
+原邮邮箱

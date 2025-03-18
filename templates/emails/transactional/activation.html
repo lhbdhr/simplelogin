@@ -2,12 +2,12 @@
 
 {% block content %}
 
-  {{ render_text("Thank you for choosing SimpleLogin.") }}
-  {{ render_text("To get started, please confirm that <b>" + email + "</b> is your email address by clicking on the button below within 1 hour.") }}
-  {{ render_text("If it wasn't you, maybe someone entered your email by mistake. In this case you can ignore this mail.") }}
-  {{ render_button("Verify email", activation_link) }}
-  {{ render_text('Thanks,
+  {{ render_text("感谢您选择 原邮邮箱") }}
+  {{ render_text("要开始使用，请在 1 小时内点击以下按钮确认 <b>" + email + "</b> 是您的电子邮件地址。") }}
+  {{ render_text("如果这不是您本人操作，可能是有人错误地输入了您的电子邮件地址。在这种情况下，您可以忽略此邮件。") }}
+  {{ render_button("验证电子邮件", activation_link) }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
   {{ raw_url(activation_link) }}
 {% endblock %}

@@ -4,20 +4,19 @@
 
   {% call text() %}
     <h1>
-      Unauthorized attempt to send an email to {{ contact.email }} from your alias <b>{{ alias.email }}</b> using
-      <b>{{ sender }}</b> has been blocked.
+      未经授权的尝试使用 <b>{{ sender }}</b> 从您的别名 <b>{{ alias.email }}</b> 向 {{ contact.email }} 发送电子邮件已被阻止。
     </h1>
   {% endcall %}
 
   {% call text() %}
-    To protect against <b>email spoofing</b>, only your mailbox can send emails on behalf of your alias.
-    SimpleLogin also refuses emails that claim to come from your mailbox but fail DMARC.
+    为了防止 <b>电子邮件欺骗</b>，只有您的邮箱可以代表您的别名发送电子邮件。
+    原邮邮箱 也会拒绝那些声称来自您的邮箱但未通过 DMARC 的电子邮件。
   {% endcall %}
 
   {% call text() %}
-    Best,
+祝好
     <br />
-    SimpleLogin Team.
+原邮邮箱
   {% endcall %}
 
 {% endblock %}

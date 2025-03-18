@@ -2,12 +2,12 @@
 
 {% block content %}
 
-  {{ render_text("This is an automated email from SimpleLogin.") }}
-  {{ render_text("We have recorded an attempt to send an email from your email <b>" + sender + "</b> to <b>" + reply_email + "</b>.") }}
-  {{ render_text(reply_email + ' is a special email address that only receives emails from its authorized user.') }}
-  {{ render_text("This user has been also informed of this incident.") }}
-  {{ render_text('If you have any question, you can contact us by replying to this email or consult our website at ' ~ LANDING_PAGE_URL ~ '.') }}
-  {{ render_text('Regards,
+  {{ render_text("这是一封来自 原邮邮箱 的自动电子邮件。") }}
+  {{ render_text("我们记录了一次使用您的电子邮件 <b>" + sender + "</b> 向 <b>" + reply_email + "</b> 发送电子邮件的尝试。") }}
+  {{ render_text(reply_email + ' 是一个特殊的电子邮件地址，只接收其授权用户的电子邮件。') }}
+  {{ render_text("该用户也已被通知此事件。") }}
+  {{ render_text('如果您有任何问题，可以通过回复此电子邮件与我们联系，或访问我们的网站：' ~ LANDING_PAGE_URL ~ '。') }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
 {% endblock %}

@@ -1,17 +1,17 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Hi
+您好
 
-You have added {{mailbox_email}} as an additional mailbox.
+您已添加 {{ mailbox_email }} 作为附加邮箱。
 
 {% if link %}
-To confirm, please click on this link:
+请点击此链接进行确认：
 
-{{link}}
+{{ link }}
 {% else %}
-Please enter {{ code }} as your verification code for this mailbox
+请输入 {{ code }} 作为此邮箱的验证码
 {% endif %}
 
-This link will only be valid during the next 15 minutes.
+此链接仅在接下来的 15 分钟内有效。
 {% endblock %}

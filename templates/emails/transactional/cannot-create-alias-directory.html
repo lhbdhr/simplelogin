@@ -3,13 +3,13 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Cannot create alias {{ alias }} on-the-fly</h1>
+    <h1>无法即时创建别名 {{ alias }}</h1>
   {% endcall %}
 
-  {{ render_text("An email has been sent to the alias <b>" + alias + "</b> that would be created automatically as you own the directory <b>" + directory + "</b>.") }}
-  {{ render_text("However you have reached the alias limit in your current plan, this creation cannot happen.") }}
-  {{ render_text("Please upgrade to premium plan in order to use this feature.") }}
-  {{ render_text('Thanks,
+  {{ render_text("已发送电子邮件到别名 <b>" + alias + "</b>，因为您拥有目录 <b>" + directory + "</b>。") }}
+  {{ render_text("但是，您的当前计划已达到别名限制，因此无法创建此别名。") }}
+  {{ render_text("请升级到高级计划以使用此功能。") }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
 {% endblock %}

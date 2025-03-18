@@ -3,27 +3,27 @@
 {% block content %}
 
   {% call text() %}
-    <h1>Email cannot be sent to {{ contact.email }} from your alias {{ alias.email }}</h1>
+    <h1>无法从您的别名 {{ alias.email }} 向 {{ contact.email }} 发送电子邮件</h1>
   {% endcall %}
 
   {% call text() %}
-    This might mean {{ contact.email }}
+    这可能意味着 {{ contact.email }}
     <ul>
-      <li>is not a valid email address, or</li>
-      <li>doesn't exist, or</li>
-      <li>its mail server refuses your email</li>
+      <li>不是一个有效的电子邮件地址，或</li>
+      <li>不存在，或</li>
+      <li>其邮件服务器拒绝了您的电子邮件</li>
     </ul>
   {% endcall %}
 
-  {{ render_button("View the original email", refused_email_url) }}
+  {{ render_button("查看原始电子邮件", refused_email_url) }}
   {% call text() %}
-    This email is automatically deleted in 7 days.
+    此邮件将在 7 天内自动删除。
   {% endcall %}
 
   {% call text() %}
-    Best,
+祝好
     <br />
-    SimpleLogin Team.
+原邮邮箱
   {% endcall %}
 
 {% endblock %}

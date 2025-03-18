@@ -1,16 +1,15 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-We have detected that SimpleLogin is probably used along with another forwarding email service.
+我们检测到 原邮邮箱 可能与另一个邮件转发服务一起使用。
 
-Please note that the following use cases aren't supported by SimpleLogin:
+请注意，原邮邮箱 不支持以下用例：
 
-- your mailbox is an email alias (i.e. not a "final" email address)
-- your mailbox automatic forwarding enabled
-- your alias receives automatic forwarding email from another mailbox
+- 您的邮箱是一个电子邮件别名（即不是“最终”电子邮件地址）
+- 您的邮箱启用了自动转发
+- 您的别名接收到来自另一个邮箱的自动转发电子邮件
 
-As different email forwarding systems are usually incompatible, using several forwarding services can cause issue
-with email delivery.
+由于不同的电子邮件转发系统通常不兼容，使用多个转发服务可能会导致电子邮件传递问题。
 
-Please let us know if you have any question.
+如有任何问题，请告知我们。
 {% endblock %}

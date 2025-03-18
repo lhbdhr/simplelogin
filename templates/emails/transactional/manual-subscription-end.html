@@ -4,16 +4,15 @@
 
   {% call text() %}
     <h1>
-      Your subscription will end on <b>{{ manual_sub.end_at.format("YYYY-MM-DD") }}</b>
+      您的订阅将于 <b>{{ manual_sub.end_at.format("YYYY-MM-DD") }}</b> 结束
     </h1>
   {% endcall %}
 
   {% call text() %}
-    Please <a href="https://app.simplelogin.io/dashboard/support">contact us</a>
-    to renew your subscription.
+    请 <a href="https://t.me/yuanyou_official">联系我们</a> 以续订您的订阅。
   {% endcall %}
 
-  {{ render_text('Thanks,
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
+    原邮邮箱') }}
 {% endblock %}

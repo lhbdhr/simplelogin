@@ -24,7 +24,7 @@ def failed_payment(sub: Subscription, subscription_id: str):
 
     send_email(
         user.email,
-        "SimpleLogin - your subscription has failed to be renewed",
+        "原邮邮箱 - 您的订阅续费失败",
         render(
             "transactional/subscription-cancel.txt",
             user=user,

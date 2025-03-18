@@ -1,17 +1,17 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-We have recorded an attempt to send the following email from your alias {{ alias }} from an unknown IP address {{ ip }}.
+我们记录了一次尝试从未知 IP 地址 {{ ip }} 使用您的别名 {{ alias }} 发送以下电子邮件的行为。
 
-- From: {{alias}}
-- To: {{to_email}}
-- Subject: {{subject}}
-- Time: {{ time.humanize() }}
+- 发件人: {{ alias }}
+- 收件人: {{ to_email }}
+- 主题: {{ subject }}
+- 时间: {{ time.humanize() }}
 
-To prevent email-spoofing, SimpleLogin enforces the SPF (Sender Policy Framework).
-Emails sent from an IP address that is unknown by your email service are refused by default.
+为了防止电子邮件欺骗，原邮邮箱 强制执行 SPF（发件人策略框架）。
+从您的电子邮件服务未知的 IP 地址发送的电子邮件默认被拒绝。
 
-However you can turn off this option by going to {{mailbox_url}}.
+但是，您可以通过访问 {{ mailbox_url }} 来关闭此选项。
 
-Please only turn this protection off this if you know what you're doing :).
+请仅在您知道自己在做什么的情况下关闭此保护功能 :).
 {% endblock %}

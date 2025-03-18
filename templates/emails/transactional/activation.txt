@@ -1,9 +1,9 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Thank you for choosing SimpleLogin.
+感谢您选择 原邮邮箱
 
-To get started, please confirm that {{email}} is your email address using this link {{activation_link}} within 1 hour.
+要开始使用，请在 1 小时内通过此链接 {{activation_link}} 确认 {{email}} 是您的电子邮件地址。
 
-If it wasn't you, maybe someone entered your email by mistake. In this case you can ignore this mail.
+如果这不是您本人操作，可能是有人错误地输入了您的电子邮件地址。在这种情况下，您可以忽略此邮件。
 {% endblock %}

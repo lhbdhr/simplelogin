@@ -1,17 +1,17 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Hi
+您好
 
-Your alias {{alias}} has been disabled successfully.
+您的别名 {{ alias }} 已成功禁用。
 
-It has been disabled thanks to the "One-click unsubscribe” provided by your mailbox service.
+它已被禁用，感谢您的邮箱服务提供的“一键退订”功能。
 
-When you click on this button on a forwarded email, the alias will be disabled automatically.
+当您在转发的电子邮件上点击此按钮时，别名将自动禁用。
 
-If this is a mistake, you can re-enable the alias on the dashboard via
+如果这是一个错误，您可以通过以下链接在仪表板上重新启用别名：
 
 {{ enable_alias_url }}
 
-Please let us know if you have any question.
+如果您有任何问题，请告诉我们。
 {% endblock %}

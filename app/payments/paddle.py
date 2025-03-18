@@ -142,7 +142,7 @@ def setup_paddle_callback(app: Flask):
 
                 send_email(
                     user.email,
-                    "SimpleLogin - your subscription is canceled",
+                    "原邮邮箱 - 订阅已取消",
                     render(
                         "transactional/subscription-cancel.txt",
                         user=user,

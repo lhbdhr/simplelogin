@@ -132,7 +132,7 @@ def auth_register():
 
     send_email(
         email,
-        "Just one more step to join SimpleLogin",
+        "只需一步即可加入原邮邮箱",
         render("transactional/code-activation.txt.jinja2", user=user, code=code),
         render("transactional/code-activation.html", user=user, code=code),
     )
@@ -234,7 +234,7 @@ def auth_reactivate():
 
     send_email(
         email,
-        "Just one more step to join SimpleLogin",
+        "只需一步即可加入原邮邮箱",
         render("transactional/code-activation.txt.jinja2", user=user, code=code),
         render("transactional/code-activation.html", user=user, code=code),
     )

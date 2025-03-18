@@ -103,7 +103,7 @@ More info on https://simplelogin.io/docs/getting-started/anti-phishing/
             user,
             ALERT_QUARANTINE_DMARC,
             user.email,
-            f"An email sent to {alias.email} has been quarantined",
+            f"发送到 {alias.email} 的邮件已被隔离",
             render(
                 "transactional/message-quarantine-dmarc.txt.jinja2",
                 user=user,
@@ -175,7 +175,7 @@ def apply_dmarc_policy_for_reply_phase(
         alias_from.user,
         ALERT_DMARC_FAILED_REPLY_PHASE,
         alias_from.user.email,
-        f"Attempt to send an email to your contact {contact_recipient.email} from {envelope.mail_from}",
+        f"尝试从 {envelope.mail_from} 向您的联系人 {contact_recipient.email} 发送电子邮件",
         render(
             "transactional/spoof-reply.txt.jinja2",
             user=alias_from.user,

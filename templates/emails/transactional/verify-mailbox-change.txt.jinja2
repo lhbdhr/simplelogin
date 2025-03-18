@@ -1,13 +1,13 @@
 {% extends "base.txt.jinja2" %}
 
 {% block content %}
-Hi
+您好
 
-You recently requested to change mailbox {{mailbox_email}} to {{mailbox_new_email}}
+您最近请求将邮箱 {{ mailbox_email }} 更改为 {{ mailbox_new_email }}
 
-To confirm, please click on this link:
+请点击此链接进行确认：
 
-{{link}}
+{{ link }}
 
-This link will only be valid during the next 15 minutes.
+此链接仅在接下来的 15 分钟内有效。
 {% endblock %}

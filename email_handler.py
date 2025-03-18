@@ -1226,7 +1226,7 @@ def handle_reply(envelope, msg: Message, rcpt_to: str) -> (bool, str):
 
         send_email(
             mailbox.email,
-            f"Email sent to {contact.email} contains non reverse-alias addresses",
+            f"发送到 {contact.email} 的电子邮件包含非反向别名地址",
             render(
                 "transactional/non-reverse-alias-reply-phase.txt.jinja2",
                 user=alias.user,
@@ -1279,7 +1279,7 @@ def handle_reply(envelope, msg: Message, rcpt_to: str) -> (bool, str):
         EmailLog.delete(email_log.id, commit=True)
         send_email(
             mailbox.email,
-            f"Email cannot be sent to {contact.email} from {alias.email}",
+            f"无法从 {alias.email} 向 {contact.email} 发送电子邮件",
             render(
                 "transactional/reply-error.txt.jinja2",
                 user=user,
@@ -1422,7 +1422,7 @@ def handle_unknown_mailbox(
         user,
         ALERT_REVERSE_ALIAS_UNKNOWN_MAILBOX,
         user.email,
-        f"Attempt to use your alias {alias.email} from {envelope.mail_from}",
+        f"尝试使用您的别名 {alias.email} 从 {envelope.mail_from} 发送邮件",
         render(
             "transactional/reply-must-use-personal-email.txt",
             user=user,
@@ -1533,7 +1533,7 @@ def handle_bounce_forward_phase(msg: Message, email_log: EmailLog):
             user,
             ALERT_BOUNCE_EMAIL,
             user.email,
-            f"Alias {alias.email} has been disabled due to multiple bounces",
+            f"别名 {alias.email} 因多次退信已被禁用",
             render(
                 "transactional/bounce/automatic-disable-alias.txt",
                 user=alias.user,
@@ -1579,7 +1579,7 @@ def handle_bounce_forward_phase(msg: Message, email_log: EmailLog):
             user,
             ALERT_BOUNCE_EMAIL,
             user.email,
-            f"An email sent to {alias.email} cannot be delivered to your mailbox",
+            f"发送到 {alias.email} 的电子邮件无法投递到您的邮箱",
             render(
                 "transactional/bounce/bounced-email.txt.jinja2",
                 user=alias.user,
@@ -1669,7 +1669,7 @@ def handle_bounce_reply_phase(envelope, msg: Message, email_log: EmailLog):
     )
     Notification.create(
         user_id=user.id,
-        title=f"Email cannot be sent to {contact.email} from your alias {alias.email}",
+        title=f"无法从您的别名 {alias.email} 向 {contact.email} 发送电子邮件",
         message=Notification.render(
             "notification/bounce-reply-phase.html",
             alias=alias,
@@ -1682,7 +1682,7 @@ def handle_bounce_reply_phase(envelope, msg: Message, email_log: EmailLog):
         user,
         ALERT_BOUNCE_EMAIL_REPLY_PHASE,
         mailbox.email,
-        f"Email cannot be sent to {contact.email} from your alias {alias.email}",
+        f"无法从您的别名 {alias.email} 向 {contact.email} 发送电子邮件",
         render(
             "transactional/bounce/bounce-email-reply-phase.txt",
             user=user,
@@ -1752,7 +1752,7 @@ def handle_spam(
             user,
             ALERT_SPAM_EMAIL,
             mailbox.email,
-            f"Email from {alias.email} to {contact.website_email} is detected as spam",
+            f"从 {alias.email} 发送到 {contact.website_email} 的电子邮件被检测为垃圾邮件",
             render(
                 "transactional/spam-email-reply-phase.txt",
                 user=user,
@@ -1783,7 +1783,7 @@ def handle_spam(
             user,
             ALERT_SPAM_EMAIL,
             mailbox.email,
-            f"Email from {contact.website_email} to {alias.email} is detected as spam",
+            f"从 {contact.website_email} 发送到 {alias.email} 的电子邮件被检测为垃圾邮件",
             render(
                 "transactional/spam-email.txt",
                 user=user,
@@ -2030,7 +2030,7 @@ def handle(envelope: Envelope, msg: Message) -> str:
             user,
             ALERT_FROM_ADDRESS_IS_REVERSE_ALIAS,
             user.email,
-            "SimpleLogin shouldn't be used with another email forwarding system",
+            "原邮邮箱 不应与另一个电子邮件转发系统一起使用",
             render(
                 "transactional/email-sent-from-reverse-alias.txt.jinja2",
                 user=user,

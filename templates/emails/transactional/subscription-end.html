@@ -2,30 +2,28 @@
 
 {% block content %}
 
-  {{ render_text("Hi") }}
-  {{ render_text("Your subscription will end on " + next_bill_date + ".") }}
-  {{ render_text("When the subscription ends:") }}
-  {{ render_text("- All aliases/domains/directories you have created are <b>kept</b> and continue working normally.") }}
-  {{ render_text("- You cannot create new reverse aliases.") }}
+  {{ render_text("您好") }}
+  {{ render_text("您的订阅将于 " + next_bill_date + " 到期。") }}
+  {{ render_text("当订阅结束时:") }}
+  {{ render_text("- 您创建的所有别名/域名/目录将<b>保留</b>并继续正常工作。") }}
+  {{ render_text("- 您无法创建新的反向别名。") }}
   {% call text() %}
-    - You cannot create new aliases if you exceed the free plan limit, i.e. have more than {{ MAX_NB_EMAIL_FREE_PLAN }} aliases.
+    - 如果您超过免费计划的限制，即拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，您将无法创建新的别名。
   {% endcall %}
 
   {% call text() %}
-    - As features like <b>catch-all</b> or <b>directory</b> allow you to create aliases on-the-fly,
-    those aliases cannot be automatically created if you have more than {{ MAX_NB_EMAIL_FREE_PLAN }} aliases.
+    - 由于<b>Catch-All</b>或<b>目录</b>等功能允许您即时创建别名，因此如果您拥有超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名，则无法自动创建这些别名。
   {% endcall %}
 
-  {{ render_text("- You cannot add new domain or directory.") }}
-  {{ render_text("You can upgrade today to continue using all these Premium features (and much more coming).") }}
-  {{ render_button("Upgrade your account", URL ~ "/dashboard/pricing") }}
-  {{ render_text('Regardless of your choice, we want to say thank you for trying SimpleLogin. We know the product
-    requires an investment of your time, and we appreciate you giving us a chance.') }}
-  {{ render_text('Thanks,
+  {{ render_text("- 您无法添加新的域名或目录。") }}
+  {{ render_text("您可以今天升级以继续使用所有这些高级功能（以及更多即将推出的功能）。") }}
+  {{ render_button("升级您的账户", URL ~ "/dashboard/pricing") }}
+  {{ render_text('无论您的选择如何，我们都感谢您尝试 原邮邮箱。我们知道这个产品需要您投入时间，我们感谢您给我们一个机会。') }}
+  {{ render_text('祝好，
     <br />
-    SimpleLogin Team.') }}
-  {{ render_text('P.S. If you have any questions or need any help, please don\'t hesitate to
-    <a href="https://app.simplelogin.io/dashboard/support">reach out</a>
+    原邮邮箱') }}
+  {{ render_text('P.S. 如果您有任何问题或需要任何帮助，请不要犹豫，
+    <a href="https://t.me/yuanyou_official">联系我们</a>
     ') }}
   {{ raw_url(URL ~ "/dashboard/pricing") }}
 {% endblock %}
