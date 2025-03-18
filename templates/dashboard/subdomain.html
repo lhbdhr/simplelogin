@@ -1,14 +1,14 @@
 {% extends "default.html" %}
 
 {% set active_page = "subdomain" %}
-{% block title %}Subdomains{% endblock %}
+{% block title %}子域名{% endblock %}
 {% block head %}{% endblock %}
 {% block default_content %}
 
   <div class="row">
     <div class="col">
       <h1 class="h3">
-        Subdomains
+        子域名
         <a class="ml-3 text-info"
            style="font-size: 12px"
            data-toggle="collapse"
@@ -16,29 +16,29 @@
            role="button"
            aria-expanded="false"
            aria-controls="collapseExample">
-          How to use <i class="fe fe-chevrons-down"></i>
+          如何使用 <i class="fe fe-chevrons-down"></i>
         </a>
       </h1>
       {% if not current_user.is_premium() %}
 
         <div class="alert alert-danger" role="alert">
-          This feature is only available on Premium plan.
+          此功能仅在高级计划中可用。
           <a href="{{ url_for("dashboard.pricing") }}"
              target="_blank"
              rel="noopener noreferrer">
-            Upgrade<i class="fe fe-external-link"></i>
+            升级<i class="fe fe-external-link"></i>
           </a>
         </div>
       {% endif %}
       <div class="alert alert-primary collapse {% if not subdomains %}show{% endif %}" id="howtouse" role="alert">
-        You can use subdomain to quickly create email aliases without opening SimpleLogin app.
+        您可以使用子域名快速创建电子邮件别名，而无需打开 原邮邮箱 应用。
         <br />
-        Handy when you need to quickly give out an email address, for example on a phone call, in a meeting or just
-        anywhere you want.
+        在您需要快速提供电子邮件地址时非常方便，例如在电话中、在会议中或只是
+        您想要的任何地方。
         <br />
-        After choosing a subdomain, simply use <b>anything@my-subdomain.simplelogin.com</b>
-        next time you need an alias:
-        it'll be <b>automatically created</b> the first time it receives an email.
+        选择子域名后，下次需要别名时只需使用 <b>anything@my-subdomain.yuanyoupush.com</b>
+        ：
+        它将<b>自动创建</b>在第一次收到电子邮件时。
         <br />
       </div>
       <div class="row">
@@ -51,13 +51,13 @@
                   <a href="{{ url_for('dashboard.domain_detail', custom_domain_id=subdomain.id) }}">{{ subdomain.domain }}</a>
                 </h5>
                 <h6 class="card-subtitle mb-4 text-muted">
-                  Created {{ subdomain.created_at | dt }}
+                  创建于 {{ subdomain.created_at | dt }}
                   <br />
-                  <span class="font-weight-bold">{{ subdomain.nb_alias() }}</span> aliases.
+                  <span class="font-weight-bold">{{ subdomain.nb_alias() }}</span> 个别名.
                   <br />
                 </h6>
                 <a href="{{ url_for('dashboard.domain_detail', custom_domain_id=subdomain.id) }}"
-                   class="mt-3">Details ➡</a>
+                   class="mt-3">详情 ➡</a>
               </div>
             </div>
           </div>
@@ -67,39 +67,38 @@
         <div class="col">
           <div class="card">
             <div class="card-body">
-              <h2 class="h4 mb-1">New Subdomain</h2>
+              <h2 class="h4 mb-1">新 子域名</h2>
               <form method="post" class="mt-2" data-parsley-validate>
                 {{ new_subdomain_form.csrf_token }}
                 <input type="hidden" name="form-name" value="create">
                 <div class="form-group">
-                  <label>Subdomain</label>
+                  <label>子域名</label>
                   <input name="subdomain"
                          v-model="subdomain"
                          data-parsley-pattern="[0-9a-z-]{3,}"
                          data-parsley-trigger="change"
-                         data-parsley-error-message="At least 3 characters. Only lowercase letters, numbers and dashes (-) are supported."
+                         data-parsley-error-message="至少 3 个字符。仅支持小写字母、数字和破折号 (-)。"
                          class="form-control"
                          minlength="3"
                          maxlength="32">
                 </div>
                 <div class="form-group">
-                  <label>Root domain</label>
+                  <label>根域名</label>
                   <select name="domain" v-model="domain" class="form-control">
                     {% for sl_domain in sl_domains %}<option value="{{ sl_domain.domain }}">{{ sl_domain.domain }}</option>{% endfor %}
                   </select>
                 </div>
-                <button class="btn btn-primary">Create</button>
+                <button class="btn btn-primary">创建</button>
               </form>
               <div v-if="toShow" class="text-info mt-2">
-                You are about to create <b>[[ subdomain]].[[domain]]</b> subdomain.
+                您即将创建 <b>[[ subdomain]].[[domain]]</b> 子域。
               </div>
               <div class="alert alert-info mt-3" style="font-size: 12px">
-                Deleting a subdomain will <b>not</b> restore the subdomain quota
-                so please make sure
-                to choose the subdomain you want to keep.
+                删除子域名<b>不会</b>恢复子域名配额
+                因此，请务必
+                选择要保留的子域名。
                 <br />
-                Currently you can create up to <b style="font-size: 1.5em">{{ current_user.subdomain_quota }}</b>
-                subdomains.
+                目前，您最多可以创建 <b style="font-size: 1.5em">{{ current_user.subdomain_quota }}</b> 个子域名。
               </div>
             </div>
           </div>

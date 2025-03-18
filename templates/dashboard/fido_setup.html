@@ -12,17 +12,17 @@
 
   <div class="card">
     <div class="card-body">
-      <h1 class="h2 text-center">Register Your Security Key</h1>
-      <p class="text-center">Follow your browser's steps to register your security key with SimpleLogin</p>
+      <h1 class="h2 text-center">注册您的安全密钥</h1>
+      <p class="text-center">按照浏览器的步骤使用 原邮邮箱 注册安全密钥</p>
       <form id="formRegisterKey" method="post">
         {{ fido_token_form.csrf_token }}
         {{ fido_token_form.sk_assertion(class="form-control", placeholder="") }}
-        {{ fido_token_form.key_name(id="key-name", class="form-control", placeholder="Name of your key (Required)") }}
+        {{ fido_token_form.key_name(id="key-name", class="form-control", placeholder="您的密钥名称（必填）") }}
         {{ render_field_errors(fido_token_form.key_name) }}
         <div class="text-center">
           <span id="btnRegisterKey"
                 class="btn btn-lg btn-primary mt-2"
-                onclick="registerKey();">Register Key</span>
+                onclick="registerKey();">注册密钥</span>
         </div>
       </form>
       <script>
@@ -37,12 +37,12 @@
         async function registerKey() {
           // make sure key name is not empty
           if (!$("#key-name").val()) {
-            toastr.error("Key name cannot be empty.");
+            toastr.error("密钥名称不能为空。");
             return
           }
 
           $("#btnRegisterKey").prop('disabled', true);
-          $("#btnRegisterKey").text('Waiting for Security Key...');
+          $("#btnRegisterKey").text('等待安全密钥...');
 
           const pkCredentialCreateOptions = transformCredentialCreateOptions(
             JSON.parse('{{credential_create_options|tojson|safe}}')
@@ -55,10 +55,10 @@
               publicKey: pkCredentialCreateOptions
             });
           } catch (err) {
-            toastr.error("An error occurred when we trying to register your key.");
+            toastr.error("当我们尝试注册您的密钥时发生了错误。");
             $("#btnRegisterKey").prop('disabled', false);
-            $("#btnRegisterKey").text('Register Key');
-            return console.error("Error when trying to create credential:", err);
+            $("#btnRegisterKey").text('注册密钥');
+            return console.error("尝试创建凭证时出错：", err);
           }
 
           const skAssertion = transformNewAssertionForServer(credential);

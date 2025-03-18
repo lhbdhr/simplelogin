@@ -1,6 +1,6 @@
 {% extends "single.html" %}
 
-{% block title %}Verify Your Security Key{% endblock %}
+{% block title %}验证您的安全密钥{% endblock %}
 {% block head %}
 
   <script src="{{ url_for('static', filename='assets/js/vendors/base64.js') }}"></script>
@@ -11,16 +11,16 @@
   <div class="card">
     <div class="card-body">
       <div class="mb-2">
-        Your account is protected with your security key (WebAuthn).
+        您的帐户受到安全密钥（WebAuthn）的保护。
         <br />
         <br />
-        Follow your browser's steps to continue the sign-in process.
+        按照浏览器的步骤继续登录过程。
       </div>
       <form id="formRegisterKey" method="post">
         {{ fido_token_form.csrf_token }}
         {{ fido_token_form.sk_assertion(class="form-control", placeholder="") }}
         <div class="text-center">
-          <button id="btnVerifyKey" class="btn btn-success mt-2" onclick="verifyKey();">Use your security key</button>
+          <button id="btnVerifyKey" class="btn btn-success mt-2" onclick="verifyKey();">使用安全密钥</button>
         </div>
         <div class="form-check">
           {{ fido_token_form.remember(class="form-check-input", id="remember") }}
@@ -31,21 +31,21 @@
 
         <hr />
         <div class="text-muted mt-5" style="margin-top: 1em;">
-          Don't have your key with you?
+          你没带安全密钥吗？
           <br />
-          <a href="{{ url_for("auth.mfa") }}">Verify by One-Time Password</a>
+          <a href="{{ url_for("auth.mfa") }}">通过一次性密码验证</a>
         </div>
       {% endif %}
       <hr />
       <div class="mt-5">
-        If you have troubles with your authentication app, you can use the recovery code to login.
+        如果您的身份验证应用程序遇到问题，您可以使用恢复代码登录。
         <br />
-        <a href="{{ url_for('auth.recovery_route', next=next_url) }}">Use Recovery Codes</a>
+        <a href="{{ url_for('auth.recovery_route', next=next_url) }}">使用恢复代码</a>
       </div>
       <script>
         async function verifyKey() {
           $("#btnVerifyKey").prop('disabled', true);
-          $("#btnVerifyKey").text('Waiting for Security Key...');
+          $("#btnVerifyKey").text('等待安全密钥...');
 
           const credentialRequestOptions = transformCredentialRequestOptions(
             JSON.parse('{{webauthn_assertion_options|tojson|safe}}')
@@ -57,10 +57,10 @@
               publicKey: credentialRequestOptions
             });
           } catch (err) {
-            toastr.error("An error occurred when we trying to verify your key.");
+            toastr.error("当我们尝试验证您的密钥时发生错误。");
             $("#btnVerifyKey").prop('disabled', false);
-            $("#btnVerifyKey").text('Use your security key');
-            return console.error("Error when trying to get credential:", err);
+            $("#btnVerifyKey").text('使用安全密钥');
+            return console.error("尝试获取凭证时出错：", err);
           }
 
           const skAssertion = transformAssertionForServer(assertion);

@@ -13,7 +13,7 @@
       <div class="list-group list-group-transparent mb-0">
         <a href="{{ url_for('dashboard.domain_detail', custom_domain_id=custom_domain.id) }}"
            class="list-group-item list-group-item-action {{ 'active' if domain_detail_page == 'info' }}">
-          <span class="icon mr-3"><i class="fe fe-flag"></i></span>Info
+          <span class="icon mr-3"><i class="fe fe-flag"></i></span>域名信息
         </a>
         {% if not custom_domain.is_sl_subdomain %}
 
@@ -24,11 +24,11 @@
         {% endif %}
         <a href="{{ url_for('dashboard.domain_detail_trash', custom_domain_id=custom_domain.id) }}"
            class="list-group-item list-group-item-action {{ 'active' if domain_detail_page == 'trash' }}">
-          <span class="icon mr-3"><i class="fe fe-trash"></i></span>Deleted Alias
+          <span class="icon mr-3"><i class="fe fe-trash"></i></span>已删除的域名邮箱
         </a>
         <a href="{{ url_for('dashboard.domain_detail_auto_create', custom_domain_id=custom_domain.id) }}"
            class="list-group-item list-group-item-action {{ 'active' if domain_detail_page == 'auto_create' }}">
-          <span class="icon mr-3"><i class="fe fe-layers"></i></span>Auto Create
+          <span class="icon mr-3"><i class="fe fe-layers"></i></span>自动创建规则
         </a>
       </div>
     </div>

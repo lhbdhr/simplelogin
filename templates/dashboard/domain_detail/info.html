@@ -1,13 +1,13 @@
 {% extends "dashboard/domain_detail/base.html" %}
 
 {% set domain_detail_page = "info" %}
-{% block title %}{{ custom_domain.domain }} Info{% endblock %}
+{% block title %}{{ custom_domain.domain }} 域名信息 {% endblock %}
 {% block domain_detail_content %}
 
   <h1 class="h2 mb-1">{{ custom_domain.domain }}</h1>
-  <div class="small-text">Created {{ custom_domain.created_at | dt }}. {{ nb_alias }} aliases</div>
+  <div class="small-text">创建于 {{ custom_domain.created_at | dt }}. {{ nb_alias }} 个别名</div>
   <hr />
-  <h3 class="mb-1">Auto create/on the fly alias</h3>
+  <h3 class="mb-1">自动创建/动态别名</h3>
   <div>
     <form method="post">
       {{ csrf_form.csrf_token }}
@@ -17,18 +17,16 @@
         <input type="checkbox" class="custom-switch-input" {{ "checked" if custom_domain.catch_all else "" }}>
         <span class="custom-switch-indicator"></span>
         <spam class="ml-2">
-        Catch All
+        Catch-All
         </spam>
       </label>
     </form>
     <div>
-      Simply use <b>anything@{{ custom_domain.domain }}</b>
-      next time you need an alias: it'll be <b>automatically</b>
-      created the first time it receives an email.
-      To have more fine-grained control, you can also define
+      下次您需要别名时，只需使用 <b>anything@{{ custom_domain.domain }}</b>：它将在第一次收到电子邮件时<b>自动</b>创建。
+      <br />
+      为了进行更细粒度的控制，您还可以定义
       <a href="{{ url_for('dashboard.domain_detail_auto_create', custom_domain_id=custom_domain.id) }}">
-        auto create
-        rules
+        自动创建规则
         <i class="fe fe-chevrons-right"></i>
       </a>
       .
@@ -37,7 +35,7 @@
   <div class="{% if not custom_domain.catch_all %}
      disabled-content{% endif %}">
     <div>
-      Auto-created aliases are automatically owned by the following mailboxes
+      自动创建的别名自动归以下邮箱所有
       <i class="fe fe-corner-right-down"></i>
       .
     </div>
@@ -60,16 +58,15 @@
           </select>
         </div>
         <div>
-          <button class="btn btn-outline-primary btn-sm">Update</button>
+          <button class="btn btn-outline-primary btn-sm">保存</button>
         </div>
       </div>
     </form>
   </div>
   <hr />
-  <h3 class="mb-1">Default Display Name</h3>
+  <h3 class="mb-1">默认显示名称</h3>
   <div>
-    Default display name for aliases created with <b>{{ custom_domain.domain }}</b>
-    unless overwritten by the alias display name.
+    使用 <b>{{ custom_domain.domain }}</b> 创建的别名的默认显示名称，除非被别名显示名称覆盖。
   </div>
   <div>
     <form method="post" class="form-inline">
@@ -77,22 +74,22 @@
       <input type="hidden" name="form-name" value="set-name">
       <div class="form-group">
         <input class="form-control mr-2"
-               value="{{ custom_domain.name or "" }}"
+               value="{{ custom_domain.name or '' }}"
                name="alias-name"
-               placeholder="Alias Display Name">
+               placeholder="别名显示名称">
       </div>
-      <button class="btn btn-outline-primary" name="action" value="save">Save</button>
+      <button class="btn btn-outline-primary" name="action" value="save">保存</button>
       {% if custom_domain.name %}
 
         <button class="btn btn-outline-danger float-right ml-2"
                 name="action"
-                value="remove">Remove</button>
+                value="remove">移除</button>
       {% endif %}
     </form>
   </div>
   <hr />
-  <h3 class="mb-1">Random Prefix Generation</h3>
-  <div>Add a random prefix for this domain when creating a new alias.</div>
+  <h3 class="mb-1">随机前缀生成</h3>
+  <div>创建新别名时为该域添加随机前缀。</div>
   <div>
     <form method="post">
       {{ csrf_form.csrf_token }}
@@ -100,7 +97,7 @@
              name="form-name"
              value="switch-random-prefix-generation">
       <label class="custom-switch cursor mt-2 pl-0" data-toggle="tooltip" {% if custom_domain.random_prefix_generation %}
-         title="Disable random prefix generation" {% else %} title="Enable random prefix generation" {% endif %}>
+         title="Disable random prefix generation" {% else %} title="启用随机前缀" {% endif %}>
         <input type="checkbox" class="custom-switch-input" {{ "checked" if custom_domain.random_prefix_generation else "" }}>
         <span class="custom-switch-indicator"></span>
       </label>
@@ -109,36 +106,34 @@
   <hr />
   <h3 class="mb-1">
     {% if custom_domain.is_sl_subdomain %}
-
-      Delete Subdomain
+      删除子域名
     {% else %}
-      Delete Domain
+      删除域名
     {% endif %}
   </h3>
   <div class="mb-3">
     {% if custom_domain.is_sl_subdomain %}
-
       <div class="alert alert-danger">
-        This operation is <b>irreversible</b>.
-        All aliases associated with this subdomain will be deleted.
-      </div>
-      <div class="alert alert-warning">
-        Because a deleted subdomain can't be recycled, i.e. reused by someone else,
-        deleting a subdomain won't restore the subdomain quota.
-        After deletion, your subdomain quota will still be {{ current_user.subdomain_quota }}.
-        We recommend to disable the <b>catch-all</b> option instead of deleting this subdomain.
+        此操作<b>不可逆</b>。
+        与此子域关联的所有别名都将被删除。
+        </div>
+        <div class="alert alert-warning">
+        由于已删除的子域无法回收，即无法被其他人重复使用，
+        删除子域不会恢复子域配额。
+        删除后，您的子域配额仍为 {{ current_user.subdomain_quota }}。
+        我们建议禁用<b>catch-all</b>选项，而不是删除此子域。
       </div>
     {% else %}
       <div class="alert alert-danger">
-        This operation is <b>irreversible</b>.
-        All aliases associated with this domain will be deleted.
+        此操作<b>不可撤消</b>。
+        与此域关联的所有别名都将被删除。
       </div>
     {% endif %}
   </div>
   <form method="post">
     {{ csrf_form.csrf_token }}
     <input type="hidden" name="form-name" value="delete">
-    <span class="delete-custom-domain btn btn-danger">Delete {{ custom_domain.domain }}</span>
+    <span class="delete-custom-domain btn btn-danger">删除 {{ custom_domain.domain }}</span>
   </form>
 {% endblock %}
 {% block script %}
@@ -154,15 +149,15 @@
       let that = $(this);
 
       bootbox.confirm({
-        message: "All aliases associated with <b>{{ custom_domain.domain }}</b> will be also deleted. <br />" +
-          "This operation is not reversible, please confirm.",
+        message: "与 <b>{{ custom_domain.domain }}</b> 相关的所有别名也将被删除。<br />" +
+          "此操作不可逆，请确认。",
         buttons: {
           confirm: {
-            label: 'Yes, delete it',
+            label: '是的，确认删除',
             className: 'btn-danger'
           },
           cancel: {
-            label: 'Cancel',
+            label: '取消',
             className: 'btn-outline-primary'
           }
         },

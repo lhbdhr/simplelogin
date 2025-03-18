@@ -41,7 +41,7 @@ def phone_messages(reservation_id):
                     "id": message.id,
                     "from_number": message.from_number,
                     "body": message.body,
-                    "created_at": message.created_at.humanize(),
+                    "created_at": message.created_at.humanize(locale="zh_CN"),
                 }
                 for message in messages
             ],

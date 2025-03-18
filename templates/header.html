@@ -13,17 +13,17 @@
       <div class="d-flex order-lg-2 ml-auto">
         <div class="nav-item"
              data-toggle="dark-mode"
-             title="Toggle bright/dark mode">
+             title="亮色模式/深色模式">
           <i class="fe fe-moon"></i>
         </div>
         <div class="nav-item">
-          <a onclick="startIntro()" data-intro="Welcome to SimpleLogin!
+          <a onclick="startIntro()" data-intro="欢迎来到 原邮邮箱 ！
             <br />
             <br />
-            It seems that this is the first time you are here, let's walk through some SimpleLogin features together!
+            看来这是您第一次来这里，让我们一起了解一些 SimpleLogin 功能吧！
             <br />
             <br />
-            You can always show this tutorial again any time by clicking on this <i class=&quot;fe fe-help-circle&quot;></i> icon above 👆" data-step="1">
+            您可以随时通过单击上方的 <i class=&quot;fe fe-help-circle&quot;></i> 图标 👆" data-step="1"> 再次显示本教程
             <i class="fe fe-help-circle"></i>
           </a>
         </div>
@@ -42,7 +42,7 @@
                id="notifications">
             <div v-if="loading">Loading ...</div>
             <a href="{{ url_for("dashboard.notifications_route") }}"
-               class="mr-5 mb-2 float-right">See all notifications ➡</a>
+               class="mr-5 mb-2 float-right">查看所有通知 ➡</a>
             <div class="dropdown-item d-flex" v-for="notification in notifications">
               <div class="flex-grow-1">
                 <div v-html="notification.title || notification.message"
@@ -52,7 +52,7 @@
                             white-space: normal;
                             overflow: hidden"></div>
                 <div v-if="notification.title">
-                  <a :href="'/dashboard/notification/' + notification.id">More</a>
+                  <a :href="'/dashboard/notification/' + notification.id">更多</a>
                 </div>
                 <div class="small text-muted">[[notification.created_at]]</div>
               </div>
@@ -60,63 +60,63 @@
                 <i class="fe fe-check"
                    @click="markAsRead(notification)"
                    data-toggle="tooltip"
-                   title="mark as read"></i>
+                   title="标记已读"></i>
               </div>
             </div>
             <div class="text-center">
-              <button v-if="canLoadMore" @click="loadMore()" class="btn btn-link">Load more</button>
+              <button v-if="canLoadMore" @click="loadMore()" class="btn btn-link">加载更多</button>
             </div>
           </div>
         </div>
-        {% if ZENDESK_ENABLED %}
+<!--        {% if ZENDESK_ENABLED %}-->
 
-          <div id="help-btn" class="dropdown nav-item align-items-center">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>
-            <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
-              <div class="dropdown-item">
-                <a href="https://simplelogin.io/docs/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  Docs
-                  <i class="fa fa-external-link" aria-hidden="true"></i>
-                </a>
-              </div>
-              <div class="dropdown-item">
-                <a href="https://github.com/simple-login/app/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  Github repo
-                  <i class="fa fa-external-link" aria-hidden="true"></i>
-                </a>
-              </div>
-              <div class="dropdown-item">
-                <a href="https://github.com/simple-login/app/discussions"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  Forum
-                  <i class="fa fa-external-link" aria-hidden="true"></i>
-                </a>
-              </div>
-              <div class="dropdown-item">
-                <a href="/dashboard/support">Support</a>
-              </div>
-            </div>
-          </div>
-        {% else %}
-          <div class="nav-item">
-            <a href="https://simplelogin.io/docs/"
-               target="_blank"
-               rel="noopener noreferrer">
-              Docs
-              <i class="fa fa-external-link" aria-hidden="true"></i>
-            </a>
-          </div>
-        {% endif %}
+<!--          <div id="help-btn" class="dropdown nav-item align-items-center">-->
+<!--            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>-->
+<!--            <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">-->
+<!--              <div class="dropdown-item">-->
+<!--                <a href="https://simplelogin.io/docs/"-->
+<!--                   target="_blank"-->
+<!--                   rel="noopener noreferrer">-->
+<!--                  Docs-->
+<!--                  <i class="fa fa-external-link" aria-hidden="true"></i>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div class="dropdown-item">-->
+<!--                <a href="https://github.com/simple-login/app/"-->
+<!--                   target="_blank"-->
+<!--                   rel="noopener noreferrer">-->
+<!--                  Github repo-->
+<!--                  <i class="fa fa-external-link" aria-hidden="true"></i>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div class="dropdown-item">-->
+<!--                <a href="https://github.com/simple-login/app/discussions"-->
+<!--                   target="_blank"-->
+<!--                   rel="noopener noreferrer">-->
+<!--                  Forum-->
+<!--                  <i class="fa fa-external-link" aria-hidden="true"></i>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div class="dropdown-item">-->
+<!--                <a href="/dashboard/support">Support</a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        {% else %}-->
+<!--          <div class="nav-item">-->
+<!--            <a href="https://simplelogin.io/docs/"-->
+<!--               target="_blank"-->
+<!--               rel="noopener noreferrer">-->
+<!--              Docs-->
+<!--              <i class="fa fa-external-link" aria-hidden="true"></i>-->
+<!--            </a>-->
+<!--          </div>-->
+<!--        {% endif %}-->
         {% if current_user.should_show_upgrade_button() %}
 
           <div class="nav-item">
             <a href="{{ url_for("dashboard.pricing") }}"
-               class="btn btn-sm btn-outline-primary">Upgrade</a>
+               class="btn btn-sm btn-outline-primary">升级</a>
           </div>
         {% endif %}
         <div class="dropdown">
@@ -134,12 +134,12 @@
 
                 <small class="text-success d-block mt-1"
                        data-toggle="tooltip"
-                       title="When you signed up, you have a free 7-day Premium trial. After that your account will automatically be downgraded to the Free plan. During the trial, the only limit is you can't create more than {{ MAX_NB_EMAIL_FREE_PLAN }} aliases.">
-                  Premium expires {{ current_user.trial_end|dt }}
+                       title="注册后，您可以免费试用 7 天高级版。之后，您的帐户将自动降级为免费计划。试用期间，唯一的限制是您不能创建超过 {{ MAX_NB_EMAIL_FREE_PLAN }} 个别名。">
+                  会员计划到期时间： {{ current_user.trial_end|dt }}
                   <i class="fe fe-info"></i>
                 </small>
               {% elif current_user.is_premium() %}
-                <small class="text-success d-block mt-1">Premium</small>
+                <small class="text-success d-block mt-1">高级会员计划</small>
               {% endif %}
             </span>
           </a>
@@ -149,10 +149,10 @@
             </a>
             <a class="dropdown-item mb-3"
                href="{{ url_for("dashboard.account_setting") }}">
-              <i class="dropdown-icon fa fa-user"></i> Account settings
+              <i class="dropdown-icon fa fa-user"></i> 账户设置
             </a>
             <a class="dropdown-item" href="{{ url_for("auth.logout") }}">
-              <i class="dropdown-icon fe fe-log-out"></i> Sign out
+              <i class="dropdown-icon fe fe-log-out"></i> 退出登陆
             </a>
           </div>
         </div>

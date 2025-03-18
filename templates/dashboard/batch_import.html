@@ -1,27 +1,27 @@
 {% extends "default.html" %}
 
 {% set active_page = "setting" %}
-{% block title %}Alias Batch Import{% endblock %}
+{% block title %}Alias 批量导入{% endblock %}
 {% block default_content %}
 
   <div class="card">
     <div class="card-body">
-      <h1 class="h3">Alias Batch Import</h1>
+      <h1 class="h3">Alias 批量导入</h1>
       <div class="alert alert-primary">
-        Only aliases created with <b>your verified domains</b> can be imported.
+        仅可导入使用<b>您已验证的域</b>创建的别名。
         <br />
-        If mailboxes are set for an alias, they will only be linked if they already exist.
+        如果为别名设置了邮箱，则只有当它们已经存在时才会链接。
         <br />
-        Please make sure to use the csv template file.
+        请确保使用 csv 模板文件。
       </div>
       <p>
-        The import can take several minutes.
-        Please come back to this page to verify the import status.
-        <br />
-        If an alias already exists, it won't be imported.
+       导入可能需要几分钟。
+      请返回此页面以验证导入状态。
+      <br />
+      如果别名已存在，则不会导入。
       </p>
       <a href="{{ url_for('static', filename='batch_import_template.csv') }}"
-         download>Download CSV Template</a>
+         download>下载 CSV 模板</a>
       <hr />
       <form method="post" enctype="multipart/form-data" class="mt-4">
         {{ csrf_form.csrf_token }}
@@ -30,22 +30,22 @@
                name="alias-file"
                accept=".csv"
                class="form-control-file">
-        <label>
-          Only <b>.csv</b> file is supported.
+        <label class="mt-2">
+          仅支持 <b>.csv</b> 文件。
         </label>
         <br />
-        <button class="btn btn-success mt-2">Upload</button>
+        <button class="btn btn-success mt-2">上传</button>
       </form>
       {% if batch_imports %}
 
         <hr />
-        <h2 class="h3 mt-7">Batch imports</h2>
+        <h2 class="h3 mt-7">批量导入</h2>
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Uploaded</th>
-              <th scope="col">Number Alias Imported</th>
-              <th scope="col">Status</th>
+              <th scope="col">导入于</th>
+              <th scope="col">已导入别名数量</th>
+              <th scope="col">状态</th>
             </tr>
           </thead>
           <tbody>
@@ -57,9 +57,9 @@
                 <td>
                   {% if batch_import.processed %}
 
-                    Processed ✅
+                    已处理 ✅
                   {% else %}
-                    Pending
+                    待处理
                   {% endif %}
                 </td>
               </tr>

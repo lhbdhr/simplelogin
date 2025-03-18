@@ -1,28 +1,25 @@
 <div>
-  This is usually because your mailbox service thinks the email is <b>spam</b>.
+  这通常是因为您的邮箱服务认为该电子邮件是<b>垃圾邮件</b>。
 </div>
-<a href="/dashboard/refused_email" class="btn btn-primary">View bounced emails</a>
-<div>The email is automatically deleted in 7 days.</div>
+<a href="/dashboard/refused_email" class="btn btn-primary">查看退回的电子邮件</a>
+  <div>该电子邮件将在 7 天内自动删除。</div>
 <div>
-  Please consider the following options:
-  <br />
-  <ol>
-    <li>
-      If the email is not spam, you can create a
-      <a href="https://simplelogin.io/docs/getting-started/troubleshooting/">filter</a>
-      to explicitly allow all emails from SimpleLogin.
-      <br />
-    </li>
-    <li>
-      If this email is indeed spam, it means your alias {{ alias.email }} is now in the hands of a spammer.
-      You can either
-      <a href="{{ disable_alias_link }}">disable the alias</a>
-      or
-      <a href="{{ block_sender_link }}">block the sender</a>
-      if they send too many spam emails.
-    </li>
-  </ol>
+请考虑以下选项：
+<br />
+<ol>
+<li>
+  如果该电子邮件不是垃圾邮件，您可以将 原邮邮箱 的发件人添加到白名单，以明确允许来自 原邮邮箱 的所有电子邮件。
+<br />
+</li>
+<li>
+  如果这封电子邮件确实是垃圾邮件，则意味着您的别名 {{ alias.email }} 现在已落入垃圾邮件发送者的手中。
+  如果发件人发送了太多垃圾邮件，您可以
+  <a href="{{ disable_alias_link }}">禁用别名</a>
+  或
+  <a href="{{ block_sender_link }}">阻止发件人</a>
+</li>
+</ol>
 </div>
 <div class="alert alert-warning">
-  Please note that the alias can be automatically disabled if too many emails sent to it are bounced.
+  请注意，如果向别名发送的太多电子邮件被您的真实邮箱拒收，别名可能会自动禁用。
 </div>

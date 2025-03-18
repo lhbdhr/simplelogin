@@ -1,16 +1,18 @@
 {% extends "default.html" %}
 
 {% set active_page = "dashboard" %}
-{% block title %}Receive {{ alias.email }}{% endblock %}
+{% block title %}接收别名 {{ alias.email }}{% endblock %}
 {% block default_content %}
 
   <div class="card">
     <div class="card-body">
-      <h1 class="h3">Receive {{ alias.email }}</h1>
+      <h1 class="h3">接收别名 {{ alias.email }}</h1>
       <p>
-        You are invited to become the owner of the alias <b>{{ alias.email }}</b>
+        你将成为 <b>{{ alias.email }}</b> 的拥有者
       </p>
-      <p>Please choose the mailbox(es) that owns this alias 👇</p>
+      <p>
+        请选择拥有此别名的邮箱 👇
+      </p>
       <form method="post" class="mt-2">
         <select data-width="100%" class="mailbox-select" multiple name="mailbox_ids">
           {% for mailbox in mailboxes %}

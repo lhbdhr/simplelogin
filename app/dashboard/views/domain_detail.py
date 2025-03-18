@@ -29,7 +29,7 @@ from app.utils import random_string, CSRFValidationForm
 def domain_detail_dns(custom_domain_id):
     custom_domain: CustomDomain = CustomDomain.get(custom_domain_id)
     if not custom_domain or custom_domain.user_id != current_user.id:
-        flash("You cannot see this page", "warning")
+        flash("您无法看到此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     # generate a domain ownership txt token if needed
@@ -53,7 +53,7 @@ def domain_detail_dns(custom_domain_id):
             )
             if ownership_validation_result.success:
                 flash(
-                    "Domain ownership is verified. Please proceed to the other records setup",
+                    "域名所有权已验证。请继续设置其他记录",
                     "success",
                 )
                 return redirect(
@@ -64,7 +64,7 @@ def domain_detail_dns(custom_domain_id):
                     )
                 )
             else:
-                flash("We can't find the needed TXT record", "error")
+                flash("我们找不到所需的 TXT 记录", "error")
                 ownership_ok = False
                 ownership_errors = ownership_validation_result.errors
 
@@ -72,7 +72,7 @@ def domain_detail_dns(custom_domain_id):
             mx_validation_result = domain_validator.validate_mx_records(custom_domain)
             if mx_validation_result.success:
                 flash(
-                    "Your domain can start receiving emails. You can now use it to create alias",
+                    "您的域名可以开始接收电子邮件。您现在可以使用它来创建别名",
                     "success",
                 )
                 return redirect(
@@ -81,14 +81,14 @@ def domain_detail_dns(custom_domain_id):
                     )
                 )
             else:
-                flash("The MX record is not correctly set", "warning")
+                flash("MX 记录设置不正确", "warning")
                 mx_ok = False
                 mx_errors = mx_validation_result.errors
 
         elif request.form.get("form-name") == "check-spf":
             spf_validation_result = domain_validator.validate_spf_records(custom_domain)
             if spf_validation_result.success:
-                flash("SPF is setup correctly", "success")
+                flash("SPF 已设置正确", "success")
                 return redirect(
                     url_for(
                         "dashboard.domain_detail_dns", custom_domain_id=custom_domain.id
@@ -96,7 +96,7 @@ def domain_detail_dns(custom_domain_id):
                 )
             else:
                 flash(
-                    f"SPF: {EMAIL_DOMAIN} is not included in your SPF record.",
+                    f"SPF: {EMAIL_DOMAIN} 未包含在您的 SPF 记录中。",
                     "warning",
                 )
                 spf_ok = False
@@ -105,7 +105,7 @@ def domain_detail_dns(custom_domain_id):
         elif request.form.get("form-name") == "check-dkim":
             dkim_errors = domain_validator.validate_dkim_records(custom_domain)
             if len(dkim_errors) == 0:
-                flash("DKIM is setup correctly.", "success")
+                flash("DKIM 已设置正确.", "success")
                 return redirect(
                     url_for(
                         "dashboard.domain_detail_dns", custom_domain_id=custom_domain.id
@@ -113,14 +113,14 @@ def domain_detail_dns(custom_domain_id):
                 )
             else:
                 dkim_ok = False
-                flash("DKIM: the CNAME record is not correctly set", "warning")
+                flash("DKIM: CNAME 记录未正确设置", "warning")
 
         elif request.form.get("form-name") == "check-dmarc":
             dmarc_validation_result = domain_validator.validate_dmarc_records(
                 custom_domain
             )
             if dmarc_validation_result.success:
-                flash("DMARC is setup correctly", "success")
+                flash("DMARC 设置正确", "success")
                 return redirect(
                     url_for(
                         "dashboard.domain_detail_dns", custom_domain_id=custom_domain.id
@@ -128,7 +128,7 @@ def domain_detail_dns(custom_domain_id):
                 )
             else:
                 flash(
-                    "DMARC: The TXT record is not correctly set",
+                    "DMARC: TXT 记录设置不正确",
                     "warning",
                 )
                 dmarc_ok = False
@@ -156,7 +156,7 @@ def domain_detail(custom_domain_id):
     mailboxes = current_user.mailboxes()
 
     if not custom_domain or custom_domain.user_id != current_user.id:
-        flash("You cannot see this page", "warning")
+        flash("您无法看到此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     if request.method == "POST":
@@ -168,18 +168,18 @@ def domain_detail(custom_domain_id):
             emit_user_audit_log(
                 user=current_user,
                 action=UserAuditLogAction.UpdateCustomDomain,
-                message=f"Switched custom domain {custom_domain.id} ({custom_domain.domain}) catch all to {custom_domain.catch_all}",
+                message=f"切换域名邮箱 {custom_domain.id} ({custom_domain.domain}) 的 Catch-all 为 {custom_domain.catch_all}",
             )
             Session.commit()
 
             if custom_domain.catch_all:
                 flash(
-                    f"The catch-all has been enabled for {custom_domain.domain}",
+                    f"{custom_domain.domain} 的 Catch-all 已启用",
                     "success",
                 )
             else:
                 flash(
-                    f"The catch-all has been disabled for {custom_domain.domain}",
+                    f"{custom_domain.domain} 的 Catch-all 已禁用",
                     "warning",
                 )
             return redirect(
@@ -191,11 +191,11 @@ def domain_detail(custom_domain_id):
                 emit_user_audit_log(
                     user=current_user,
                     action=UserAuditLogAction.UpdateCustomDomain,
-                    message=f"Switched custom domain {custom_domain.id} ({custom_domain.domain}) name",
+                    message=f"已切换自定义域 {custom_domain.id} ({custom_domain.domain}) 名字",
                 )
                 Session.commit()
                 flash(
-                    f"Default alias name for Domain {custom_domain.domain} has been set",
+                    f"域的默认别名 {custom_domain.domain} 已设置",
                     "success",
                 )
             else:
@@ -207,7 +207,7 @@ def domain_detail(custom_domain_id):
                 )
                 Session.commit()
                 flash(
-                    f"Default alias name for Domain {custom_domain.domain} has been removed",
+                    f"域的默认别名 {custom_domain.domain} 已被删除",
                     "info",
                 )
 
@@ -221,18 +221,18 @@ def domain_detail(custom_domain_id):
             emit_user_audit_log(
                 user=current_user,
                 action=UserAuditLogAction.UpdateCustomDomain,
-                message=f"Switched custom domain {custom_domain.id} ({custom_domain.domain}) random prefix generation to {custom_domain.random_prefix_generation}",
+                message=f"已切换自定义域 {custom_domain.id} ({custom_domain.domain}) 随机前缀生成 {custom_domain.random_prefix_generation}",
             )
             Session.commit()
 
             if custom_domain.random_prefix_generation:
                 flash(
-                    f"Random prefix generation has been enabled for {custom_domain.domain}",
+                    f"{custom_domain.domain} 已启用随机前缀生成",
                     "success",
                 )
             else:
                 flash(
-                    f"Random prefix generation has been disabled for {custom_domain.domain}",
+                    f"{custom_domain.domain} 随机前缀生成已禁用",
                     "warning",
                 )
             return redirect(
@@ -247,7 +247,7 @@ def domain_detail(custom_domain_id):
             )
 
             if result.success:
-                flash(f"{custom_domain.domain} mailboxes has been updated", "success")
+                flash(f"{custom_domain.domain} 收件邮箱已更新", "success")
             else:
                 flash(result.reason.value, "warning")
 
@@ -261,8 +261,7 @@ def domain_detail(custom_domain_id):
             delete_custom_domain(custom_domain)
 
             flash(
-                f"{name} scheduled for deletion."
-                f"You will receive a confirmation email when the deletion is finished",
+                f"{name} 已安排删除。" f"删除完成后您将收到一封确认电子邮件",
                 "success",
             )
 
@@ -282,7 +281,7 @@ def domain_detail_trash(custom_domain_id):
     csrf_form = CSRFValidationForm()
     custom_domain = CustomDomain.get(custom_domain_id)
     if not custom_domain or custom_domain.user_id != current_user.id:
-        flash("You cannot see this page", "warning")
+        flash("您无法看到此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     if request.method == "POST":
@@ -293,7 +292,7 @@ def domain_detail_trash(custom_domain_id):
             DomainDeletedAlias.filter_by(domain_id=custom_domain.id).delete()
             Session.commit()
 
-            flash("All deleted aliases can now be re-created", "success")
+            flash("现在可以重新创建所有已删除的别名", "success")
             return redirect(
                 url_for(
                     "dashboard.domain_detail_trash", custom_domain_id=custom_domain.id
@@ -303,7 +302,7 @@ def domain_detail_trash(custom_domain_id):
             deleted_alias_id = request.form.get("deleted-alias-id")
             deleted_alias = DomainDeletedAlias.get(deleted_alias_id)
             if not deleted_alias or deleted_alias.domain_id != custom_domain.id:
-                flash("Unknown error, refresh the page", "warning")
+                flash("未知错误，请刷新页面", "warning")
                 return redirect(
                     url_for(
                         "dashboard.domain_detail_trash",
@@ -314,7 +313,7 @@ def domain_detail_trash(custom_domain_id):
             DomainDeletedAlias.delete(deleted_alias.id)
             Session.commit()
             flash(
-                f"{deleted_alias.email} can now be re-created",
+                f"{deleted_alias.email} 现在可以重新创建",
                 "success",
             )
 
@@ -370,7 +369,7 @@ def domain_detail_auto_create(custom_domain_id):
     )
 
     if not custom_domain or custom_domain.user_id != current_user.id:
-        flash("You cannot see this page", "warning")
+        flash("您无法看到此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     if request.method == "POST":
@@ -382,9 +381,7 @@ def domain_detail_auto_create(custom_domain_id):
                     if auto_create_rule.order == int(
                         new_auto_create_rule_form.order.data
                     ):
-                        flash(
-                            "Another rule with the same order already exists", "error"
-                        )
+                        flash("已存在另一条具有相同顺序的规则", "error")
                         break
                 else:
                     mailbox_ids = request.form.getlist("mailbox_ids")
@@ -397,7 +394,7 @@ def domain_detail_auto_create(custom_domain_id):
                             or mailbox.user_id != current_user.id
                             or not mailbox.verified
                         ):
-                            flash("Something went wrong, please retry", "warning")
+                            flash("发生错误，请重新尝试", "warning")
                             return redirect(
                                 url_for(
                                     "dashboard.domain_detail_auto_create",
@@ -407,7 +404,7 @@ def domain_detail_auto_create(custom_domain_id):
                         mailboxes.append(mailbox)
 
                     if not mailboxes:
-                        flash("You must select at least 1 mailbox", "warning")
+                        flash("你至少要选择一个收件邮箱", "warning")
                         return redirect(
                             url_for(
                                 "dashboard.domain_detail_auto_create",
@@ -419,7 +416,7 @@ def domain_detail_auto_create(custom_domain_id):
                         re.compile(new_auto_create_rule_form.regex.data)
                     except Exception:
                         flash(
-                            f"Invalid regex {new_auto_create_rule_form.regex.data}",
+                            f"无效的正则表达式 {new_auto_create_rule_form.regex.data}",
                             "error",
                         )
                         return redirect(
@@ -443,7 +440,7 @@ def domain_detail_auto_create(custom_domain_id):
 
                     Session.commit()
 
-                    flash("New auto create rule has been created", "success")
+                    flash("已创建新的自动创建规则", "success")
 
                     return redirect(
                         url_for(
@@ -456,7 +453,7 @@ def domain_detail_auto_create(custom_domain_id):
             rule: AutoCreateRule = AutoCreateRule.get(int(rule_id))
 
             if not rule or rule.custom_domain_id != custom_domain.id:
-                flash("Something wrong, please retry", "error")
+                flash("发生错误，请重新尝试", "error")
                 return redirect(
                     url_for(
                         "dashboard.domain_detail_auto_create",
@@ -467,7 +464,7 @@ def domain_detail_auto_create(custom_domain_id):
             rule_order = rule.order
             AutoCreateRule.delete(rule_id)
             Session.commit()
-            flash(f"Rule #{rule_order} has been deleted", "success")
+            flash(f"规则 #{rule_order} 已经被删除", "success")
             return redirect(
                 url_for(
                     "dashboard.domain_detail_auto_create",
@@ -482,13 +479,13 @@ def domain_detail_auto_create(custom_domain_id):
                 for rule in custom_domain.auto_create_rules:
                     if regex_match(rule.regex, local):
                         auto_create_test_result = (
-                            f"{local}@{custom_domain.domain} passes rule #{rule.order}"
+                            f"{local}@{custom_domain.domain} 属于规则 #{rule.order}"
                         )
                         auto_create_test_passed = True
                         break
                 else:  # no rule passes
                     auto_create_test_result = (
-                        f"{local}@{custom_domain.domain} doesn't pass any rule"
+                        f"{local}@{custom_domain.domain} 不属于任何规则"
                     )
 
                 return render_template(

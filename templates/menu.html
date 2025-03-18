@@ -3,7 +3,7 @@
     <a href="{{ url_for("dashboard.index") }}"
        class="nav-link {{ 'active' if active_page == 'dashboard' }}">
       <i class="fe fe-home"></i>
-      Aliases
+      别名邮箱
     </a>
   </li>
   {% if current_user.subdomain_is_available() %}
@@ -11,26 +11,26 @@
     <li class="nav-item">
       <a href="{{ url_for("dashboard.subdomain_route") }}"
          class="nav-link {{ 'active' if active_page == 'subdomain' }}">
-        <i class="fe fe-server"></i> Subdomains
+        <i class="fe fe-server"></i> 子域名
       </a>
     </li>
   {% endif %}
   <li class="nav-item">
     <a href="{{ url_for("dashboard.mailbox_route") }}"
        class="nav-link {{ 'active' if active_page == 'mailbox' }}">
-      <i class="fe fe-inbox"></i> Mailboxes
+      <i class="fe fe-inbox"></i> 收件邮箱
     </a>
   </li>
   <li class="nav-item">
     <a href="{{ url_for("dashboard.custom_domain") }}"
        class="nav-link {{ 'active' if active_page == 'custom_domain' }}">
-      <i class="fe fe-server"></i> Domains
+      <i class="fe fe-server"></i> 域名邮箱
     </a>
   </li>
   <li class="nav-item">
     <a href="{{ url_for("dashboard.directory") }}"
        class="nav-link {{ 'active' if active_page == 'directory' }}">
-      <i class="fe fe-folder"></i> Directories
+      <i class="fe fe-folder"></i> 目录邮箱
     </a>
   </li>
   <!--
@@ -62,7 +62,7 @@
     <a href="{{ url_for("dashboard.setting") }}"
        class="nav-link {{ 'active' if active_page == 'setting' }}">
       <i class="fe fe-settings"></i>
-      Settings
+      设置
     </a>
   </li>
   {#  <li class="nav-item">#}
@@ -78,10 +78,10 @@
       <a href="{{ url_for("phone.index") }}"
          class="nav-link {{ 'active' if active_page == 'phone' }}">
         <i class="fe fe-phone"></i>
-        Phone
+        手机
         <span class="badge badge-warning"
               style="line-height: .7em;
-                     margin-top: 2px">Beta</span>
+                     margin-top: 2px">测试版</span>
       </a>
     </li>
   {% endif %}
@@ -93,33 +93,33 @@
       </a>
     </li>
   {% endif %}
-  {% if ZENDESK_ENABLED %}
+<!--  {% if ZENDESK_ENABLED %}-->
 
-    <li class="nav-item">
-      <div id="help-menu-item" class="dropdown nav-item align-items-center mb-3">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>
-        <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
-          <div class="dropdown-item">
-            <a href="https://simplelogin.io/docs/"
-               target="_blank"
-               rel="noopener noreferrer">
-              Docs
-              <i class="fa fa-external-link" aria-hidden="true"></i>
-            </a>
-          </div>
-          <div class="dropdown-item">
-            <a href="https://github.com/simple-login/app/discussions"
-               target="_blank"
-               rel="noopener noreferrer">
-              Forum
-              <i class="fa fa-external-link" aria-hidden="true"></i>
-            </a>
-          </div>
-          <div class="dropdown-item">
-            <a href="/dashboard/support">Support</a>
-          </div>
-        </div>
-      </div>
-    </li>
-  {% endif %}
+<!--    <li class="nav-item">-->
+<!--      <div id="help-menu-item" class="dropdown nav-item align-items-center mb-3">-->
+<!--        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>-->
+<!--        <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">-->
+<!--          <div class="dropdown-item">-->
+<!--            <a href="https://simplelogin.io/docs/"-->
+<!--               target="_blank"-->
+<!--               rel="noopener noreferrer">-->
+<!--              Docs-->
+<!--              <i class="fa fa-external-link" aria-hidden="true"></i>-->
+<!--            </a>-->
+<!--          </div>-->
+<!--          <div class="dropdown-item">-->
+<!--            <a href="https://github.com/simple-login/app/discussions"-->
+<!--               target="_blank"-->
+<!--               rel="noopener noreferrer">-->
+<!--              Forum-->
+<!--              <i class="fa fa-external-link" aria-hidden="true"></i>-->
+<!--            </a>-->
+<!--          </div>-->
+<!--          <div class="dropdown-item">-->
+<!--            <a href="/dashboard/support">Support</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </li>-->
+<!--  {% endif %}-->
 </ul>

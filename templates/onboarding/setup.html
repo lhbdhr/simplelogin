@@ -14,26 +14,26 @@
     </div>
     <!-- Text container -->
     <div class="mt-8 mb-4 text-center">
-      <h2 class="text-dark" style="font-size:2rem">Let's take back control of your inbox!</h2>
+      <h2 class="text-dark" style="font-size:2rem">让您重新掌控您的收件箱！</h2>
     </div>
     <div class="mt-8 text-center">
       {% if current_user != None and current_user.is_authenticated %}
 
         <h2 class="text-black-50" style="font-size:2rem">
-          Automatically performing extension setup.
-          If the setup doesn't start in a couple seconds click <a onclick="sendSetupMessage()" class="text-primary">here</a>
+          自动执行扩展程序设置。
+          如果几秒钟后设置仍未启动，请点击<a onclick="sendSetupMessage()" class="text-primary">此处</a>
         </h2>
       {% else %}
         <a class="mx-6 p-4 text-decoration-none"
            style="background:black;
                   color:white"
-           href="{{ url_for('auth.register', next=url_for('onboarding.setup_done') ) }}">Create a new account</a>
+           href="{{ url_for('auth.register', next=url_for('onboarding.setup_done') ) }}">创建一个新账号</a>
         <a class="mx-6 p-4 text-decoration-none"
            style="background:white;
                   color:black;
                   border-radius: 2px;
                   border:1px solid black"
-           href="{{ url_for('auth.login', next=url_for('onboarding.setup_done') ) }}">I already have an account</a>
+           href="{{ url_for('auth.login', next=url_for('onboarding.setup_done') ) }}">我已经有一个账号了</a>
       {% endif %}
     </div>
   </div>

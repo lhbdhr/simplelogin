@@ -1,9 +1,9 @@
 <div>
-  An email from {{ from_header }} to {{ alias.email }} is put into Quarantine as it fails DMARC check.
+  一封来自 {{ from_header }} 发往 {{ alias.email }} 的电子邮件因未通过 DMARC 检查而被隔离。
   <br />
   <a href="https://en.wikipedia.org/wiki/DMARC">DMARC</a>
-  is an email authentication protocol designed for detecting
-  phishing. When an email fails DMARC, it can be considered as suspicious.
-</div>
-<a href="/dashboard/refused_email" class="btn btn-primary">View quarantined emails</a>
-<div>The email is automatically deleted in 7 days.</div>
+  是一种用于检测
+  网络钓鱼的电子邮件身份验证协议。当电子邮件未通过 DMARC 检查时，可视为可疑电子邮件。
+  </div>
+  <a href="/dashboard/refused_email" class="btn btn-primary">查看隔离的电子邮件</a>
+<div>该电子邮件将在 7 天内自动删除。</div>

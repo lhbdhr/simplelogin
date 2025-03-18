@@ -1,29 +1,28 @@
 {% extends "default.html" %}
 
 {% set active_page = "dashboard" %}
-{% block title %}Support{% endblock %}
+{% block title %}支持{% endblock %}
 {% block default_content %}
 
   <div class="col pb-3">
     <div class="card">
       <div class="card-body">
-        <div class="card-title mb-3">Report a problem</div>
+        <div class="card-title mb-3">报告问题</div>
         <div class="alert alert-info">
-          If an email cannot be delivered to your mailbox, please check
+          如果电子邮件无法送达您的邮箱，请检查
           <a href="{{ url_for("dashboard.notifications_route") }}">
-            your
-            notifications
+            您的通知
           </a>
-          for error messages.
+          如果遇到错误消息。
           <br />
-          For generic questions, i.e. not related to your account, we recommend to post the question on
-          our
-          <a href="https://www.reddit.com/r/Simplelogin/">Reddit</a> or <a href="https://github.com/simple-login/app/discussions">forum</a>
-          where our community can help answer the question
-          and other people with the same question can find the answer there.
+          对于一般性问题，即与您的帐户无关的问题，我们建议将问题发布到
+          我们的
+          <a href="https://t.me/yuanyou_de">原邮邮箱官方TG交流群</a> 或 <a href="https://t.me/yuanyou_official">官方TG频道</a>
+          我们的社区可以帮助回答问题
+          并且其他有同样问题的人可以在那里找到答案。
         </div>
         <div class="alert alert-warning">
-          A support ticket will be created in Zendesk. Please do not include any sensitive information in the ticket.
+          Zendesk 中将创建一张支持单。请不要在单中包含任何敏感信息。
         </div>
         <form id="supportZendeskForm" method="post" enctype="multipart/form-data">
           <div class="mt-4 mb-5">

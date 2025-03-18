@@ -1,31 +1,30 @@
 {% extends "dashboard/domain_detail/base.html" %}
 
 {% set domain_detail_page = "auto_create" %}
-{% block title %}{{ custom_domain.domain }} Auto Create Rules{% endblock %}
+{% block title %}{{ custom_domain.domain }} 自动创建规则 {% endblock %}
 {% block domain_detail_content %}
 
-  <h1 class="h2 mb-1">{{ custom_domain.domain }} auto create alias rules</h1>
+  <h1 class="h2 mb-1">{{ custom_domain.domain }} 自动创建别名规则 </h1>
   <div>
-    <span class="badge badge-info">Advanced</span>
-    <span class="badge badge-warning">Beta</span>
+    <span class="badge badge-info">高级设置</span>
+    <span class="badge badge-warning">测试版</span>
   </div>
   {% if custom_domain.catch_all %}
 
-    <div class="alert alert-warning mt-3">Rules are ineffective when catch-all is enabled.</div>
+    <div class="alert alert-warning mt-3">当启用 catch-all 时，规则无效。</div>
   {% endif %}
   <div class="{% if custom_domain.catch_all %}
      disabled-content{% endif %}">
     <div class="mt-3 mb-2">
-      For a greater control than a simple catch-all, you can define a set of <b>rules</b> to auto create aliases.
+      为了获得比简单的 catch-all 更大的控制权，您可以定义一组<b>规则</b>来自动创建别名。
       <br />
-      A rule is based on a regular expression (<b>regex</b>): if an alias <b>fully</b> matches the expression,
-      it'll be automatically created.
+      规则基于正则表达式 (<b>regex</b>)：如果别名<b>完全</b>匹配表达式，
+      它将自动创建。
     </div>
     <div class="alert alert-info">
-      Only the <b>local</b> part of the alias (i.e. <b>@{{ custom_domain.domain }}</b> is ignored) during the
-      regex test.
+      正则表达式测试期间仅忽略别名的 <b>local</b> 部分（即 <b>@{{ custom_domain.domain }}</b>）。
     </div>
-    <div class="alert alert-info">When there are several rules, rules will be evaluated by their order.</div>
+    <div class="alert alert-info">当有多条规则时，规则将按其顺序进行评估。</div>
     {% if custom_domain.auto_create_rules | length > 0 %}
 
       <div class="mt-2" id="rule-list">
@@ -33,10 +32,10 @@
 
           <div class="card">
             <div class="card-body">
-              Order: <b>{{ auto_create_rule.order }}</b>
+              顺序: <b>{{ auto_create_rule.order }}</b>
               <br />
               <input readonly value="{{ auto_create_rule.regex }}" class="form-control">
-              New alias will belong to
+                新别名将属于
               {% for mailbox in auto_create_rule.mailboxes %}
 
                 <b>{{ mailbox.email }}</b>
@@ -45,7 +44,7 @@
               <form method="post" class="mt-2">
                 <input type="hidden" name="form-name" value="delete-auto-create-rule">
                 <input type="hidden" name="rule-id" value="{{ auto_create_rule.id }}">
-                <button class="btn btn-outline-danger btn-sm float-right">Delete</button>
+                <button class="btn btn-outline-danger btn-sm float-right">删除</button>
               </form>
             </div>
           </div>
@@ -54,35 +53,35 @@
     {% endif %}
     <div class="mt-2" id="new-rule">
       <hr />
-      <h3>New rule</h3>
+      <h3>新建规则</h3>
       <form method="post" action="#rule-list" data-parsley-validate>
         <input type="hidden" name="form-name" value="create-auto-create-rule">
         {{ new_auto_create_rule_form.csrf_token }}
         <div class="form-group">
-          <label>Regex</label>
+          <label>正则表达式</label>
           {{ new_auto_create_rule_form.regex(class="form-control",
                     placeholder="prefix.*") }}
           {{ render_field_errors(new_auto_create_rule_form.regex) }}
-          <div class="small-text">
-            For example, if you want aliases that starts with <b>prefix</b> to be automatically created, you can set
-            the
-            regex to <em data-toggle="tooltip"
-     title="Click to copy"
-     class="clipboard"
-     data-clipboard-text="prefix.*">prefix.*</em>
+          <div class="small-text mt-2">
+            例如，如果您希望自动创建以 <b>prefix</b> 开头的别名，则可以将
+            正则表达式设置为
+            <em data-toggle="tooltip"
+            title="Click to copy"
+            class="clipboard"
+            data-clipboard-text="prefix.*">prefix.*</em>
             <br />
-            If you want aliases that ends with <b>suffix</b> to be automatically created, you can use the regex
+            如果您希望自动创建以 <b>suffix</b> 结尾的别名，可以使用正则表达式
             <em data-toggle="tooltip"
                 title="Click to copy"
                 class="clipboard"
                 data-clipboard-text=".*suffix">.*suffix</em>
             <br />
-            To test out regex, we recommend using regex tester tool like
+            要测试正则表达式，我们建议使用正则表达式测试工具，例如
             <a href="https://regex101.com" target="_blank" rel="noopener noreferrer">https://regex101.com↗</a>
           </div>
         </div>
         <div class="form-group">
-          <label>Order</label>
+          <label>顺序</label>
           {{ new_auto_create_rule_form.order(class="form-control", placeholder="10", min=1, value=1, type="number") }}
           {{ render_field_errors(new_auto_create_rule_form.order) }}
         </div>
@@ -100,14 +99,14 @@
             </select>
           </div>
         </div>
-        <button class="btn btn-primary mt-2">Create</button>
+        <button class="btn btn-primary mt-2">创建规则</button>
       </form>
     </div>
     <div id="debug-zone">
       <hr />
-      <h3>Debug Zone</h3>
-      <p>You can test whether an alias will be automatically created given the rules above</p>
-      <div class="alert alert-info">No worries, no alias will be created during the test :)</div>
+      <h3>规则测试</h3>
+      <p>您可以测试是否可以根据上述规则自动创建别名</p>
+      <div class="alert alert-info">不用担心，测试期间不会创建别名:)</div>
       <form method="post" action="#debug-zone">
         <input type="hidden" name="form-name" value="test-auto-create-rule">
         {{ auto_create_test_form.csrf_token }}
@@ -119,7 +118,7 @@
           </div>
         </div>
         <div class="form-group">
-          <button class="btn btn-outline-primary">Test</button>
+          <button class="btn btn-outline-primary">测试</button>
         </div>
       </form>
       {% if auto_create_test_result %}

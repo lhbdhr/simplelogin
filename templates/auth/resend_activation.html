@@ -1,24 +1,24 @@
 {% extends "single.html" %}
 
-{% block title %}Resend activation email{% endblock %}
+{% block title %}重新发送激活电子邮件{% endblock %}
 {% block single_content %}
 
   <form class="card" method="post">
     {{ form.csrf_token }}
     <div class="card-body p-6">
-      <div class="card-title">Resend activation email</div>
+      <div class="card-title">重新发送激活电子邮件</div>
       <div class="form-group">
-        <label class="form-label">Email address</label>
+        <label class="form-label">邮箱地址</label>
         {{ form.email(class="form-control", type="email") }}
         {{ render_field_errors(form.email) }}
       </div>
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary btn-block">Resend</button>
+        <button type="submit" class="btn btn-primary btn-block">重新发送</button>
       </div>
     </div>
   </form>
   <div class="text-center text-muted">
-    Don't have account yet?
-    <a href="{{ url_for("auth.register") }}">Sign up</a>
+    还没有账号？
+    <a href="{{ url_for("auth.register") }}">注册账号</a>
   </div>
 {% endblock %}

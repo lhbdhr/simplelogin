@@ -1,23 +1,23 @@
 {% extends "default.html" %}
 
 {% set active_page = "dashboard" %}
-{% block title %}Custom Alias{% endblock %}
+{% block title %}自定义别名邮箱{% endblock %}
 {% block default_content %}
 
   <div class="card">
     <div class="card-body">
-      <h1 class="h3">New Custom Alias</h1>
+      <h1 class="h3">新的自定义别名邮箱</h1>
       {% if  user_custom_domains|length == 0 and not DISABLE_ALIAS_SUFFIX %}
 
         <div class="row">
           <div class="col p-1">
             <div class="alert alert-primary" role="alert">
-              You might notice a random word after the dot(<em>.</em>) in the alias.
-              This part is to avoid a person taking all the "nice" aliases like
-              <b>hello@{{ FIRST_ALIAS_DOMAIN }}</b>,
-              <b>me@{{ FIRST_ALIAS_DOMAIN }}</b>, etc.
+              您可能会注意到别名中的点 (<em>.</em>) 后面有一个随机单词。
+              此部分是为了避免有人使用所有“好”的别名，例如
+              <b>hello@{{ FIRST_ALIAS_DOMAIN }}</b>、
+              <b>me@{{ FIRST_ALIAS_DOMAIN }}</b> 等。
               <br />
-              If you add your own domain (or subdomain), this restriction is removed, and you can fully customize the alias.
+              如果您添加自己的域（或子域），则此限制将被删除，您可以完全自定义别名。
               <br />
             </div>
           </div>
@@ -25,38 +25,38 @@
       {% endif %}
       <form method="post" data-parsley-validate>
         <div class="row mb-2">
-          <div class="col-sm-6 mb-1 p-1" style="min-width: 4em">
+          <div class="col-sm-4 mb-1 p-1" style="min-width: 4em">
             <input name="prefix"
                    class="form-control"
                    id="prefix"
                    type="text"
                    data-parsley-pattern="[0-9a-z-_.]{1,}"
                    data-parsley-trigger="change"
-                   data-parsley-error-message="Only lowercase letters, dots, numbers, dashes (-) and underscores (_) are currently supported."
+                   data-parsley-error-message="目前仅支持小写字母、点、数字、破折号 (-) 和下划线 (_)。"
                    maxlength="40"
-                   placeholder="Alias prefix, for example newsletter.com-123_xyz"
+                   placeholder="别名前缀，例如 newsletter.com-123_xyz"
                    autofocus
                    required>
           </div>
-          <div class="col-sm-6 p-1">
+          <div class="col-sm-8 p-1">
             <select class="form-control" name="signed-alias-suffix">
               {% for alias_suffix in alias_suffixes %}
 
                 <option value="{{ alias_suffix.signed_suffix }}" {% if alias_suffix.is_premium %}
-                   title="Only available to Premium accounts" {% elif not alias_suffix.is_custom and at_least_a_premium_domain %} title="Available to all accounts" {% endif %}>
+                   title="仅适用于高级帐户" {% elif not alias_suffix.is_custom and at_least_a_premium_domain %} title="适用于所有帐户" {% endif %}>
                   {% if alias_suffix.is_custom %}
                     {% if alias_suffix.mx_verified %}
 
-                      {{ alias_suffix.suffix }} (your domain)
+                      {{ alias_suffix.suffix }} (你的域名)
                     {% else %}
-                      {{ alias_suffix.suffix }} (your domain, not MX verified yet)
+                      {{ alias_suffix.suffix }} (你的域名, MX 记录未验证，验证通过才可接收邮件)
                     {% endif %}
                   {% else %}
                     {% if alias_suffix.is_premium %}
 
-                      {{ alias_suffix.suffix }} (Premium domain)
+                      {{ alias_suffix.suffix }} (仅高级会员可用)
                     {% else %}
-                      {{ alias_suffix.suffix }} (Public domain)
+                      {{ alias_suffix.suffix }} (公共域名)
                     {% endif %}
                   {% endif %}
                 </option>
@@ -77,21 +77,21 @@
                 <option value="{{ mailbox.id }}" {% if mailbox.id == current_user.default_mailbox_id %}selected{% endif %}>{{ mailbox.email }}</option>
               {% endfor %}
             </select>
-            <div class="small-text">The mailbox(es) that owns this alias.</div>
+            <div class="small-text mt-2">拥有该别名的收件邮箱</div>
           </div>
         </div>
         <div class="row mb-2">
           <div class="col p-1">
             <textarea name="note"
-                      class="form-control"
-                      rows="3"
-                      placeholder="Note, can be anything to help you remember why you created this alias. This field is optional."></textarea>
+              class="form-control"
+              rows="3"
+              placeholder="注意，可以是任何内容，以帮助您记住创建此别名的原因。此字段是可选的。"></textarea>
           </div>
         </div>
         <div class="row">
           <div class="col p-1">
             {{ csrf_form.csrf_token }}
-            <button type="submit" id="create" class="btn btn-primary mt-1">Create</button>
+            <button type="submit" id="create" class="btn btn-primary mt-1">创建</button>
           </div>
         </div>
       </form>
@@ -115,12 +115,12 @@
       let prefix = $('#prefix').val();
 
       if (mailbox_ids.length == 0) {
-        toastr.error("You must select at least a mailbox", "Error");
+        toastr.error("您必须至少选择一个邮箱", "Error");
         return;
       }
 
       if (!prefix) {
-        toastr.error("Alias cannot be empty", "Error");
+        toastr.error("别名不能为空", "Error");
         return;
       }
 

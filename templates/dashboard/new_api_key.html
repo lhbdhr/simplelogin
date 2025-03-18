@@ -6,8 +6,8 @@
 
   <div class="card">
     <div class="card-body">
-      <h1 class="h3">New API Key {{ api_key.name }} is created</h1>
-      <div class="alert alert-warning">For security reasons, API Key is only visible when it is created.</div>
+      <h1 class="h3">已创建新 API 密钥 {{ api_key.name }}</h1>
+      <div class="alert alert-warning">出于安全原因，API Key 仅在创建时可见。</div>
       <div class="input-group mb-2">
         <input class="form-control"
                id="apikey-{{ api_key.id }}"
@@ -25,7 +25,7 @@
               data-clipboard-action="copy"
               data-clipboard-text="{{ api_key.code }}"
               data-clipboard-target="#apikey-{{ api_key.id }}">
-        Copy &nbsp; &nbsp; <i class="fe fe-clipboard"></i>
+        复制 &nbsp; &nbsp; <i class="fe fe-clipboard"></i>
       </button>
     </div>
   </div>
