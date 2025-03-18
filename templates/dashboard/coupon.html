@@ -16,36 +16,35 @@
       }
 </style>
 {% endblock %}
-{% block title %}Coupon{% endblock %}
+{% block title %}高级会员兑换券{% endblock %}
 {% block default_content %}
 
 {% if can_use_coupon %}
 
 <div class="card">
 <div class="card-body">
-<h1 class="h2">Coupon</h1>
-<div class="mb-4">Please enter the coupon here to upgrade your account or extend your current subscription.</div>
+<h1 class="h2">高级会员兑换券</h1>
+<div class="mb-4">请在此处输入兑换券来升级您的帐户或延长您当前的订阅。</div>
 <form method="post">
 {{ coupon_form.csrf_token }}
-{{ coupon_form.code(class="form-control", placeholder="Licence Code") }}
+{{ coupon_form.code(class="form-control", placeholder="兑换码") }}
 {{ render_field_errors(coupon_form.code) }}
-<button class="btn btn-success mt-2">Apply</button>
+<button class="btn btn-success mt-2">应用</button>
 </form>
 </div>
 </div>
 {% endif %}
 <div class="card">
 <div class="card-body">
-<h2>1-year coupon</h2>
+<h2>1 年期兑换券</h2>
 <div class="mb-3">
-You can buy a 1-year coupon that allows anyone to have the SimpleLogin premium for 1 year.
-Can be an idea for a gift card :).
-After the payment, the coupon will be sent to you by email.
+您可以购买 1 年期兑换券，任何人都可以使用 原邮邮箱 高级会员 1 年。
+可以作为礼品卡 :)。
+付款后，兑换券将通过电子邮件发送给您。
 </div>
-<div class="alert alert-info">The coupon must be used before {{ max_coupon_date.date().isoformat() }}</div>
+<div class="alert alert-info">兑换券必须在 {{ max_coupon_date.date().isoformat() }}</div>
 <a href="#!" class="paddle_button btn btn-primary" data-product="{{ PADDLE_COUPON_ID }}">
-Buy 1-year SimpleLogin
-coupon
+购买 1 年期兑换券
 </a>
 </div>
 </div>

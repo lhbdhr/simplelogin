@@ -541,7 +541,7 @@ def verify_receipt(receipt_data, user, password) -> Optional[AppleSubscription]:
             "Update AppleSubscription for user %s, expired at %s (%s), plan %s",
             user,
             expires_date,
-            expires_date.humanize(),
+            expires_date.humanize(locale="zh_CN"),
             plan,
         )
         apple_sub.receipt_data = receipt_data

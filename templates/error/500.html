@@ -1,16 +1,16 @@
 {% extends "error.html" %}
 
-{% block error_name %}Server error{% endblock %}
+{% block error_name %}服务器错误{% endblock %}
 {% block error_description %}
 
-  Looks like we are having some server issues...
-  <br />
-  <br />
-  We are notified and will look at this issue asap!
+看起来我们遇到了一些服务器问题...
+<br />
+<br />
+我们已收到通知，将尽快处理此问题！
 {% endblock %}
-{% block suggestion %}
+{% block suggestions %}
 
-  <a class="btn btn-primary" href="javascript:history.back()">
-    <i class="fe fe-arrow-left mr-2"></i>Go Back
-  </a>
+<a class="btn btn-primary" href="/">
+    <i class="fe fe-arrow-left mr-2"></i>返回首页
+</a>
 {% endblock %}

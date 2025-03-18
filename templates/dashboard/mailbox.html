@@ -1,13 +1,13 @@
 {% extends "default.html" %}
 
 {% set active_page = "mailbox" %}
-{% block title %}Mailboxes{% endblock %}
+{% block title %}收件邮箱{% endblock %}
 {% block default_content %}
 
   <div class="row">
     <div class="col">
       <h1 class="h3">
-        Mailboxes
+        收件邮箱
         <a class="ml-3 text-info"
            style="font-size: 12px"
            data-toggle="collapse"
@@ -15,28 +15,26 @@
            role="button"
            aria-expanded="false"
            aria-controls="collapseExample">
-          How to use <i class="fe fe-chevrons-down"></i>
+          如何使用 <i class="fe fe-chevrons-down"></i>
         </a>
       </h1>
       {% if not current_user.is_premium() %}
 
-        <div class="alert alert-danger" role="alert">This feature is only available in premium plan.</div>
+        <div class="alert alert-danger" role="alert">此功能仅在高级计划中可用。</div>
       {% endif %}
       <div class="alert alert-primary collapse {% if mailboxes|length == 1 %}show{% endif %}" id="howtouse" role="alert">
-        A <em>mailbox</em> is just another personal email address. When creating a new alias, you could choose
-        the
-        mailbox that <em>owns</em> this alias, i.e:
+        <em>收件邮箱</em> 只是另一个个人电子邮件地址。创建新别名时，您可以选择
+        <em>拥有</em>此别名的邮箱，即：
         <br />
-        - all emails sent to this alias will be forwarded to this mailbox
+        - 发送到此别名的所有电子邮件都将转发到此邮箱
         <br />
-        - from this mailbox, you can reply/send emails from the alias.
-        <br />
-        <br />
-        When you signed up, a mailbox is automatically created with your email <b>{{ current_user.email }}</b>
+        - 从此邮箱，您可以从别名回复/发送电子邮件。
         <br />
         <br />
-        The mailbox doesn't have to be your email: it can be your friend's email
-        if you want to create aliases for your buddy.
+        当您注册时，将自动创建一个邮箱，其中包含您的电子邮件 <b>{{ current_user.email }}</b>
+        <br />
+        <br />
+        邮箱也不一定必须是您的电子邮件：如果您想为您的好友创建别名，它可以是您朋友的电子邮件。
       </div>
       <div class="row">
         {% for mailbox in mailboxes %}
@@ -50,34 +48,34 @@
 
                     <span class="cursor"
                           data-toggle="tooltip"
-                          data-original-title="Mailbox Verified">✅</span>
+                          data-original-title="收件邮箱已验证">✅</span>
                   {% else %}
                     <span class="cursor"
                           data-toggle="tooltip"
-                          data-original-title="Mailbox Not Verified">🚫</span>
+                          data-original-title="收件邮箱未验证">🚫</span>
                   {% endif %}
                   {% if mailbox.pgp_enabled() %}
 
                     <span class="cursor"
                           data-toggle="tooltip"
-                          data-original-title="PGP Enabled">🗝</span>
+                          data-original-title="PGP 已启用">🗝</span>
                   {% endif %}
                   {% if mailbox.id == current_user.default_mailbox_id %}
 
                     <div class="badge badge-primary float-right"
                          data-toggle="tooltip"
-                         title="When a new random alias is created, it belongs to the default mailbox">
-                      Default Mailbox
+                         title="创建新的随机别名时，它属于默认邮箱">
+                      默认收件邮箱
                     </div>
                   {% endif %}
                 </h5>
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Created {{ mailbox.created_at | dt }}
+                  创建于 {{ mailbox.created_at | dt }}
                   <br />
-                  <span class="font-weight-bold">{{ mailbox.nb_alias() }}</span> aliases.
+                  <span class="font-weight-bold">{{ mailbox.nb_alias() }}</span> 个别名.
                   <br />
                 </h6>
-                <a href="{{ url_for('dashboard.mailbox_detail_route', mailbox_id=mailbox.id) }}">Edit
+                <a href="{{ url_for('dashboard.mailbox_detail_route', mailbox_id=mailbox.id) }}">编辑
                 ➡</a>
               </div>
               <div class="card-footer p-0">
@@ -90,7 +88,7 @@
                         <input type="hidden" name="form-name" value="set-default">
                         <input type="hidden" class="mailbox" value="{{ mailbox.email }}">
                         <input type="hidden" name="mailbox_id" value="{{ mailbox.id }}">
-                        <button class="card-link btn btn-link {% if mailbox.id == current_user.default_mailbox_id %}disabled{% endif %}">Set As Default Mailbox</button>
+                        <button class="card-link btn btn-link {% if mailbox.id == current_user.default_mailbox_id %}disabled{% endif %}">设置成默认收件邮箱</button>
                       </form>
                     </div>
                   {% endif %}
@@ -101,16 +99,16 @@
                       <input type="hidden" class="mailbox" value="{{ mailbox.email }}">
                       <input type="hidden" name="mailbox_id" value="{{ mailbox.id }}">
                       <select hidden name="transfer_mailbox_id" value="">
-                        <option value="-1">Delete my aliases</option>
+                        <option value="-1">删除这些别名</option>
                         {% for mailbox_opt in mailboxes %}
 
                           {% if mailbox_opt.verified and mailbox_opt.id != mailbox.id %}
 
-                            <option value="{{ mailbox_opt.id }}">{{ mailbox_opt.email }}</option>
+                            <option value="{{ mailbox_opt.id }}">将别名转移至 {{ mailbox_opt.email }}</option>
                           {% endif %}
                         {% endfor %}
                       </select>
-                      <span class="card-link btn btn-link text-danger float-right delete-mailbox {% if mailbox.id == current_user.default_mailbox_id %}disabled{% endif %}">Delete</span>
+                      <span class="card-link btn btn-link text-danger float-right delete-mailbox {% if mailbox.id == current_user.default_mailbox_id %}disabled{% endif %}">删除</span>
                     </form>
                   </div>
                 </div>
@@ -122,11 +120,11 @@
       <form method="post" class="mt-2">
         {{ new_mailbox_form.csrf_token }}
         <input type="hidden" name="form-name" value="create">
-        <h2 class="h4">New Mailbox</h2>
+        <h2 class="h4">新的 收件邮箱</h2>
         {{ new_mailbox_form.email(class="form-control", placeholder="email@example.com") }}
         {{ render_field_errors(new_mailbox_form.email) }}
-        <div class="small-text">A mailbox can't be a disposable or forwarding email address.</div>
-        <button class="btn btn-primary mt-2">Create</button>
+        <div class="small-text mt-2">邮箱不能是一次性的或者转发的电子邮件地址。</div>
+        <button class="btn btn-primary mt-2">创建</button>
       </form>
     </div>
   </div>
@@ -141,22 +139,22 @@
             let inputOptions = new_mailboxes.map((index, option) => { return {["value"]: option.value, ["text"]: option.text}}).toArray()
 
             let that = $(this);
-            let message = `All aliases owned by the mailbox <b>${mailbox}</b> will be also deleted.<br>` +
-                "You can choose to transfer them to a different mailbox:<br><br>";
+            let message = `邮箱 <b>${mailbox} 拥有的所有别名也将被删除。<br>` +
+                "您也可以选择将它们转移到其他的收件邮箱：<br><br>";
 
             bootbox.prompt({
-                title: '<b>Delete Mailbox</b>',
+                title: '<b>删除 收件邮箱</b>',
                 message: message,
                 value: ["-1"],
                 inputType: 'select',
                 inputOptions: inputOptions,
                 buttons: {
                     confirm: {
-                        label: 'Yes, delete it',
+                        label: '确认删除',
                         className: 'btn-danger'
                     },
                     cancel: {
-                        label: 'Cancel',
+                        label: '取消',
                         className: 'btn-outline-primary mr-auto'
                     }
                 },

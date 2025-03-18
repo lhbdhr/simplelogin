@@ -1,13 +1,13 @@
 {% extends "default.html" %}
 
 {% set active_page = "dashboard" %}
-{% block title %}Pricing{% endblock %}
+{% block title %}价格{% endblock %}
 {% block head %}
 
   <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
   <script>
     if (window.Paddle === undefined) {
-      console.log("cannot load Paddle from CDN");
+      console.log("无法从 CDN 加载 Paddle");
       // split string to avoid djlint incorrectly formatting the file
       document.write('<' + 'script src="/static/vendor/paddle.js"><\/script ' + '>');
     }

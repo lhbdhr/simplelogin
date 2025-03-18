@@ -6,41 +6,40 @@
   <div class="card">
     <div class="card-body p-6">
       <div class="mb-2">
-        Your account is protected with Two Factor Authentication.
+        您的帐户受到双重身份验证的保护。
         <br />
         <br />
-        You will need to enter your 2FA authentication code.
+        您需要输入您的 两步验证 验证码。
       </div>
       <form method="post">
         {{ otp_token_form.csrf_token }}
         <input type="hidden" name="form-name" value="create" />
         <div class="font-weight-bold mt-5">Token</div>
-        <div class="small-text mb-3">Please enter the 2FA code from your authenticator app</div>
+        <div class="small-text mb-3">请输入您的身份验证器应用中的 2FA 代码</div>
         {{ otp_token_form.token(class="form-control", autofocus="true") }}
         {{ render_field_errors(otp_token_form.token) }}
         <div class="form-check">
           {{ otp_token_form.remember(class="form-check-input", id="remember") }}
           <label class="form-check-label" for="remember">{{ otp_token_form.remember.description }}</label>
         </div>
-        <button class="btn btn-success mt-2">Submit</button>
+        <button class="btn btn-success mt-2">提交</button>
       </form>
       {% if enable_fido %}
 
         <hr />
         <div class="text-muted mt-5" style="margin-top: 1em;">
-          Having trouble with your authenticator?
+          你的身份验证器有问题吗？
           <br />
           <a href="{{ url_for("auth.fido") }}">
-            Verify by your security
-            key
+            通过您的安全密钥验证
           </a>
         </div>
       {% endif %}
       <hr />
       <div class="mt-5">
-        If you cannot access your authenticator application you can instead use a recovery code.
+        如果您无法访问您的身份验证器应用程序，您可以改用恢复代码。
         <br />
-        <a href="{{ url_for('auth.recovery_route', next=next_url) }}">Use Recovery Code</a>
+        <a href="{{ url_for('auth.recovery_route', next=next_url) }}">使用恢复代码</a>
       </div>
     </div>
   </div>

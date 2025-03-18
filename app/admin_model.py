@@ -375,7 +375,10 @@ def manual_upgrade(way: str, ids: [int], is_giveaway: bool):
                     )
                 ),
             )
-            flash(f"Subscription extended to {manual_sub.end_at.humanize()}", "success")
+            flash(
+                f"Subscription extended to {manual_sub.end_at.humanize(locale="zh_CN")}",
+                "success",
+            )
         else:
             emit_user_audit_log(
                 user=user,

@@ -5,7 +5,7 @@
   <div class="card" style="border-radius: 2%">
     <div class="card-body">
       <div class="mt-4">
-        <b>{{ client.name }}</b> would like to have access to your following data:
+        <b>{{ client.name }}</b> 希望访问您的以下数据：
       </div>
       <div>
         <ul class="mt-3">
@@ -23,33 +23,32 @@
         </ul>
       </div>
       <div>
-        Sign in to accept sharing data with <b>{{ client.name }}</b>
+        登录以授权给 <b>{{ client.name }}</b>
       </div>
       <div class="mt-4">
         <div class="btn-group w-100">
-          <a href="{{ url_for('auth.login', next=next) }}" class="btn btn-success">Login</a>
+          <a href="{{ url_for('auth.login', next=next) }}" class="btn btn-success">登陆</a>
           {% if client.referral %}
 
             <a href="{{ url_for('auth.register', slref=client.referral.code, next=next) }}"
                class="btn btn-info">Sign Up</a>
           {% else %}
-            <a href="{{ url_for('auth.register', next=next) }}" class="btn btn-info">Sign Up</a>
+            <a href="{{ url_for('auth.register', next=next) }}" class="btn btn-info">注册</a>
           {% endif %}
         </div>
       </div>
       <hr />
       <div>
         <p class="text-center col">
-          Cancel and go back to <b>{{ client.name }}</b>
+          取消并返回 <b>{{ client.name }}</b>
         </p>
         <a class="btn btn-block btn-secondary back-or-close">
-          <i class="fe fe-arrow-left mr-2"></i>Cancel
+          <i class="fe fe-arrow-left mr-2"></i>取消
         </a>
       </div>
       <div class="small-text mt-4">
-        <a href="https://simplelogin.io">SimpleLogin</a>
-        is an open source social login provider that protects your
-        privacy.
+        <a href="{{ url_for("dashboard.index") }}">原邮邮箱</a>
+        是一个开源社交登录提供商，可保护您的隐私。
       </div>
     </div>
   </div>

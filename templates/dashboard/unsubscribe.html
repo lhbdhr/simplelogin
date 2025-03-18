@@ -1,21 +1,21 @@
 {% extends "default.html" %}
 
 {% set active_page = "dashboard" %}
-{% block title %}Deactivate an alias{% endblock %}
+{% block title %}停用别名{% endblock %}
 {% block default_content %}
 
   <div class="card">
     <div class="card-body">
-      <h1 class="h3">Deactivate alias</h1>
+      <h1 class="h3">停用别名</h1>
       <p>
-        You are about to deactivate the alias
+        您即将停用该别名
         <a href="mailto:{{ alias }}" target="_blank">{{ alias }}</a>
       </p>
       <p>
-        After this, you will stop receiving all emails sent to this alias, please confirm. You will always be able to re-activate it untill you will decide to delete it.
+        此后，您将不再收到发送到此别名的所有电子邮件，请确认。您始终可以重新激活它，直到您决定删除它为止。
       </p>
       <form method="post">
-        <button class="btn btn-warning">Confirm</button>
+        <button class="btn btn-warning">确认</button>
       </form>
     </div>
   </div>

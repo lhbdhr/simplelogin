@@ -5,21 +5,21 @@ function confirmDeleteAlias() {
   let alias = that.data("alias-email");
   let aliasDomainTrashUrl = that.data("custom-domain-trash-url");
 
-  let message = `Maybe you want to disable the alias instead? Please note once deleted, it <b>can't</b> be restored.`;
+  let message = `也许您想禁用别名？请注意，一旦删除，<b>无法</b>恢复。`;
   if (aliasDomainTrashUrl !== undefined) {
-    message = `Maybe you want to disable the alias instead? When it's deleted, it's moved to the domain
-    <a href="${aliasDomainTrashUrl}">trash</a>`;
+    message = `也许您想禁用别名？删除后，它会移至域
+    <a href="${aliasDomainTrashUrl}">垃圾箱</a>`;
   }
 
   bootbox.dialog({
-    title: `Delete ${alias}`,
+    title: `删除 ${alias}`,
     message: message,
     size: 'large',
     onEscape: true,
     backdrop: true,
     buttons: {
       disable: {
-        label: 'Disable it',
+        label: '禁用别名',
         className: 'btn-primary',
         callback: function () {
           that.closest("form").find('input[name="form-name"]').val("disable-alias");
@@ -28,7 +28,7 @@ function confirmDeleteAlias() {
       },
 
       delete: {
-        label: "Delete it, I don't need it anymore",
+        label: "确认删除，我已经不需要它了",
         className: 'btn-outline-danger',
         callback: function () {
           that.closest("form").submit();
@@ -36,7 +36,7 @@ function confirmDeleteAlias() {
       },
 
       cancel: {
-        label: 'Cancel',
+        label: '取消',
         className: 'btn-outline-primary'
       },
 
@@ -77,13 +77,13 @@ async function disableAlias(aliasId, alias) {
         $(`#send-email-${aliasId}`).addClass("disabled");
       }
     } else {
-      toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+      toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
       // reset to the original value
       oldValue = !$(this).prop("checked");
       $(this).prop("checked", oldValue);
     }
   } catch (e) {
-    toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+    toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
     // reset to the original value
     oldValue = !$(this).prop("checked");
     $(this).prop("checked", oldValue);
@@ -107,17 +107,17 @@ $(".enable-disable-pgp").change(async function (e) {
 
     if (res.ok) {
       if (newValue) {
-        toastr.success(`PGP is enabled for ${alias}`);
+        toastr.success(`PGP 已经为 ${alias} 启用`);
       } else {
-        toastr.info(`PGP is disabled for ${alias}`);
+        toastr.info(`PGP 已经为 ${alias} 禁用`);
       }
     } else {
-      toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+      toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
       // reset to the original value
       $(this).prop("checked", oldValue);
     }
   } catch (err) {
-    toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+    toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
     // reset to the original value
     $(this).prop("checked", oldValue);
   }
@@ -132,7 +132,7 @@ $(".pin-alias").change(async function () {
   try {
     let res = await fetch(`/api/aliases/${aliasId}`, {
       method: "PUT",
-        headers: getHeaders(),
+      headers: getHeaders(),
       body: JSON.stringify({
         pinned: newValue,
       }),
@@ -140,17 +140,17 @@ $(".pin-alias").change(async function () {
 
     if (res.ok) {
       if (newValue) {
-        toastr.success(`${alias} is pinned`);
+        toastr.success(`${alias} 已置顶`);
       } else {
-        toastr.info(`${alias} is unpinned`);
+        toastr.info(`${alias} 已取消置顶`);
       }
     } else {
-      toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+      toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
       // reset to the original value
       $(this).prop("checked", oldValue);
     }
   } catch (e) {
-    toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+    toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
     // reset to the original value
     $(this).prop("checked", oldValue);
   }
@@ -169,12 +169,12 @@ async function handleNoteChange(aliasId, aliasEmail) {
     });
 
     if (res.ok) {
-      toastr.success(`Description saved for ${aliasEmail}`);
+      toastr.success(`已保存 ${aliasEmail} 的描述`);
     } else {
-      toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+      toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
     }
   } catch (e) {
-    toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+    toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
   }
 
 }
@@ -192,7 +192,7 @@ async function handleMailboxChange(aliasId, aliasEmail) {
   const mailbox_ids = Array.from(selectedOptions).map((selectedOption) => selectedOption.value);
 
   if (mailbox_ids.length === 0) {
-    toastr.error("You must select at least a mailbox", "Error");
+    toastr.error("您必须至少选择一个邮箱", "错误");
     return;
   }
 
@@ -206,12 +206,12 @@ async function handleMailboxChange(aliasId, aliasEmail) {
     });
 
     if (res.ok) {
-      toastr.success(`Mailbox updated for ${aliasEmail}`);
+      toastr.success(`已为 ${aliasEmail} 更新邮箱`);
     } else {
-      toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+      toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
     }
   } catch (e) {
-    toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+    toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
   }
 
 }
@@ -229,12 +229,12 @@ async function handleDisplayNameChange(aliasId, aliasEmail) {
     });
 
     if (res.ok) {
-      toastr.success(`Display name saved for ${aliasEmail}`);
+      toastr.success(`已为 ${aliasEmail} 保存显示名称`);
     } else {
-      toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+      toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
     }
   } catch (e) {
-    toastr.error("Sorry for the inconvenience! Could you refresh the page & retry please?", "Unknown Error");
+    toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
   }
 
 }

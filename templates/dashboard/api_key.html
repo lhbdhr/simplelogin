@@ -9,12 +9,14 @@
     <div class="col">
       <h1 class="h3">API Keys</h1>
       <div class="alert alert-info">
-        When you log in on a SimpleLogin mobile app or browser extension,
-        a new API Key is automatically created and stored on your device.
-        It's usually named after the device where it was created, e.g. Samsung S8, John's iPhone, etc.
+        当您登录 原邮邮箱 移动应用或浏览器扩展程序时，
+        <br />
+        系统会自动创建一个新的 API 密钥并将其存储在您的设备上。
+        <br />
+        它通常以创建它的设备命名，例如 Samsung S8、John 的 iPhone 等。
       </div>
       <div class="alert alert-danger">
-        ️API Keys should be kept secret and treated like passwords, they can be used to gain access to your account.
+        API 密钥应该保密并像密码一样对待，它们可以用来访问您的帐户。
       </div>
       <div class="row">
         {% for api_key in api_keys %}
@@ -26,11 +28,11 @@
                 <h6 class="card-subtitle mb-2 text-muted">
                   {% if api_key.last_used %}
 
-                    Created {{ api_key.created_at | dt }}.
-                    Used {{ api_key.times }} times.
-                    Was last used {{ api_key.last_used | dt }}.
+                    创建于 {{ api_key.created_at | dt }}.
+                    已使用 {{ api_key.times }} 次.
+                    最后一次使用于 {{ api_key.last_used | dt }}.
                   {% else %}
-                    Never used
+                    从未使用
                   {% endif %}
                 </h6>
                 <div class="input-group">
@@ -46,7 +48,7 @@
                       {{ csrf_form.csrf_token }}
                       <input type="hidden" name="form-name" value="delete">
                       <input type="hidden" name="api-key-id" value="{{ api_key.id }}">
-                      <span class="card-link btn btn-link float-right text-danger delete-api-key">Delete</span>
+                      <span class="card-link btn btn-link float-right text-danger delete-api-key">删除</span>
                     </form>
                   </div>
                 </div>
@@ -61,7 +63,7 @@
           {{ csrf_form.csrf_token }}
           <input type="hidden" name="form-name" value="delete-all">
           <span class="delete btn btn-outline-danger delete-all-api-keys float-right">
-            Delete All &nbsp; &nbsp; <i class="fe fe-trash"></i>
+            全部删除&nbsp;<i class="fe fe-trash"></i>
           </span>
         </form>
         <br />
@@ -70,11 +72,11 @@
       <form method="post">
         {{ csrf_form.csrf_token }}
         <input type="hidden" name="form-name" value="create">
-        <h2 class="h4">New API Key</h2>
+        <h2 class="h4">新的 API Key</h2>
         {{ new_api_key_form.name(class="form-control", placeholder="Chrome") }}
         {{ render_field_errors(new_api_key_form.name) }}
-        <div class="small-text">Name of the api key, e.g. where it will be used.</div>
-        <button class="btn btn-success mt-2">Create</button>
+        <div class="small-text mt-2">API 密钥的名称，例如它将在何处使用。</div>
+        <button class="btn btn-success mt-2">创建</button>
       </form>
     </div>
   </div>
@@ -86,14 +88,14 @@
       let that = $(this);
 
       bootbox.confirm({
-        message: "If this API Key is currently in use, you might need to login again on the corresponding device, please confirm.",
+        message: "如果该API Key正在使用中，您可能需要在相应设备上重新登录，请确认。",
         buttons: {
           confirm: {
-            label: 'Yes, delete it',
+            label: '确认删除',
             className: 'btn-danger'
           },
           cancel: {
-            label: 'Cancel',
+            label: '取消',
             className: 'btn-outline-primary'
           }
         },
@@ -111,14 +113,14 @@
       let that = $(this);
 
       bootbox.confirm({
-        message: "This will delete all API Keys, they will all stop working, are you sure?",
+        message: "这将删除所有 API 密钥，它们将全部停止工作，你确定吗？",
         buttons: {
           confirm: {
-            label: 'Delete All',
+            label: '全部删除',
             className: 'btn-danger'
           },
           cancel: {
-            label: 'Cancel',
+            label: '取消',
             className: 'btn-outline-primary'
           }
         },

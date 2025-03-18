@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}Mailbox Validation{% endblock %}
+{% block title %}收件邮箱验证{% endblock %}
 {% block content %}
 
   <div class="mx-auto p-7 card" style="max-width: 50rem">
     <div class="text-center mb-7">
-      Mailbox <b>{{ mailbox.email }}</b> verified, you can now start creating alias with it
+      收件邮箱 <b>{{ mailbox.email }}</b> 已验证，您现在可以开始用它创建别名
     </div>
     <div class="mx-auto">
-      <a href="{{ url_for("dashboard.index") }}" class="btn btn-primary">Go To Home Page</a>
+      <a href="{{ url_for("dashboard.index") }}" class="btn btn-primary">回到主页</a>
     </div>
   </div>
 {% endblock %}

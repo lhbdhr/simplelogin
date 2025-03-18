@@ -62,8 +62,8 @@ def mailbox_route():
                 flash(e.msg, "warning")
                 return redirect(url_for("dashboard.mailbox_route"))
             flash(
-                f"Mailbox {mailbox.email} scheduled for deletion."
-                f"You will receive a confirmation email when the deletion is finished",
+                f"收件邮箱 {mailbox.email} 已安排删除，"
+                f"删除完成后，您将收到一封确认电子邮件",
                 "success",
             )
             return redirect(url_for("dashboard.mailbox_route"))

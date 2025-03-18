@@ -1,12 +1,12 @@
 {% extends "default.html" %}
 
 {% set active_page = "dashboard" %}
-{% block title %}Notifications{% endblock %}
+{% block title %}通知{% endblock %}
 {% block default_content %}
 
   <div class="row">
     <div class="col">
-      <h1 class="h3">Notifications</h1>
+      <h1 class="h3">通知</h1>
       {% for notification in notifications %}
 
         <div class="card">
@@ -19,7 +19,7 @@
                         max-height: 100px;
                         text-overflow: ellipsis">{{ notification.message | safe }}</div>
             <a href="{{ url_for('dashboard.notification_route', notification_id=notification.id) }}"
-               class="mt-2 btn btn-outline-primary">More ➡</a>
+               class="mt-2 btn btn-outline-primary">更多 ➡</a>
             <div class="small text-muted mt-2">{{ notification.created_at | dt }}</div>
           </div>
         </div>
@@ -31,13 +31,13 @@
           <div class="col">
             <nav aria-label="Notification navigation">
               <ul class="pagination">
-                <li class="page-item mr-1">
+                <li class="page-item mr-2">
                   <a class="btn btn-outline-primary {% if page == 0 %}disabled{% endif %}" href="{{ url_for('dashboard.notifications_route', page=page-1) }}">
-                    Previous
+                    上一页
                   </a>
                 </li>
                 <li class="page-item">
-                  <a class="btn btn-outline-primary {% if last_page %}disabled{% endif %}" href="{{ url_for('dashboard.notifications_route', page=page+1) }}">Next</a>
+                  <a class="btn btn-outline-primary {% if last_page %}disabled{% endif %}" href="{{ url_for('dashboard.notifications_route', page=page+1) }}">下一页</a>
                 </li>
               </ul>
             </nav>

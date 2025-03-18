@@ -407,7 +407,7 @@ def setup_favicon_route(app):
 def jinja2_filter(app):
     def format_datetime(value):
         dt = arrow.get(value)
-        return dt.humanize()
+        return dt.humanize(locale="zh_CN")
 
     app.jinja_env.filters["dt"] = format_datetime
 

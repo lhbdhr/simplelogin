@@ -1,20 +1,20 @@
 {% extends "default.html" %}
 
 {% set active_page = "setting" %}
-{% block title %}Delete account{% endblock %}
+{% block title %}删除帐户{% endblock %}
 {% block default_content %}
 
   <div class="card">
     <div class="card-body">
-      <div class="h2">Account Deletion</div>
+      <div class="h2">删除帐户</div>
       <div class="my-3 alert alert-warning">
-        Once an account is deleted, it can't be restored.
-        All its records (aliases, domains, settings, etc.) are immediately deleted.
+        帐户一旦删除，将无法恢复。
+        其所有记录（别名、域、设置等）将立即被删除。
       </div>
       <form method="post">
         <input type="hidden" name="form-name" value="delete-account">
         {{ delete_form.csrf_token }}
-        <span class="delete-account btn btn-outline-danger">Delete account</span>
+        <span class="delete-account btn btn-outline-danger">删除帐户</span>
       </form>
     </div>
   </div>
@@ -26,16 +26,16 @@
       let that = $(this);
 
       bootbox.confirm({
-        message: "All your data including your aliases will be deleted, " +
-          "other people might not be able to reach you after, " +
-          " please confirm.",
+        message: "您的所有数据（包括别名）都将被删除，" +
+          "其他人可能无法联系到你， " +
+          "您确定要删除您的帐户吗？",
         buttons: {
           confirm: {
-            label: 'Yes, delete my account',
+            label: '是的，删除我的账户',
             className: 'btn-danger'
           },
           cancel: {
-            label: 'Cancel',
+            label: '取消',
             className: 'btn-outline-primary'
           }
         },

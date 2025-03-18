@@ -1,14 +1,14 @@
 {% extends "default.html" %}
 
 {% set active_page = "custom_domain" %}
-{% block title %}Custom Domains{% endblock %}
+{% block title %}域名邮箱{% endblock %}
 {% block head %}{% endblock %}
 {% block default_content %}
 
   <div class="row">
     <div class="col">
       <h1 class="h3">
-        Custom Domains
+        域名邮箱
         <a class="ml-3 text-info"
            style="font-size: 12px"
            data-toggle="collapse"
@@ -16,26 +16,27 @@
            role="button"
            aria-expanded="false"
            aria-controls="collapseExample">
-          How to use <i class="fe fe-chevrons-down"></i>
+          如何使用 <i class="fe fe-chevrons-down"></i>
         </a>
       </h1>
       {% if not current_user.is_premium() %}
 
         <div class="alert alert-danger" role="alert">
-          This feature is only available on Premium plan.
+          此功能仅在高级会员计划中可用。
           <a href="{{ URL }}/dashboard/pricing"
              target="_blank"
              rel="noopener noreferrer">
-            Upgrade<i class="fe fe-external-link"></i>
+            升级<i class="fe fe-external-link"></i>
           </a>
         </div>
       {% endif %}
       <div class="alert alert-primary collapse {% if not custom_domains %}show{% endif %}" id="howtouse" role="alert">
-        By adding your domain, you can create aliases like <b>hi@my-domain.com</b>
+         通过添加您的域名，您可以创建别名，例如 <b>hi@my-domain.com</b> <br>
+        您还可以启用 <b>catch-all</b> 来动态创建别名：
+        只需使用 <b>anything@my-domain.com</b>，它就会在
+        收到电子邮件时创建。
         <br />
-        You can also enable <b>catch-all</b> to create aliases on-the-fly:
-        simply use <b>anything@my-domain.com</b> and it'll be created when
-        it receives an email.
+        <span class="text-danger">自定义域别名邮箱不支持PUSH</span>
       </div>
       <div class="row">
         {% for custom_domain in custom_domains %}
@@ -48,24 +49,24 @@
                   {% if custom_domain.ownership_verified and not custom_domain.verified %}
 
                     <a href="{{ url_for('dashboard.domain_detail_dns', custom_domain_id=custom_domain.id, _anchor='dns-setup') }}"
-                       class="btn btn-info btn-sm">Ownership verified. Setup the DNS</a>
+                       class="btn btn-info btn-sm">所有权已验证。需设置 DNS</a>
                   {% elif custom_domain.ownership_verified and custom_domain.verified %}
-                    <span class="badge badge-success">Domain ready</span>
+                    <span class="badge badge-success">域名已经过验证</span>
                     <!-- custom_domain.ownership_verified is False -->
                   {% else %}
                     <a href="{{ url_for('dashboard.domain_detail_dns', custom_domain_id=custom_domain.id, _anchor='ownership-form') }}"
                        class="btn btn-warning btn-sm"
-                       role="button">Verify domain ownership</a>
+                       role="button">域名所有权需验证</a>
                   {% endif %}
                 </h5>
                 <h6 class="card-subtitle mb-4 text-muted">
-                  Created {{ custom_domain.created_at | dt }}
+                  创建于 {{ custom_domain.created_at | dt }}
                   <br />
-                  <span class="font-weight-bold">{{ custom_domain.nb_alias() }}</span> aliases.
+                  已创建 <span class="font-weight-bold">{{ custom_domain.nb_alias() }}</span> 个别名.
                   <br />
                 </h6>
                 <a href="{{ url_for('dashboard.domain_detail', custom_domain_id=custom_domain.id) }}"
-                   class="mt-3">Details ➡</a>
+                   class="mt-3">详情 ➡</a>
               </div>
             </div>
           </div>
@@ -78,14 +79,14 @@
               <form method="post" class="mt-2">
                 {{ new_custom_domain_form.csrf_token }}
                 <input type="hidden" name="form-name" value="create">
-                <h2 class="h4">New Domain</h2>
+                <h2 class="h4">新域名</h2>
                 {{ new_custom_domain_form.domain(class="form-control", placeholder="my-domain.com", maxlength=128) }}
                 {{ render_field_errors(new_custom_domain_form.domain) }}
-                <div class="small-text">
-                  Please use full path domain, for example <b>my-domain.com</b>
-                  or <b>my-subdomain.my-domain.com</b> if you are using a subdomain.
+                <div class="small-text mt-2">
+                  请使用完整路径域名，例如 <b>my-domain.com</b>
+                  或 <b>my-subdomain.my-domain.com</b>（如果您使用子域名）。
                 </div>
-                <button class="btn btn-primary mt-2">Create</button>
+                <button class="btn btn-primary mt-2">创建</button>
               </form>
             </div>
           </div>

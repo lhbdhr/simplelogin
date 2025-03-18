@@ -4,9 +4,9 @@
 
     <i class="fe fe-play-circle"
        data-toggle="tooltip"
-       title="Unblock sender"></i>
+       title="解禁发送者"></i>
   {% else %}
-    <i class="fe fe-pause-circle" data-toggle="tooltip" title="Block sender"></i>
+    <i class="fe fe-pause-circle" data-toggle="tooltip" title="屏蔽发送者"></i>
   {% endif %}
 </button>
 {% if toast_msg %}<script>toastr.success("{{ toast_msg }}");</script>{% endif %}

@@ -1,23 +1,23 @@
 {% extends "default.html" %}
 
 {% set active_page = "dashboard" %}
-{% block title %}Extend Subscription{% endblock %}
+{% block title %}延长订阅{% endblock %}
 {% block default_content %}
 
   <div class="card">
     <div class="card-body">
-      <h1 class="h2">Extend Subscription</h1>
-      <p>Your subscription is expired on {{ coinbase_subscription.end_at.format("YYYY-MM-DD") }}</p>
+      <h1 class="h2">延长订阅</h1>
+      <p>您的订阅将于 {{ coinbase_subscription.end_at.format("YYYY-MM-DD") }} 结束</p>
       <div>
         <a class="buy-with-crypto"
            data-custom="{{ current_user.id }}"
-           href="{{ coinbase_url }}">Extend for 1 year - $36</a>
+           href="{{ coinbase_url }}">延长1年 - $36</a>
         <script src="https://commerce.coinbase.com/v1/checkout.js?version=201807"></script>
       </div>
       <div class="mt-2">
-        Your subscription will be extended when the payment is confirmed and we'll send you a confirmation email.
+        付款确认后，您的订阅将延长，我们将向您发送确认电子邮件。
         <br />
-        Please note that it can take up to 1h for processing a cryptocurrency payment.
+        请注意，处理加密货币付款可能需要长达 1 小时。
       </div>
     </div>
   </div>

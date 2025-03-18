@@ -1,7 +1,7 @@
 {% extends "default.html" %}
 
 {% set active_page = "mailbox" %}
-{% block title %}Mailbox {{ mailbox.email }}{% endblock %}
+{% block title %} 收件邮箱 {{ mailbox.email }}{% endblock %}
 {% block head %}
 
   <style>
@@ -22,25 +22,25 @@
 
           <span class="cursor"
                 data-toggle="tooltip"
-                data-original-title="Mailbox Verified">✅</span>
+                data-original-title="收件邮箱已验证">✅</span>
         {% else %}
           <span class="cursor"
                 data-toggle="tooltip"
-                data-original-title="Mailbox Not Verified">🚫</span>
+                data-original-title="收件邮箱未验证">🚫</span>
         {% endif %}
         {% if mailbox.pgp_enabled() %}
 
           <span class="cursor"
                 data-toggle="tooltip"
-                data-original-title="PGP Enabled">🗝</span>
+                data-original-title="PGP 已启用">🗝</span>
         {% endif %}
       </h1>
       {% if not mailbox.verified %}
 
         <div class="alert alert-info">
-          Mailbox not verified, please check your inbox/spam folder for the verification email.
+          邮箱未验证，请检查您的收件箱/垃圾邮件文件夹中是否有验证邮件。
           <br />
-          To receive the verification email again, you can delete and re-add the mailbox.
+          要再次收到验证邮件，您可以删除并重新添加邮箱。
         </div>
       {% endif %}
       <!-- Change email -->
@@ -49,22 +49,22 @@
           <input type="hidden" name="form-name" value="update-email">
           {{ change_email_form.csrf_token }}
           <div class="card-body">
-            <div class="card-title">Change Mailbox Address</div>
+            <div class="card-title">更改收件邮箱地址</div>
             <div class="form-group">
-              <label class="form-label">Address</label>
+              <label class="form-label">地址</label>
               <!-- Not allow user to change mailbox if there's a pending change -->
               {{ change_email_form.email(class="form-control", value=mailbox.email, readonly=pending_email != None) }}
               {{ render_field_errors(change_email_form.email) }}
               {% if pending_email %}
 
                 <div class="mt-2">
-                  <span class="text-danger">Pending change: {{ pending_email }}</span>
+                  <span class="text-danger">更改中: {{ pending_email }}</span>
                   <a href="{{ url_for('dashboard.cancel_mailbox_change_route', mailbox_id=mailbox.id) }}"
-                     class="btn btn-secondary btn-sm">Cancel mailbox change</a>
+                     class="btn btn-secondary btn-sm">取消收件邮箱变更</a>
                 </div>
               {% endif %}
             </div>
-            <button class="btn btn-primary">Change</button>
+            <button class="btn btn-primary">修改</button>
           </div>
         </form>
       </div>
@@ -73,9 +73,9 @@
       {% if mailbox.is_proton() and not mailbox.pgp_enabled() %}
 
         <div class="alert alert-info">
-          As an email is always encrypted at rest in Proton Mail, having SimpleLogin also encrypt your email is redundant and does not add any security benefit.
+          由于 Proton Mail 中的电子邮件始终处于静态加密状态，因此让 原邮邮箱 也加密您的电子邮件是多余的，并且不会增加任何安全优势。
           <br>
-          The PGP option on SimpleLogin is instead useful for when your mailbox provider isn't encrypted by default like Gmail, Outlook, etc.
+          当您的邮箱提供商（如 Gmail/Outlook 等）默认不加密时，原邮邮箱 上的 PGP 选项很有用。
         </div>
       {% endif %}
       <div class="{% if mailbox.is_proton() and not mailbox.pgp_enabled() %}
@@ -83,23 +83,23 @@
         {% if mailbox.pgp_finger_print and not mailbox.disable_pgp and current_user.include_sender_in_reverse_alias and not mailbox.is_proton() %}
 
           <div class="alert alert-info">
-            Email headers like <span class="italic">From, To, Subject</span> aren't encrypted by PGP.
-            Currently, your reverse alias includes the sender address.
-            You can disable this on <a href="/dashboard/setting#sender-in-ra">Settings</a>.
+            电子邮件标头（如<span class="italic">发件人、收件人、主题</span>）未通过 PGP 加密。
+            目前，您的反向别名包含发件人地址。
+            您可以在<a href="/dashboard/setting#sender-in-ra">设置</a>中禁用此功能。
           </div>
         {% endif %}
         <div class="card">
           <div class="card-body">
             <div class="card-title">
               <div class="d-flex">
-                Pretty Good Privacy (PGP)
+                电子邮件加密 (PGP)
                 {% if mailbox.pgp_finger_print %}
 
                   <form method="post">
                     {{ csrf_form.csrf_token }}
                     <input type="hidden" name="form-name" value="toggle-pgp">
                     <label class="custom-switch cursor" style="padding-left: 1rem" data-toggle="tooltip" {% if mailbox.disable_pgp %}
-                       title="Enable PGP" {% else %} title="Disable PGP" {% endif %}>
+                       title="启用 PGP" {% else %} title="禁用 PGP" {% endif %}>
                       <input type="checkbox" class="custom-switch-input" name="pgp-enabled" {{ "" if mailbox.disable_pgp else "checked" }}>
                       <span class="custom-switch-indicator"></span>
                     </label>
@@ -107,32 +107,32 @@
                 {% endif %}
               </div>
               <div class="small-text mt-1">
-                By importing your PGP Public Key into SimpleLogin, all emails sent to {{ mailbox.email }} are
-                <b>encrypted</b> with your key.
+                通过将您的 PGP 公钥导入 SimpleLogin，所有发送到 {{ mailbox.email }} 的电子邮件都将使用您的密钥进行
+                <b>加密</b>。
                 <br />
-                {% if PGP_SIGNER %}All forwarded emails will be signed with <b>{{ PGP_SIGNER }}</b>.{% endif %}
+                {% if PGP_SIGNER %}所有转发的电子邮件都将使用 <b>{{ PGP_SIGNER }}</b> 进行签名。{% endif %}
               </div>
             </div>
             {% if not current_user.is_premium() %}
 
-              <div class="alert alert-danger" role="alert">This feature is only available in premium plan.</div>
+              <div class="alert alert-danger" role="alert">此功能仅在高级计划中可用。</div>
             {% endif %}
             <form method="post">
               {{ csrf_form.csrf_token }}
               <div class="form-group">
-                <label class="form-label">PGP Public Key</label>
+                <label class="form-label">PGP 公钥</label>
                 <textarea name="pgp"
                           {% if not current_user.is_premium() %}disabled{% endif %}
                           class="form-control"
                           rows="10"
                           id="pgp-public-key"
-                          placeholder="(Drag and drop or paste your pgp public key here)&#10;-----BEGIN PGP PUBLIC KEY BLOCK-----">{{ mailbox.pgp_public_key or "" }}</textarea>
+                          placeholder="(将您的 pgp 公钥拖放或粘贴到此处)&#10;-----BEGIN PGP PUBLIC KEY BLOCK-----">{{ mailbox.pgp_public_key or "" }}</textarea>
               </div>
               <input type="hidden" name="form-name" value="pgp">
-              <button class="btn btn-primary" name="action" {% if not current_user.is_premium() %}disabled{% endif %} value="save">Save</button>
+              <button class="btn btn-primary" name="action" {% if not current_user.is_premium() %}disabled{% endif %} value="save">保存</button>
               {% if mailbox.pgp_finger_print %}
 
-                <button class="btn btn-danger float-right" name="action" value="remove">Remove</button>
+                <button class="btn btn-danger float-right" name="action" value="remove">移除</button>
               {% endif %}
             </form>
           </div>
@@ -144,32 +144,32 @@
           <input type="hidden" name="form-name" value="generic-subject">
           <div class="card-body">
             <div class="card-title">
-              Hide email subject
+              隐藏电子邮件主题
               <div class="small-text mt-1">
-                The original subject will be added to the email body and all forwarded emails will have the generic subject.
+                原始主题将添加到电子邮件正文中，所有转发的电子邮件都将具有通用主题。
                 <br />
-                This option is often used when PGP is enabled.
-                As PGP does not encrypt the email subject, it allows a further protection of your email content.
+                此选项通常在启用 PGP 时使用。
+                由于 PGP 不加密电子邮件主题，因此它可以进一步保护您的电子邮件内容。
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Generic Subject</label>
+              <label class="form-label">通用主题</label>
               <input name="generic-subject"
                      class="form-control"
                      maxlength="78"
-                     placeholder="Generic Subject"
+                     placeholder="这是一封加密的电子邮件"
                      value="{{ mailbox.generic_subject or "" }}">
             </div>
-            <button class="btn btn-primary" name="action" value="save">Save</button>
+            <button class="btn btn-primary" name="action" value="save">保存</button>
             {% if mailbox.generic_subject %}
 
-              <button class="btn btn-danger float-right" name="action" value="remove">Remove</button>
+              <button class="btn btn-danger float-right" name="action" value="remove">移除</button>
             {% endif %}
           </div>
         </form>
       </div>
       <hr />
-      <h2 class="h4">Advanced Options</h2>
+      <h2 class="h4">高级选项</h2>
       {% if spf_available %}
 
         <div class="card" id="spf">
@@ -178,21 +178,22 @@
             <input type="hidden" name="form-name" value="force-spf">
             <div class="card-body">
               <div class="card-title">
-                Enforce SPF
+                强制 SPF
                 <div class="small-text">
-                  To avoid email-spoofing, SimpleLogin blocks email that
+                  为了防止电子邮件欺骗，原邮邮箱 会阻止以下电子邮件
                   <em data-toggle="tooltip"
-                      title="Email that has your mailbox as envelope-sender address">seems</em> to come from your
-                  mailbox
-                  but sent from <em data-toggle="tooltip"
-     title="IP Address that is not known by your mailbox email service">unknown</em>
-                  IP address.
+                    title="以您的邮箱作为发件人地址的电子邮件">似乎</em>来自您的
+                    邮箱,
+                    但发送自
+                  <em data-toggle="tooltip"
+                    title="您的邮箱电子邮件服务不知道的 IP 地址">未知</em>
+                    IP 地址.
                   <br />
-                  Only turn off this option if you know what you're doing :).
+                  仅当您知道自己在做什么时才关闭此选项:)。
                 </div>
               </div>
               <label class="custom-switch cursor mt-2 pl-0" data-toggle="tooltip" {% if mailbox.force_spf %}
-                 title="Disable SPF enforcement" {% else %} title="Enable SPF enforcement" {% endif %}>
+                 title="Disable SPF enforcement" {% else %} title="启用 SPF 强制执行" {% endif %}>
                 <input type="checkbox" name="spf-status" class="custom-switch-input" {{ "checked" if mailbox.force_spf else "" }}>
                 <span class="custom-switch-indicator"></span>
               </label>
@@ -203,10 +204,9 @@
       <div class="card" id="authorized-address">
         <div class="card-body">
           <div class="card-title">
-            Authorized addresses
+            授权邮箱地址
             <div class="small-text">
-              Emails sent from these addresses to a <b>reverse-alias</b> are considered as being sent
-              from {{ mailbox.email }}
+              从这些地址发送到<b>反向别名</b>的电子邮件将被视为来自 {{ mailbox.email }}
             </div>
           </div>
           {% if mailbox.authorized_addresses | length == 0 %}
@@ -223,7 +223,7 @@
                     <input type="hidden"
                            name="authorized-address-id"
                            value="{{ authorized_address.id }}">
-                    <input type="submit" class="btn btn-sm btn-outline-warning" value="Delete">
+                    <input type="submit" class="btn btn-sm btn-outline-warning" value="删除">
                   </form>
                 </li>
               {% endfor %}
@@ -233,7 +233,7 @@
             {{ csrf_form.csrf_token }}
             <input type="hidden" name="form-name" value="add-authorized-address">
             <input type="email" name="email" size="50" class="form-control" required>
-            <input type="submit" class="btn btn-primary" value="Add">
+            <input type="submit" class="btn btn-primary" value="添加">
           </form>
         </div>
       </div>

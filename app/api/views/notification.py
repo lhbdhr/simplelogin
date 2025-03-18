@@ -51,7 +51,7 @@ def get_notifications():
                     "message": notification.message,
                     "title": notification.title,
                     "read": notification.read,
-                    "created_at": notification.created_at.humanize(),
+                    "created_at": notification.created_at.humanize(locale="zh_CN"),
                 }
                 for notification in notifications[:PAGE_LIMIT]
             ],

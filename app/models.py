@@ -854,13 +854,15 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
 
         apple_sub: AppleSubscription = AppleSubscription.get_by(user_id=self.id)
         if apple_sub and apple_sub.is_valid():
-            channels.append(f"Apple Subscription {apple_sub.expires_date.humanize()}")
+            channels.append(
+                f"Apple Subscription {apple_sub.expires_date.humanize(locale="zh_CN")}"
+            )
 
         manual_sub: ManualSubscription = ManualSubscription.get_by(user_id=self.id)
         if manual_sub and manual_sub.is_active():
             mode = "Giveaway" if manual_sub.is_giveaway else "Paid"
             channels.append(
-                f"Manual Subscription {manual_sub.comment} {mode} {manual_sub.end_at.humanize()}"
+                f"Manual Subscription {manual_sub.comment} {mode} {manual_sub.end_at.humanize(locale="zh_CN")}"
             )
 
         coinbase_subscription: CoinbaseSubscription = CoinbaseSubscription.get_by(
@@ -868,7 +870,7 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
         )
         if coinbase_subscription and coinbase_subscription.is_active():
             channels.append(
-                f"Coinbase Subscription ends {coinbase_subscription.end_at.humanize()}"
+                f"Coinbase Subscription ends {coinbase_subscription.end_at.humanize(locale="zh_CN")}"
             )
 
         r = (
@@ -882,7 +884,7 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
         )
         if r and r[0].is_active():
             channels.append(
-                f"Subscription via {r[2].name} partner , ends {r[0].end_at.humanize()}"
+                f"Subscription via {r[2].name} partner , ends {r[0].end_at.humanize(locale="zh_CN")}"
             )
 
         return ".\n".join(channels)
