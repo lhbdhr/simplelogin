@@ -102,7 +102,7 @@ docker run -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=myuser -e POSTGRES_D
 
 To run the server:
 
-```
+```bash
 alembic upgrade head && flask dummy-data && python3 server.py
 ```
 
