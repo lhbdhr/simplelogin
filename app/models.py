@@ -667,10 +667,9 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
         # create a first alias mail to show user how to use when they login
         alias = Alias.create_new(
             user,
-            prefix="simplelogin-newsletter",
+            prefix="yuanyou-newsletter",
             mailbox_id=mb.id,
-            note="This is your first alias. It's used to receive SimpleLogin communications "
-            "like new features announcements, newsletters.",
+            note="这是您的第一个别名。它用于接收 原邮邮箱 的最新消息，例如新功能公告、新闻通讯。",
         )
         Session.flush()
 
