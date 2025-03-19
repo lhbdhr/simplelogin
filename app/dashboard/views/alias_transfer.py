@@ -53,6 +53,13 @@ def alias_transfer_send_route(alias_id):
         if not csrf_form.validate():
             flash("Invalid request", "warning")
             return redirect(request.url)
+
+        # banned custom domain aliases transferred
+        if alias.custom_domain_id:
+            LOG.d("alias %s has custom domain", alias)
+            flash("域名别名无法转移", "error")
+            return redirect(url_for("dashboard.index"))
+
         # generate a new transfer_token
         if request.form.get("form-name") == "create":
             transfer_token = f"{alias.id}.{secrets.token_urlsafe(32)}"
