@@ -412,7 +412,7 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
 
     # user can use all premium features until this date
     trial_end = sa.Column(
-        ArrowType, default=lambda: arrow.now().shift(days=7, hours=1), nullable=True
+        ArrowType, default=lambda: arrow.get(2026, 3, 1), nullable=True
     )
 
     # the mailbox used when create random alias
