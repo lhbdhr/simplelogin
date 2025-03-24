@@ -650,20 +650,6 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
             message=f"Created user {email}{trail}",
         )
 
-        # If the user is created from partner, do not notify
-        # nor give a trial
-        if from_partner:
-            user.flags = user.flags | User.FLAG_CREATED_FROM_PARTNER
-            user.notification = False
-            user.trial_end = None
-            Job.create(
-                name=JobType.SEND_PROTON_WELCOME_1.value,
-                payload={"user_id": user.id},
-                run_at=arrow.now(),
-            )
-            Session.flush()
-            return user
-
         # create a first alias mail to show user how to use when they login
         alias = Alias.create_new(
             user,
@@ -675,6 +661,16 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
 
         user.newsletter_alias_id = alias.id
         Session.flush()
+
+        if from_partner:
+            user.flags = user.flags | User.FLAG_CREATED_FROM_PARTNER
+            # user.trial_end = None
+            Job.create(
+                name=JobType.SEND_PROTON_WELCOME_1.value,
+                payload={"user_id": user.id},
+                run_at=arrow.now(),
+            )
+            Session.flush()
 
         if config.DISABLE_ONBOARDING:
             LOG.d("Disable onboarding emails")
