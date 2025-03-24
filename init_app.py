@@ -67,6 +67,17 @@ def add_proton_partner() -> Partner:
     return proton_partner
 
 
+def add_partner(partner_name) -> Partner:
+    partner = Partner.get_by(name="linuxdo")
+    if not partner:
+        partner = Partner.create(
+            name=partner_name,
+            contact_email="yuanyou@linux.do",
+        )
+        Session.commit()
+    return partner
+
+
 if __name__ == "__main__":
     # wrap in an app context to benefit from app setup like database cleanup, sentry integration, etc
     with create_light_app().app_context():

@@ -32,6 +32,30 @@
           <button type="submit" class="btn btn-primary btn-block">登陆</button>
         </div>
       </form>
+      {% if GOOGLE_CLIENT_ID %}
+
+       <div class="text-center my-2 text-gray">
+          <span>or</span>
+        </div>
+        <a class="btn btn-primary btn-block mt-2 btn-google"
+          style="color:#000;background-color:#fff"
+           href="{{ url_for('auth.google_login', next=next_url) }}">
+          <img class="mr-2" height="24px" src="/static/images/google.svg" />
+          Log in with Google
+        </a>
+      {% endif %}
+
+
+      {% if LINUXDO_CLIENT_ID %}
+        <a class="btn btn-primary btn-block mt-2 btn-google"
+        style="color:#000;background-color:#fff"
+           href="{{ url_for('auth.linuxdo_login', next=next_url) }}">
+          <img class="mr-2" height="24px" src="/static/images/linuxdo.svg" />
+          Log in with LinuxDo
+        </a>
+      {% endif %}
+
+
       {% if connect_with_oidc %}
         <a class="btn btn-primary btn-block mt-2 btn-social"
            href="{{ url_for('auth.oidc_login', next=next_url) }}">

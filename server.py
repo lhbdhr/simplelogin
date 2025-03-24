@@ -61,6 +61,7 @@ from app.config import (
     PLAUSIBLE_HOST,
     PLAUSIBLE_DOMAIN,
     GITHUB_CLIENT_ID,
+    LINUXDO_CLIENT_ID,
     GOOGLE_CLIENT_ID,
     FACEBOOK_CLIENT_ID,
     LANDING_PAGE_URL,
@@ -426,6 +427,7 @@ def jinja2_filter(app):
             GITHUB_CLIENT_ID=GITHUB_CLIENT_ID,
             GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID,
             FACEBOOK_CLIENT_ID=FACEBOOK_CLIENT_ID,
+            LINUXDO_CLIENT_ID=LINUXDO_CLIENT_ID,
             LANDING_PAGE_URL=LANDING_PAGE_URL,
             STATUS_PAGE_URL=STATUS_PAGE_URL,
             SUPPORT_EMAIL=SUPPORT_EMAIL,
@@ -498,10 +500,11 @@ def register_custom_commands(app):
 
     @app.cli.command("dummy-data")
     def dummy_data():
-        from init_app import add_sl_domains, add_proton_partner
+        from init_app import add_sl_domains, add_proton_partner, add_partner
 
         LOG.w("reset db, add fake data")
         add_proton_partner()
+        add_partner("linuxdo")
         fake_data()
         add_sl_domains()
 

@@ -67,6 +67,10 @@ class ProtonPartnerNotSetUp(SLException):
     pass
 
 
+class PartnerNotSetUp(SLException):
+    pass
+
+
 class ErrContactErrorUpgradeNeeded(SLException):
     """raised when user cannot create a contact because the plan doesn't allow it"""
 

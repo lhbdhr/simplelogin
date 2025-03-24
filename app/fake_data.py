@@ -38,6 +38,7 @@ from app.models import (
 )
 from app.pgp_utils import load_public_key
 from app.proton.proton_partner import get_proton_partner
+from app.auth.partner import get_partner_by_name
 
 
 def fake_data():
@@ -289,6 +290,30 @@ def fake_data():
         user_id=user.id,
         partner_id=proton_partner.id,
         partner_email="test@proton.me",
+        external_user_id="DUMMY",
+        flush=True,
+    )
+    PartnerSubscription.create(
+        partner_user_id=pu.id, end_at=arrow.now().shift(years=1, days=1)
+    )
+    Session.commit()
+
+    # Create a user
+    partner = get_partner_by_name("linuxdo")
+    user = User.create(
+        email="test@linux.do",
+        name="linuxdo test",
+        password="password",
+        activated=True,
+        is_admin=False,
+        intro_shown=True,
+        from_partner=True,
+        flush=True,
+    )
+    pu = PartnerUser.create(
+        user_id=user.id,
+        partner_id=partner.id,
+        partner_email="test@linux.do",
         external_user_id="DUMMY",
         flush=True,
     )
