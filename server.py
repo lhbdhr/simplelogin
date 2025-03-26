@@ -500,11 +500,11 @@ def register_custom_commands(app):
 
     @app.cli.command("dummy-data")
     def dummy_data():
-        from init_app import add_sl_domains, add_proton_partner, add_partner
+        from init_app import add_sl_domains, add_proton_partner, set_partners
 
         LOG.w("reset db, add fake data")
         add_proton_partner()
-        add_partner("linuxdo")
+        set_partners()
         fake_data()
         add_sl_domains()
 

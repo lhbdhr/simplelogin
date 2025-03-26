@@ -1,6 +1,10 @@
 from app.config import (
     ALIAS_DOMAINS,
     PREMIUM_ALIAS_DOMAINS,
+    PROTON_CLIENT_ID,
+    GITHUB_CLIENT_ID,
+    GOOGLE_CLIENT_ID,
+    LINUXDO_CLIENT_ID,
 )
 from app.db import Session
 from app.log import LOG
@@ -56,26 +60,54 @@ def add_sl_domains():
     Session.commit()
 
 
+def add_partner(partner: dict) -> Partner:
+    partnerCurr = Partner.get_by(name=partner["name"])
+    if not partnerCurr:
+        Partner.create(
+            name=partner["name"],
+            contact_email=partner["contact_email"],
+        )
+        Session.commit()
+    return partner
+
+
+def set_partners():
+    DEFAULT_PARTNERS = [
+        {
+            "is_enabled": PROTON_CLIENT_ID,
+            "name": "proton",
+            "contact_email": "proton@yuanyou.de",
+        },
+        {
+            "is_enabled": GITHUB_CLIENT_ID,
+            "name": "github",
+            "contact_email": "github@yuanyou.de",
+        },
+        {
+            "is_enabled": GOOGLE_CLIENT_ID,
+            "name": "google",
+            "contact_email": "google@yuanyou.de",
+        },
+        {
+            "is_enabled": LINUXDO_CLIENT_ID,
+            "name": "linuxdo",
+            "contact_email": "linuxdo@yuanyou.de",
+        },
+    ]
+    for partner in DEFAULT_PARTNERS:
+        if partner["is_enabled"]:
+            add_partner(partner)
+
+
 def add_proton_partner() -> Partner:
     proton_partner = Partner.get_by(name=PROTON_PARTNER_NAME)
     if not proton_partner:
         proton_partner = Partner.create(
             name=PROTON_PARTNER_NAME,
-            contact_email="simplelogin@protonmail.com",
+            contact_email="paroton@yuanyou.de",
         )
         Session.commit()
     return proton_partner
-
-
-def add_partner(partner_name) -> Partner:
-    partner = Partner.get_by(name="linuxdo")
-    if not partner:
-        partner = Partner.create(
-            name=partner_name,
-            contact_email="yuanyou@linux.do",
-        )
-        Session.commit()
-    return partner
 
 
 if __name__ == "__main__":
@@ -83,3 +115,4 @@ if __name__ == "__main__":
     with create_light_app().app_context():
         load_pgp_public_keys()
         add_sl_domains()
+        set_partners()

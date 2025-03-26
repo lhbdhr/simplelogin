@@ -1,10 +1,14 @@
-from flask import request, session, redirect, flash, url_for
+from flask import request, session, redirect, flash
 from requests_oauthlib import OAuth2Session
 
 from app import s3
 from app.auth.base import auth_bp
 from app.config import URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+from app.auth.partner import get_partner_by_name
+from app.models import PartnerUser
 from app.db import Session
+from psycopg2.errors import UniqueViolation
+import sqlalchemy.exc
 from app.log import LOG
 from app.models import User, File, SocialAuth
 from app.utils import random_string, sanitize_email, sanitize_next_url
@@ -81,8 +85,9 @@ def google_callback():
 
     email = sanitize_email(google_user_data["email"])
     user = User.get_by(email=email)
-
+    name = google_user_data.get("name")
     picture_url = google_user_data.get("picture")
+    id = google_user_data.get("id")
 
     if user:
         if picture_url and not user.profile_picture_id:
@@ -91,11 +96,27 @@ def google_callback():
             user.profile_picture_id = file.id
             Session.commit()
     else:
-        flash(
-            "Sorry you cannot sign up via Google, please use email/password sign-up instead",
-            "error",
-        )
-        return redirect(url_for("auth.register"))
+        try:
+            partner = get_partner_by_name("google")
+            user = User.create(
+                email=email,
+                name=name,
+                activated=True,
+                from_partner=True,
+                flush=True,
+            )
+            PartnerUser.create(
+                user_id=user.id,
+                partner_id=partner.id,
+                partner_email=email,
+                external_user_id=id,
+                flush=True,
+            )
+            Session.commit()
+        except (UniqueViolation, sqlalchemy.exc.IntegrityError) as e:
+            Session.rollback()
+            LOG.debug(f"Got the duplicate user error: {e}")
+            return False
 
     next_url = None
     # The activation link contains the original page, for ex authorize page
