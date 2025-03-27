@@ -185,6 +185,9 @@ def linuxdo_callback():
         res = handler.handle_login(linuxdo_partner)
     elif action == Action.Link:
         res = handler.handle_link(current_user, linuxdo_partner)
+        if not res.user and "already linked" in res.flash_message:
+            flash("链接失败了，一个原邮邮箱账号只能同时链接一个外部账号！", "error")
+            return redirect("/")
     else:
         raise Exception(f"Unknown Action: {action.name}")
 
