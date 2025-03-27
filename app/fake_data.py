@@ -38,7 +38,7 @@ from app.models import (
 )
 from app.pgp_utils import load_public_key
 from app.proton.proton_partner import get_proton_partner
-from app.auth.partner import get_partner_by_name
+from app.partner.partner import get_partner_by_name
 
 
 def fake_data():

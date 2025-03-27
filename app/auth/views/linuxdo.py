@@ -1,19 +1,26 @@
-from flask import request, session, redirect, flash
+import requests
+from flask import request, session, redirect, flash, url_for
+from flask_limiter.util import get_remote_address
+from flask_login import current_user
 from requests_oauthlib import OAuth2Session
+from typing import Optional
 
-from app import s3
 from app.auth.base import auth_bp
-from app.config import URL, LINUXDO_CLIENT_ID, LINUXDO_CLIENT_SECRET
-from psycopg2.errors import UniqueViolation
-from app.models import PartnerUser
-from app.auth.partner import get_partner_by_name
-import sqlalchemy.exc
-
-from app.db import Session
+from app.auth.views.login_utils import after_login
+from app.config import (
+    URL,
+    LINUXDO_CLIENT_ID,
+    LINUXDO_CLIENT_SECRET,
+)
 from app.log import LOG
-from app.models import User, File, SocialAuth
-from app.utils import random_string, sanitize_email, sanitize_next_url
-from .login_utils import after_login
+from app.models import ApiKey, User
+from app.partner.partner_callback_handler import (
+    PartnerCallbackHandler,
+    Action,
+)
+from app.partner.partner_client import HttpPartnerClient
+from app.partner.partner import get_partner_by_name
+from app.utils import sanitize_next_url, sanitize_scheme
 
 _authorization_base_url = "https://connect.linux.do/oauth2/authorize"
 _token_url = "https://connect.linux.do/oauth2/token"
@@ -25,127 +32,176 @@ _user = "https://connect.linux.do/api/user"
 # when served behind nginx, the redirect_uri is localhost... and not the real url
 _redirect_uri = URL + "/auth/linuxdo/callback"
 
+SESSION_ACTION_KEY = "oauth_action"
+SESSION_STATE_KEY = "oauth_state"
+DEFAULT_SCHEME = "auth.simplelogin"
+
+
+def get_api_key_for_user(user: User) -> str:
+    ak = ApiKey.create(
+        user_id=user.id,
+        name="Created via Login with Proton on mobile app",
+        commit=True,
+    )
+    return ak.code
+
+
+def extract_action() -> Optional[Action]:
+    action = request.args.get("action")
+    if action is not None:
+        if action == "link":
+            return Action.Link
+        elif action == "login":
+            return Action.Login
+        else:
+            LOG.w(f"Unknown action received: {action}")
+            return None
+    return Action.Login
+
+
+def get_action_from_state() -> Action:
+    oauth_action = session[SESSION_ACTION_KEY]
+    if oauth_action == Action.Login.value:
+        return Action.Login
+    elif oauth_action == Action.Link.value:
+        return Action.Link
+    raise Exception(f"Unknown action in state: {oauth_action}")
+
 
 @auth_bp.route("/linuxdo/login")
 def linuxdo_login():
-    # to avoid flask-login displaying the login error message
-    session.pop("_flashes", None)
+    if LINUXDO_CLIENT_ID is None or LINUXDO_CLIENT_SECRET is None:
+        return redirect(url_for("auth.login"))
+
+    action = extract_action()
+    if action is None:
+        return redirect(url_for("auth.login"))
+    if action == Action.Link and not current_user.is_authenticated:
+        return redirect(url_for("auth.login"))
 
     next_url = sanitize_next_url(request.args.get("next"))
-
-    # Google does not allow to append param to redirect_url
-    # we need to pass the next url by session
     if next_url:
-        session["linuxdo_next_url"] = next_url
+        session["oauth_next"] = next_url
+    elif "oauth_next" in session:
+        del session["oauth_next"]
 
-    google = OAuth2Session(LINUXDO_CLIENT_ID, scope=_scope, redirect_uri=_redirect_uri)
-    authorization_url, state = google.authorization_url(_authorization_base_url)
+    scheme = sanitize_scheme(request.args.get("scheme"))
+    if scheme:
+        session["oauth_scheme"] = scheme
+    elif "oauth_scheme" in session:
+        del session["oauth_scheme"]
+
+    mode = request.args.get("mode", "session")
+    if mode == "apikey":
+        session["oauth_mode"] = "apikey"
+    else:
+        session["oauth_mode"] = "session"
+
+    linuxdo = OAuth2Session(LINUXDO_CLIENT_ID, scope=_scope, redirect_uri=_redirect_uri)
+    authorization_url, state = linuxdo.authorization_url(_authorization_base_url)
 
     # State is used to prevent CSRF, keep this for later.
-    session["oauth_state"] = state
+    session[SESSION_STATE_KEY] = state
+    session[SESSION_ACTION_KEY] = action.value
     return redirect(authorization_url)
 
 
 @auth_bp.route("/linuxdo/callback")
 def linuxdo_callback():
-    LOG.d("linuxdo callback")
+    if SESSION_STATE_KEY not in session or SESSION_STATE_KEY not in session:
+        flash("Invalid state, please retry", "error")
+        return redirect(url_for("auth.login"))
+    if LINUXDO_CLIENT_ID is None or LINUXDO_CLIENT_SECRET is None:
+        return redirect(url_for("auth.login"))
+
     # user clicks on cancel
     if "error" in request.args:
-        flash("please use another sign in method then", "warning")
+        flash("Please use another sign in method then", "warning")
         return redirect("/")
 
     linuxdo = OAuth2Session(
         LINUXDO_CLIENT_ID,
-        # some how Google Login fails with oauth_state KeyError
-        # state=session["oauth_state"],
         scope="all",
+        state=session[SESSION_STATE_KEY],
         redirect_uri=_redirect_uri,
     )
-    linuxdo.fetch_token(
-        _token_url,
-        client_secret=LINUXDO_CLIENT_SECRET,
-        authorization_response=request.url,
-    )
-    # # Fetch a protected resource, i.e. user profile
-    # {
-    #     "id": 108990,
-    #     "sub": "108990",
-    #     "username": "yuanyou",
-    #     "login": "yuanyou",
-    #     "name": "原邮邮箱",
-    #     "email": "u108990@linux.do",
-    #     "avatar_template": "https://linux.do/user_avatar/linux.do/yuanyou/288/499808_2.png",
-    #     "avatar_url": "https://linux.do/user_avatar/linux.do/yuanyou/288/499808_2.png",
-    #     "active": True,
-    #     "trust_level": 1,
-    #     "silenced": False,
-    #     "external_ids": None,
-    #     "api_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    # }
-    linuxdo_user_data = linuxdo.get("https://connect.linux.do/api/user").json()
-    # LOG.d("linuxdo user data %s", linuxdo_user_data)
 
-    email = sanitize_email(linuxdo_user_data["email"])
-    user = User.get_by(email=email)
+    def check_status_code(response: requests.Response) -> requests.Response:
+        if response.status_code != 200:
+            raise Exception(
+                f"Bad Partner API response [status={response.status_code}]: {response.json()}"
+            )
+        return response
 
-    name = linuxdo_user_data.get("name")
-    picture_url = linuxdo_user_data.get("avatar_url")
-    id = linuxdo_user_data.get("id")
+    linuxdo.register_compliance_hook("access_token_response", check_status_code)
 
-    if user:
-        if picture_url and not user.profile_picture_id:
-            LOG.d("set user profile picture to %s", picture_url)
-            file = create_file_from_url(user, picture_url)
-            user.profile_picture_id = file.id
-            Session.commit()
+    # headers = None
+
+    try:
+        token = linuxdo.fetch_token(
+            _token_url,
+            client_secret=LINUXDO_CLIENT_SECRET,
+            authorization_response=request.url,
+        )
+        # {
+        #     "access_token": "xxx",
+        #     "expires_in": 3600,
+        #     "refresh_token": "xxxx",
+        #     "token_type": "bearer",
+        #     "expires_at": 1743052334.0229573,
+        # }
+
+        # # Fetch a protected resource, i.e. user profile
+        # {
+        #     "id": 108990,
+        #     "sub": "108990",
+        #     "username": "yuanyou",
+        #     "login": "yuanyou",
+        #     "name": "原邮邮箱",
+        #     "email": "u108990@linux.do",
+        #     "avatar_template": "https://linux.do/user_avatar/linux.do/yuanyou/288/499808_2.png",
+        #     "avatar_url": "https://linux.do/user_avatar/linux.do/yuanyou/288/499808_2.png",
+        #     "active": True,
+        #     "trust_level": 1,
+        #     "silenced": False,
+        #     "external_ids": None,
+        #     "api_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        # }
+    except Exception as e:
+        LOG.warning(f"Error fetching Partner token: {e}")
+        flash("There was an error in the login process", "error")
+        return redirect(url_for("auth.login"))
+
+    credentials = token["access_token"]
+    action = get_action_from_state()
+
+    linuxdo_client = HttpPartnerClient(_user, credentials, get_remote_address())
+    handler = PartnerCallbackHandler(linuxdo_client)
+
+    linuxdo_partner = get_partner_by_name("linuxdo")
+    # LOG.debug(f"token is {token}")
+    next_url = session.get("oauth_next")
+    if action == Action.Login:
+        res = handler.handle_login(linuxdo_partner)
+    elif action == Action.Link:
+        res = handler.handle_link(current_user, linuxdo_partner)
     else:
-        try:
-            # user = User.create(email=email, name=name, activated=True)
-            # Session.commit()
-            partner = get_partner_by_name("linuxdo")
-            user = User.create(
-                email=email,
-                name=name,
-                activated=True,
-                from_partner=True,
-                flush=True,
-            )
-            PartnerUser.create(
-                user_id=user.id,
-                partner_id=partner.id,
-                partner_email=email,
-                external_user_id=id,
-                flush=True,
-            )
-            Session.commit()
-        except (UniqueViolation, sqlalchemy.exc.IntegrityError) as e:
-            Session.rollback()
-            LOG.debug(f"Got the duplicate user error: {e}")
-            return False
+        raise Exception(f"Unknown Action: {action.name}")
 
-    next_url = None
-    # The activation link contains the original page, for ex authorize page
-    if "linuxdo_next_url" in session:
-        next_url = session["linuxdo_next_url"]
-        LOG.d("redirect user to %s", next_url)
+    if res.flash_message is not None:
+        flash(res.flash_message, res.flash_category)
 
-        # reset the next_url to avoid user getting redirected at each login :)
-        session.pop("linuxdo_next_url", None)
+    oauth_scheme = session.get("oauth_scheme")
+    if session.get("oauth_mode", "session") == "apikey":
+        apikey = get_api_key_for_user(res.user)
+        scheme = oauth_scheme or DEFAULT_SCHEME
+        return redirect(f"{scheme}:///login?apikey={apikey}")
 
-    if not SocialAuth.get_by(user_id=user.id, social="linuxdo"):
-        SocialAuth.create(user_id=user.id, social="linuxdo")
-        Session.commit()
+    if res.redirect_to_login:
+        return redirect(url_for("auth.login"))
 
-    return after_login(user, next_url)
+    if next_url and next_url[0] == "/" and oauth_scheme:
+        next_url = f"{oauth_scheme}://{next_url}"
 
-
-def create_file_from_url(user, url) -> File:
-    file_path = random_string(30)
-    file = File.create(path=file_path, user_id=user.id)
-
-    s3.upload_from_url(url, file_path)
-
-    Session.flush()
-    LOG.d("upload file %s to s3", file)
-
-    return file
+    redirect_url = next_url or res.redirect
+    return after_login(res.user, redirect_url, login_from_proton=True)

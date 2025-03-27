@@ -9,19 +9,19 @@ class SLException(Exception):
 
 
 class AliasInTrashError(SLException):
-    """raised when alias is deleted before"""
+    """别名已被删除，抛出异常"""
 
     pass
 
 
 class DirectoryInTrashError(SLException):
-    """raised when a directory is deleted before"""
+    """目录已被删除，抛出异常"""
 
     pass
 
 
 class SubdomainInTrashError(SLException):
-    """raised when a subdomain is deleted before"""
+    """子域名已被删除，抛出异常"""
 
     pass
 
@@ -30,11 +30,11 @@ class CannotCreateContactForReverseAlias(SLException):
     """raised when a contact is created that has website_email=reverse_alias of another contact"""
 
     def error_for_user(self) -> str:
-        return "You can't create contact for a reverse alias"
+        return "你不能将一个反向别名创建为联系人，抛出异常"
 
 
 class NonReverseAliasInReplyPhase(SLException):
-    """raised when a non reverse-alias is used during a reply phase"""
+    """在回复阶段使用非反向别名时引发"""
 
     pass
 
@@ -132,3 +132,8 @@ class ProtonAccountNotVerified(LinkException):
         super().__init__(
             "The Proton account you are trying to use has not been verified"
         )
+
+
+class PartnerAccountNotVerified(LinkException):
+    def __init__(self):
+        super().__init__("您尝试使用的帐户尚未经过验证")

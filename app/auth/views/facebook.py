@@ -1,9 +1,8 @@
 from flask import request, session, redirect, url_for, flash
 from requests_oauthlib import OAuth2Session
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
-
+from app import s3
 from app.auth.base import auth_bp
-from app.auth.views.google import create_file_from_url
 from app.config import (
     URL,
     FACEBOOK_CLIENT_ID,
@@ -11,9 +10,9 @@ from app.config import (
 )
 from app.db import Session
 from app.log import LOG
-from app.models import User, SocialAuth
+from app.models import User, SocialAuth, File
 from .login_utils import after_login
-from ...utils import sanitize_email, sanitize_next_url
+from ...utils import sanitize_email, sanitize_next_url, random_string
 
 _authorization_base_url = "https://www.facebook.com/dialog/oauth"
 _token_url = "https://graph.facebook.com/oauth/access_token"
@@ -125,3 +124,15 @@ def facebook_callback():
         Session.commit()
 
     return after_login(user, next_url)
+
+
+def create_file_from_url(user, url) -> File:
+    file_path = random_string(30)
+    file = File.create(path=file_path, user_id=user.id)
+
+    s3.upload_from_url(url, file_path)
+
+    Session.flush()
+    LOG.d("upload file %s to s3", file)
+
+    return file
