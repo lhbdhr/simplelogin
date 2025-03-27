@@ -142,6 +142,63 @@
         </form>
       </div>
       <!-- END change name & profile picture -->
+       <!-- Connect with Proton -->
+      <div class="card" id="connect-with-proton">
+        <div class="card-body">
+          <div class="card-title">账号连接</div>
+          <div class="mb-3">
+              您可以将您的 Google/LinuxDo 账户 和 原邮邮箱 帐户连接。
+              <br>
+              然后，您可以使用 Google/LinuxDo 帐户快速登录到您的 原邮邮箱 帐户。
+              <br />
+            </div>
+          {% if google_linked_account != None %}
+              <form class="d-inline" method="post"
+                  action="{{ url_for("dashboard.unlink_google_account") }}">
+              {{ csrf_form.csrf_token }}
+              <button class="btn btn-primary mt-2"
+                  style="color:#000;background-color:#fff"
+              >
+                <img class="mr-2" width="24px" src="/static/images/google.svg">
+                取消 和 Google 账号 连接
+              </button>
+            </form>
+          {% else %}
+
+            <a class="btn btn-primary mt-2"
+                style="color:#000;background-color:#fff"
+                href="{{ url_for("auth.google_login", action="link") }}">
+              <img class="mr-2" width="24px" src="/static/images/google.svg">
+              和 Google 账号 连接
+            </a>
+          {% endif %}
+          {% if linuxdo_linked_account != None %}
+              <form method="post"
+                  class="d-inline"
+                  action="{{ url_for("dashboard.unlink_linuxdo_account") }}">
+              {{ csrf_form.csrf_token }}
+              <button class="btn btn-primary mt-2 "
+                  style="color:#000;background-color:#fff"
+              >
+                <img class="mr-2" height="24px" src="/static/images/linuxdo.svg">
+                取消 和 LinuxDo 账号 连接
+              </button>
+            </form>
+          {% else %}
+            <a class="btn btn-primary mt-2 proton-button"
+                style="color:#000;background-color:#fff"
+                href="{{ url_for("auth.linuxdo_login", action="link") }}">
+              <img class="mr-2"
+                    height="24px"
+                    src="{{ url_for('static', filename='images/linuxdo.svg') }}" />
+              和 LinuxDo 账号 连接
+            </a>
+          {% endif %}
+
+        </div>
+      </div>
+
+      <!-- END Connect with Proton -->
       <!-- Random alias -->
       <div id="random-alias" class="card">
         <div class="card-body">

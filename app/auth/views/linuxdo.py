@@ -121,7 +121,7 @@ def linuxdo_callback():
 
     linuxdo = OAuth2Session(
         LINUXDO_CLIENT_ID,
-        scope="all",
+        scope=_scope,
         state=session[SESSION_STATE_KEY],
         redirect_uri=_redirect_uri,
     )

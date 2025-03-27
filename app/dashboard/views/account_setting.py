@@ -40,6 +40,8 @@ from app.models import (
     UnsubscribeBehaviourEnum,
 )
 from app.proton.proton_unlink import perform_proton_account_unlink
+from app.partner.proton_unlink import perform_partner_account_unlink
+
 from app.utils import (
     random_string,
     CSRFValidationForm,
@@ -243,4 +245,36 @@ def unlink_proton_account():
         flash("Account cannot be unlinked", "warning")
     else:
         flash("Your Proton account has been unlinked", "success")
+    return redirect(url_for("dashboard.setting"))
+
+
+@dashboard_bp.route("/unlink_linuxdo_account", methods=["POST"])
+@login_required
+@sudo_required
+def unlink_linuxdo_account():
+    csrf_form = CSRFValidationForm()
+    if not csrf_form.validate():
+        flash("Invalid request", "warning")
+        return redirect(url_for("dashboard.setting"))
+
+    if not perform_partner_account_unlink("linuxdo", current_user):
+        flash("Account cannot be unlinked", "warning")
+    else:
+        flash("Your LinuxDo account has been unlinked", "success")
+    return redirect(url_for("dashboard.setting"))
+
+
+@dashboard_bp.route("/unlink_google_account", methods=["POST"])
+@login_required
+@sudo_required
+def unlink_google_account():
+    csrf_form = CSRFValidationForm()
+    if not csrf_form.validate():
+        flash("Invalid request", "warning")
+        return redirect(url_for("dashboard.setting"))
+
+    if not perform_partner_account_unlink("google", current_user):
+        flash("Account cannot be unlinked", "warning")
+    else:
+        flash("Your Google account has been unlinked", "success")
     return redirect(url_for("dashboard.setting"))

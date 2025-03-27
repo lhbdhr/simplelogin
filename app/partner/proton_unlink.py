@@ -14,14 +14,12 @@ def can_unlink_partner_account(user: User) -> bool:
 
 
 def perform_partner_account_unlink(
-    current_user: User, skip_check: bool = False
+    partner_name: str, current_user: User, skip_check: bool = False
 ) -> None | str:
     if not skip_check and not can_unlink_partner_account(current_user):
         return None
-    proton_partner = get_partner_by_name()
-    partner_user = PartnerUser.get_by(
-        user_id=current_user.id, partner_id=proton_partner.id
-    )
+    partner = get_partner_by_name(partner_name)
+    partner_user = PartnerUser.get_by(user_id=current_user.id, partner_id=partner.id)
     if partner_user is not None:
         LOG.info(f"User {current_user} has unlinked the account from {partner_user}")
         emit_user_audit_log(
@@ -35,5 +33,5 @@ def perform_partner_account_unlink(
         PartnerUser.delete(partner_user.id)
     external_user_id = partner_user.external_user_id
     Session.commit()
-    agent.record_custom_event("AccountUnlinked", {"partner": proton_partner.name})
+    agent.record_custom_event("AccountUnlinked", {"partner": partner.name})
     return external_user_id

@@ -125,7 +125,7 @@ def google_callback():
 
     google = OAuth2Session(
         GOOGLE_CLIENT_ID,
-        scope="all",
+        scope=_scope,
         state=session[SESSION_STATE_KEY],
         redirect_uri=_redirect_uri,
     )
