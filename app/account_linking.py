@@ -386,6 +386,9 @@ def process_link_case(
     partner_user = PartnerUser.get_by(
         partner_id=partner.id, external_user_id=link_request.external_user_id
     )
+    current_user_partner = PartnerUser.get_by(user_id=current_user.id)
+    if current_user_partner:
+        raise AccountAlreadyLinkedToAnotherPartnerException()
     if partner_user is None:
         # There is no SL user linked with the partner. Proceed with linking
         return link_user(link_request, current_user, partner)
