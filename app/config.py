@@ -178,6 +178,9 @@ PREMIUM_ALIAS_DOMAINS = [d.lower().strip() for d in PREMIUM_ALIAS_DOMAINS]
 # the alias domain used when creating the first alias for user
 FIRST_ALIAS_DOMAIN = os.environ.get("FIRST_ALIAS_DOMAIN") or EMAIL_DOMAIN
 
+# the alias domain used when creating the first alias for user
+DEFAULT_ALIAS_DOMAIN = os.environ.get("DEFAULT_ALIAS_DOMAIN") or EMAIL_DOMAIN
+
 # list of (priority, email server)
 # e.g. [(10, "mx1.hostname."), (10, "mx2.hostname.")]
 EMAIL_SERVERS_WITH_PRIORITY = sl_getenv("EMAIL_SERVERS_WITH_PRIORITY")

@@ -633,6 +633,11 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
 
         Session.flush()
 
+        # 使用 默认域名
+        sl_domain: SLDomain = SLDomain.get_by(domain=config.DEFAULT_ALIAS_DOMAIN)
+        if sl_domain:
+            user.default_alias_public_domain_id = sl_domain.id
+
         mb = Mailbox.create(user_id=user.id, email=user.email, verified=True)
         Session.flush()
         user.default_mailbox_id = mb.id
