@@ -34,10 +34,12 @@ RUN apt-get update \
     mv /tmp/uv-*/uvx /usr/bin/uvx && \
     rm -rf /tmp/uv* uv.tar.gz
 
-# Install Python dependencies
+# 安装 Python 版本和依赖
 RUN uv python install `cat .python-version` \
-    && uv sync --locked \
-    && apt-get autoremove -y \
+    && uv sync --locked
+
+# 清理不需要的工具和缓存
+RUN apt-get autoremove -y \
     && apt-get purge -y curl netcat-traditional build-essential pkg-config cmake ninja-build python3-dev clang \
     && apt-get autoremove -y \
     && apt-get clean \
