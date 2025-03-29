@@ -3,7 +3,7 @@ WORKDIR /code
 COPY ./static/package*.json /code/static/
 RUN cd /code/static && npm ci
 
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
 ARG UV_VERSION="0.5.21"
 
@@ -33,6 +33,9 @@ RUN apt-get update \
     mv /tmp/uv-*/uv /usr/bin/uv && \
     mv /tmp/uv-*/uvx /usr/bin/uvx && \
     rm -rf /tmp/uv* uv.tar.gz
+
+# 在安装 Python 依赖前设置
+ENV CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 
 # 安装 Python 版本和依赖
 RUN uv python install `cat .python-version` \
