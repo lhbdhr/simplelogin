@@ -18,30 +18,32 @@
           如何使用 <i class="fe fe-chevrons-down"></i>
         </a>
       </h1>
-      <div class="alert alert-primary collapse" id="howtouse" role="alert">
+      <div class="collapse" id="howtouse" role="alert">
+        <div class="alert alert-primary">
           <p>
           你想要从你的别名，给别人发送电子邮件，你需要创建一个<em>反向别名</em>，即
           一个特殊的电子邮件地址。<br>
           当你用自己的真实邮箱，向反向别名发送电子邮件时，该电子邮件将<b>从你的别名</b>发送到联系人。
           <br>
-        </p>
-        <p>
-          {% if alias.mailbox_id %}
-            {% if alias.mailboxes | length == 1 %}
-              一定要从邮箱 <em>{{ alias.mailbox.email }}</em> 发送电子邮件。否则会被本网站拒收。<br>
-              <p style="color: red;">这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。<p>
+          </p>
+          <p>
+            {% if alias.mailbox_id %}
+              {% if alias.mailboxes | length == 1 %}
+                一定要从邮箱 <em>{{ alias.mailbox.email }}</em> 发送电子邮件。否则会被本网站拒收。<br>
+                <p style="color: red;">这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。<p>
+              {% else %}
+                一定要从以下邮箱之一发送电子邮件：<br>
+                {% for mailbox in alias.mailboxes %}
+                  - <b>{{ mailbox.email }}</b> <br>
+                {% endfor %}
+                <p style="color: red;">这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。<p>
+              {% endif %}
             {% else %}
-              一定要从以下邮箱之一发送电子邮件：<br>
-              {% for mailbox in alias.mailboxes %}
-                - <b>{{ mailbox.email }}</b> <br>
-              {% endfor %}
+              确保从个人电子邮件地址发送电子邮件 ({{ current_user.email }}).<br>
               <p style="color: red;">这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。<p>
             {% endif %}
-          {% else %}
-            确保从个人电子邮件地址发送电子邮件 ({{ current_user.email }}).<br>
-            <p style="color: red;">这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。<p>
-          {% endif %}
-        </p>
+          </p>
+        </div>
       </div>
     </div>
   </div>

@@ -30,16 +30,18 @@
           </a>
         </div>
       {% endif %}
-      <div class="alert alert-primary collapse {% if not subdomains %}show{% endif %}" id="howtouse" role="alert">
-        您可以使用子域名快速创建电子邮件别名，而无需打开 原邮邮箱 应用。
-        <br />
-        在您需要快速提供电子邮件地址时非常方便，例如在电话中、在会议中或只是
-        您想要的任何地方。
-        <br />
-        选择子域名后，下次需要别名时只需使用 <b>anything@my-subdomain.yuanyoupush.com</b>
-        ：
-        它将<b>自动创建</b>在第一次收到电子邮件时。
-        <br />
+      <div class="collapse {% if not subdomains %}show{% endif %}" id="howtouse" role="alert">
+        <div class="alert alert-primary">
+          您可以使用子域名快速创建电子邮件别名，而无需打开 原邮邮箱 应用。
+          <br />
+          在您需要快速提供电子邮件地址时非常方便，例如在电话中、在会议中或只是
+          您想要的任何地方。
+          <br />
+          选择子域名后，下次需要别名时只需使用 <b>anything@my-subdomain.yuanyoupush.com</b>
+          ：
+          它将<b>自动创建</b>在第一次收到电子邮件时。
+          <br />
+        </div>
       </div>
       <div class="row">
         {% for subdomain in subdomains %}

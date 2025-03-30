@@ -24,39 +24,41 @@
         </div>
       {% endif %}
 
-      <div class="alert alert-primary collapse {% if not dirs %} show {% endif %}" id="howtouse" role="alert">
-        <div>
-          目录允许您<b>动态</b>创建别名。
-        </div>
-        <div class="mt-2 pb-2">
-          1️⃣ 为您的目录选择一个名称，例如 <em>my_directory</em> <br>
+      <div class="collapse {% if not dirs %} show {% endif %}" id="howtouse" role="alert">
+        <div class="alert alert-primary">
+          <div>
+            目录允许您<b>动态</b>创建别名。
+          </div>
+          <div class="mt-2 pb-2">
+            1️⃣ 为您的目录选择一个名称，例如 <em>my_directory</em> <br>
 
-          2️⃣ 使用以下格式之一快速创建别名，<b>无需事先创建此别名</b>
-        </div>
-        <div class="pl-3 py-2 bg-secondary">
-          <em>my_directory/<b>anything</b>@{{ FIRST_ALIAS_DOMAIN }}</em> 或者 <br>
-          <em>my_directory+<b>anything</b>@{{ FIRST_ALIAS_DOMAIN }}</em> 或者 <br>
-          <em>my_directory#<b>anything</b>@{{ FIRST_ALIAS_DOMAIN }}</em> <br>
-        </div>
-        <em><b>anything</b></em> 是任意由小写字符组成的字符串。<br>
+            2️⃣ 使用以下格式之一快速创建别名，<b>无需事先创建此别名</b>
+          </div>
+          <div class="pl-3 py-2 bg-secondary">
+            <em>my_directory/<b>anything</b>@{{ FIRST_ALIAS_DOMAIN }}</em> 或者 <br>
+            <em>my_directory+<b>anything</b>@{{ FIRST_ALIAS_DOMAIN }}</em> 或者 <br>
+            <em>my_directory#<b>anything</b>@{{ FIRST_ALIAS_DOMAIN }}</em> <br>
+          </div>
+          <em><b>anything</b></em> 是任意由小写字符组成的字符串。<br>
 
-        <div class="mt-2">
-          您可以在以下域上使用此功能：
-          {% for alias_domain in ALIAS_DOMAINS %}
-            <div class="font-weight-bold">{{ alias_domain }} </div>
-          {% endfor %}
-        </div>
+          <div class="mt-2">
+            您可以在以下域上使用此功能：
+            {% for alias_domain in ALIAS_DOMAINS %}
+              <div class="font-weight-bold">{{ alias_domain }} </div>
+            {% endfor %}
+          </div>
 
-        <div class="h4 text-primary mt-3">
-          ℹ️
-          第一次收到电子邮件时将自动创建别名。
-        </div>
-        <div class="mt-2">
-          比如我创建了一个名叫 <em>admin</em> 的目录，然后我在注册<em>搬瓦工</em>需要填写邮箱时，<br>
-          我可以填写 <em>admin+<b>bwg</b>@{{ FIRST_ALIAS_DOMAIN }}</em>，<br>
-          然后这个别名就自动创建了，不用每次注册网站时，都需要登陆<em>原邮邮箱</em>来手动创建别名了。<br>
-          这个自动创建的别名属于哪个用户，是根据这里创建的目录<em>admin</em>来决定的。<br>
-          <em>bwg</em>只是个例子，你也可以不用注册网站名字，而是用任意的名字。但是你要自己能区分<em>哪个别名是负责什么网站的</em>。
+          <div class="h4 text-primary mt-3">
+            ℹ️
+            第一次收到电子邮件时将自动创建别名。
+          </div>
+          <div class="mt-2">
+            比如我创建了一个名叫 <em>admin</em> 的目录，然后我在注册<em>搬瓦工</em>需要填写邮箱时，<br>
+            我可以填写 <em>admin+<b>bwg</b>@{{ FIRST_ALIAS_DOMAIN }}</em>，<br>
+            然后这个别名就自动创建了，不用每次注册网站时，都需要登陆<em>原邮邮箱</em>来手动创建别名了。<br>
+            这个自动创建的别名属于哪个用户，是根据这里创建的目录<em>admin</em>来决定的。<br>
+            <em>bwg</em>只是个例子，你也可以不用注册网站名字，而是用任意的名字。但是你要自己能区分<em>哪个别名是负责什么网站的</em>。
+          </div>
         </div>
     </div>
     <div class="row">

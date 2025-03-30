@@ -16,12 +16,14 @@
       如何使用 <i class="fe fe-chevrons-down"></i>
     </a>
   </h1>
-  <div class="alert alert-primary collapse" id="howtouse" role="alert">
-    在此页面上，您可以查看已删除且属于 <b>{{ custom_domain.domain }}</b> 域的所有别名
-    <br />
-    当别名位于垃圾箱中时，无论是通过手工创建的别名还是使用域 Catch-All 自动创建的别名，
-    <br />
-    您都无法重新创建它。
+  <div class="collapse" id="howtouse" role="alert">
+    <div class="alert alert-primary">
+      在此页面上，您可以查看已删除且属于 <b>{{ custom_domain.domain }}</b> 域的所有别名
+      <br />
+      当别名位于垃圾箱中时，无论是通过手工创建的别名还是使用域 Catch-All 自动创建的别名，
+      <br />
+      您都无法重新创建它。
+    </div>
   </div>
   {% if domain_deleted_aliases | length > 0 %}
 

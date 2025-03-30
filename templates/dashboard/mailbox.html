@@ -22,19 +22,23 @@
 
         <div class="alert alert-danger" role="alert">此功能仅在高级计划中可用。</div>
       {% endif %}
-      <div class="alert alert-primary collapse {% if mailboxes|length == 1 %}show{% endif %}" id="howtouse" role="alert">
-        <em>收件邮箱</em> 只是另一个个人电子邮件地址。创建新别名时，您可以选择
-        <em>拥有</em>此别名的邮箱，即：
-        <br />
-        - 发送到此别名的所有电子邮件都将转发到此邮箱
-        <br />
-        - 从此邮箱，您可以从别名回复/发送电子邮件。
-        <br />
-        <br />
-        当您注册时，将自动创建一个邮箱，其中包含您的电子邮件 <b>{{ current_user.email }}</b>
-        <br />
-        <br />
-        邮箱也不一定必须是您的电子邮件：如果您想为您的好友创建别名，它可以是您朋友的电子邮件。
+      <div class="collapse {% if mailboxes|length == 1 %}show{% endif %}" id="howtouse" role="alert"
+        style="margin: 0; padding:0"
+      >
+        <div class="alert alert-primary">
+          <em>收件邮箱</em> 只是另一个个人电子邮件地址。创建新别名时，您可以选择
+          <em>拥有</em>此别名的邮箱，即：
+          <br />
+          - 发送到此别名的所有电子邮件都将转发到此邮箱
+          <br />
+          - 从此邮箱，您可以从别名回复/发送电子邮件。
+          <br />
+          <br />
+          当您注册时，将自动创建一个邮箱，其中包含您的电子邮件 <b>{{ current_user.email }}</b>
+          <br />
+          <br />
+          邮箱也不一定必须是您的电子邮件：如果您想为您的好友创建别名，它可以是您朋友的电子邮件。
+        </div>
       </div>
       <div class="row">
         {% for mailbox in mailboxes %}

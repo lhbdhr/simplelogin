@@ -30,13 +30,15 @@
           </a>
         </div>
       {% endif %}
-      <div class="alert alert-primary collapse {% if not custom_domains %}show{% endif %}" id="howtouse" role="alert">
-         通过添加您的域名，您可以创建别名，例如 <b>hi@my-domain.com</b> <br>
-        您还可以启用 <b>catch-all</b> 来动态创建别名：
-        只需使用 <b>anything@my-domain.com</b>，它就会在
-        收到电子邮件时创建。
-        <br />
-        <span class="text-danger">自定义域别名邮箱不支持PUSH</span>
+      <div class="collapse {% if not custom_domains %}show{% endif %}" id="howtouse" role="alert">
+        <div class="alert alert-primary">
+          通过添加您的域名，您可以创建别名，例如 <b>hi@my-domain.com</b> <br>
+          您还可以启用 <b>catch-all</b> 来动态创建别名：
+          只需使用 <b>anything@my-domain.com</b>，它就会在
+          收到电子邮件时创建。
+          <br />
+          <span class="text-danger">自定义域别名邮箱不支持PUSH</span>
+        </div>
       </div>
       <div class="row">
         {% for custom_domain in custom_domains %}
