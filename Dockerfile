@@ -36,6 +36,7 @@ RUN apt-get update \
 
 # Install Python dependencies
 RUN uv python install `cat .python-version` \
+    && export CMAKE_POLICY_VERSION_MINIMUM=3.5 \
     && uv sync --locked \
     && apt-get autoremove -y \
     && apt-get purge -y curl netcat-traditional build-essential pkg-config cmake ninja-build python3-dev clang \
