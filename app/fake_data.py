@@ -299,25 +299,25 @@ def fake_data():
     Session.commit()
 
     # Create a user
-    partner = get_partner_by_name("linuxdo")
-    user = User.create(
-        email="test@linux.do",
-        name="linuxdo test",
-        password="password",
-        activated=True,
-        is_admin=False,
-        intro_shown=True,
-        from_partner=True,
-        flush=True,
-    )
-    pu = PartnerUser.create(
-        user_id=user.id,
-        partner_id=partner.id,
-        partner_email="test@linux.do",
-        external_user_id="DUMMY",
-        flush=True,
-    )
-    PartnerSubscription.create(
-        partner_user_id=pu.id, end_at=arrow.now().shift(years=1, days=1)
-    )
-    Session.commit()
+    # partner = get_partner_by_name("linuxdo")
+    # user = User.create(
+    #     email="test@linux.do",
+    #     name="linuxdo test",
+    #     password="password",
+    #     activated=True,
+    #     is_admin=False,
+    #     intro_shown=True,
+    #     from_partner=True,
+    #     flush=True,
+    # )
+    # pu = PartnerUser.create(
+    #     user_id=user.id,
+    #     partner_id=partner.id,
+    #     partner_email="test@linux.do",
+    #     external_user_id="DUMMY",
+    #     flush=True,
+    # )
+    # PartnerSubscription.create(
+    #     partner_user_id=pu.id, end_at=arrow.now().shift(years=1, days=1)
+    # )
+    # Session.commit()
