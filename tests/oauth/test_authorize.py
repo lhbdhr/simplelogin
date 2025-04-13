@@ -67,7 +67,7 @@ def test_authorize_page_non_login_user(flask_client):
 
     html = r.get_data(as_text=True)
     assert r.status_code == 200
-    assert "Sign in to accept sharing data with" in html
+    assert "登录以授权给" in html
 
 
 def test_authorize_page_login_user_non_supported_flow(flask_client):

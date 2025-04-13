@@ -15,7 +15,7 @@ def message_to_bytes(msg: Message) -> bytes:
         try:
             return msg.as_bytes(policy=generator_policy)
         except Exception:
-            LOG.w("as_bytes() fails with %s policy", policy, exc_info=True)
+            LOG.w("as_bytes() fails with %s policy", generator_policy, exc_info=True)
 
     msg_string = msg.as_string()
     try:

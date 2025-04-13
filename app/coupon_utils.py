@@ -104,7 +104,7 @@ def redeem_lifetime_coupon(coupon_code: str, user: User) -> Optional[Coupon]:
     partner_sub = (
         Session.query(PartnerSubscription)
         .join(PartnerUser, PartnerUser.id == PartnerSubscription.partner_user_id)
-        .filter(PartnerUser.user_id == user.id, PartnerSubscription.lifetime is True)
+        .filter(PartnerUser.user_id == user.id, PartnerSubscription.lifetime.is_(True))
         .first()
     )
     if partner_sub is not None:

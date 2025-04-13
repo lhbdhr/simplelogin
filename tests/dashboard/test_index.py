@@ -38,4 +38,4 @@ def test_too_many_requests(flask_client):
     else:
         # last request
         assert r.status_code == 429
-        assert "Whoa, slow down there, pardner!" in str(r.data)
+        assert "哇哦，伙计，慢点！" in r.data.decode("utf-8")

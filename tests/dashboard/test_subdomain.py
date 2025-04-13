@@ -50,7 +50,7 @@ def test_delete_subdomain(flask_client):
     )
 
     assert r.status_code == 200
-    assert f"test.{sl_domain.domain} scheduled for deletion." in r.data.decode()
+    assert f"test.{sl_domain.domain} 已安排删除" in r.data.decode("utf-8")
 
     # a domain deletion job is scheduled
     assert Job.count() == nb_job + 1

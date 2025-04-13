@@ -33,7 +33,7 @@ def test_delete_mailbox_transfer_mailbox_primary(flask_client):
     assert len(alias._mailboxes) == 0
     mails_sent = mail_sender.get_stored_emails()
     assert len(mails_sent) == 1
-    assert str(mails_sent[0].msg).find("alias have been transferred") > -1
+    assert str(mails_sent[0].msg).find("及其别名已转移到") > -1
 
 
 @mail_sender.store_emails_test_decorator
@@ -83,7 +83,7 @@ def test_delete_mailbox_transfer_mailbox_in_list(flask_client):
     assert alias._mailboxes[0].id == m3.id
     mails_sent = mail_sender.get_stored_emails()
     assert len(mails_sent) == 1
-    assert str(mails_sent[0].msg).find("alias have been transferred") > -1
+    assert str(mails_sent[0].msg).find("及其别名已转移到") > -1
 
 
 @mail_sender.store_emails_test_decorator
@@ -105,4 +105,4 @@ def test_delete_mailbox_no_transfer(flask_client):
     assert Alias.get(alias_id) is None
     mails_sent = mail_sender.get_stored_emails()
     assert len(mails_sent) == 1
-    assert str(mails_sent[0].msg).find("along with its aliases have been deleted") > -1
+    assert str(mails_sent[0].msg).find("及其别名已成功删除") > -1

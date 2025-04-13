@@ -25,7 +25,7 @@ def test_register_success(flask_client):
 
     assert r.status_code == 200
     # User arrives at the waiting activation page.
-    assert b"An email to validate your email is on its way" in r.data
+    assert "用于验证您的电子邮件正在发送中" in r.data.decode("utf-8")
 
 
 def test_register_increment_nb_new_web_non_proton_user(flask_client):
@@ -84,5 +84,5 @@ def test_register_non_canonical_is_canonicalized(flask_client):
         follow_redirects=True,
     )
 
-    assert b"An email to validate your email is on its way" in r.data
+    assert "用于验证您的电子邮件正在发送中" in r.data.decode("utf-8")
     assert User.get_by(email=canonicalize_email(email)) is not None
