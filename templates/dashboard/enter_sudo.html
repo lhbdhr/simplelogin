@@ -43,9 +43,11 @@
         <div class="my-3">
           <p>或者，您可以使用您的 Google 凭证来确保是您本人。</p>
         </div>
-        <a class="btn btn-primary btn-block mt-2 proton-button"
+        <a class="btn btn-primary btn-block mt-2"
            href="{{ url_for('auth.google_login', next=next) }}"
-           style="max-width: 400px">
+           style="max-width: 400px;
+                  color:#000;
+                  background-color:#fff">
           <img class="mr-2" height="24px" src="/static/images/google.svg" />
           使用 Google 进行身份验证
         </a>
