@@ -40,9 +40,7 @@
             <form method="post">
               {{ csrf_form.csrf_token }}
               <input type="hidden" name="form-name" value="create-custom-email">
-              <button data-toggle="tooltip"
-                      title="新建自定义别名"
-                      class="btn btn-primary mr-2">
+              <button data-toggle="tooltip" title="新建自定义别名" class="btn btn-primary mr-2">
                 <i class="fa fa-plus"></i> 新建自定义别名
               </button>
             </form>
@@ -50,9 +48,7 @@
               <form method="post">
                 {{ csrf_form.csrf_token }}
                 <input type="hidden" name="form-name" value="create-random-email">
-                <button data-toggle="tooltip"
-                        title="创建随机别名"
-                        class="btn btn-success">
+                <button data-toggle="tooltip" title="创建随机别名" class="btn btn-success">
                   <i class="fa fa-random"></i> 随机别名
                 </button>
               </form>
@@ -178,12 +174,12 @@
     <!-- END Global Stats -->
     <div class="row mb-2" v-if="showFilter" id="filter-control">
       <!-- Filter Control -->
-      <div class="col d-flex">
+      <div class="col d-flex flex-wrap">
         <form method="get" class="form-inline">
           {{ csrf_form.csrf_token }}
           <select name="sort"
                   onchange="this.form.submit()"
-                  class="form-control mr-3 shadow">
+                  class="form-control shadow mr-0 mr-sm-3">
             <option value="" {% if sort == "" %}selected{% endif %}>按最近活动排序</option>
             <option value="old2new" {% if sort == "old2new" %}selected{% endif %}>别名 旧-新</option>
             <option value="new2old" {% if sort == "new2old" %}selected{% endif %}>别名 新-旧</option>
@@ -192,8 +188,7 @@
           </select>
           <select name="filter"
                   onchange="this.form.submit()"
-                  class="form-control mr-3 shadow"
-                  style="max-width: 200px">
+                  class="form-control shadow mr-0 mr-sm-3 mt-1 mt-sm-0">
             <option value="" {% if filter == "" %}selected{% endif %}>全部别名邮箱</option>
             <option value="pinned" {% if filter == "pinned" %}selected{% endif %}>置顶的别名</option>
             <option value="enabled" {% if filter == "enabled" %}selected{% endif %}>启用的别名</option>
@@ -213,11 +208,10 @@
           <input type="search"
                  name="query"
                  placeholder="输入搜索别名"
-                 class="form-control shadow mr-2"
-                 style="max-width: 15em"
+                 class="form-control shadow mr-0 mr-sm-3 mt-1 mt-sm-0"
                  value="{{ query }}">
         </form>
-        <div style="margin-left: auto">
+        <div class="mt-1" style="margin-left: auto">
           {% if query or sort or filter %}
 
             <a href="{{ url_for("dashboard.index") }}"
@@ -238,14 +232,14 @@
           <div class="row">
             <div class="col-8">
               <span class="{% if alias.id == highlight_alias_id %}
-                highlighted{% endif %} clipboard cursor mb-0" {% if loop.index ==1 %}
-                data-intro="这是您的第一个<em>别名</em>.
-                  <br />
-                  <br />
-                  发送至别名的电子邮件将被<em>转发</em>至您的<em>真实</em>电子邮件地址。
-                  <br />
-                  <br />"
-                data-step="2"
+                 highlighted{% endif %} clipboard cursor mb-0" {% if loop.index ==1 %}
+                 data-intro="这是您的第一个<em>别名</em>.
+                <br />
+                <br />
+                发送至别名的电子邮件将被<em>转发</em>至您的<em>真实</em>电子邮件地址。
+                <br />
+                <br />
+                " data-step="2"
               {% endif %}
               {% if alias.enabled %}data-toggle="tooltip" title="点击复制" data-clipboard-text="{{ alias.email }}"{% endif %}
               >
@@ -257,12 +251,7 @@
                     data-toggle="tooltip"
                     title="此别名是由于收到一封电子邮件而自动生成的"></span>
             {% endif %}
-            {% if alias.pinned %}
-
-              <span class="fa fa-thumb-tack"
-                    data-toggle="tooltip"
-                    title="此别名已置顶"></span>
-            {% endif %}
+            {% if alias.pinned %}<span class="fa fa-thumb-tack" data-toggle="tooltip" title="此别名已置顶"></span>{% endif %}
             {% if alias.hibp_breaches | length > 0 %}
 
               <a href="https://haveibeenpwned.com/account/{{ alias.email }}">
@@ -303,9 +292,7 @@
               {% if email_log.is_reply %}
 
                 {{ contact.website_email }}
-                <i class="fa fa-reply mr-2"
-                   data-toggle="tooltip"
-                   title="电子邮件回复/从别名发送"></i>
+                <i class="fa fa-reply mr-2" data-toggle="tooltip" title="电子邮件回复/从别名发送"></i>
                 {{ email_log.created_at | dt }}
               {% elif email_log.bounced %}
                 <span class="text-danger">
@@ -357,16 +344,19 @@
       <div class="row">
         <div class="col">
           <a href="{{ url_for('dashboard.alias_contact_manager', alias_id=alias.id) }}" id="send-email-{{ alias.id }}" {% if loop.index ==1 %}
-            data-intro="别名不仅可以接收电子邮件，还可以<em>发送</em>电子邮件！
-              <br />
-              <br />
-              您可以在此处为您的别名添加新的<em>联系人</em>。
-              <br />
-              <br />
-              如果您需要回复电子邮件，只需点击“回复”：回复将来自您的别名，而您的真实电子邮件地址将保持<em>隐藏</em>状态。" data-step="4"
+             data-intro="别名不仅可以接收电子邮件，还可以<em>发送</em>电子邮件！
+            <br />
+            <br />
+            您可以在此处为您的别名添加新的<em>联系人</em>。
+            <br />
+            <br />
+            如果您需要回复电子邮件，只需点击“回复”：回复将来自您的别名，而您的真实电子邮件地址将保持<em>隐藏</em>状态。" data-step="4"
           {% endif %}
           class="btn btn-sm btn-outline-primary
-          {% if not alias.enabled %}disabled{% endif %}
+          {% if not alias.enabled %}
+
+            disabled
+          {% endif %}
           " data-toggle="tooltip" title="添加新联系人，管理现有联系人">
           联系人&nbsp;<i class="fe fe-send"></i>
         </a>
@@ -393,7 +383,7 @@
     <!-- Collapse section -->
     <div class="{% if not current_user.expand_alias_info %}
        collapse{% endif %}" id="alias-{{ alias.id }}">
-       <div class="mt-2">
+      <div class="mt-2">
         {% if alias_info.latest_email_log != None %}
 
           <div style="font-size: 12px">别名创建于 {{ alias.created_at | dt }}</div>
@@ -402,7 +392,7 @@
         <span class="alias-activity">{{ alias_info.nb_blocked }}</span> 个屏蔽,
         <span class="alias-activity">{{ alias_info.nb_reply }}</span> 个发送/回复
         <a href="{{ url_for('dashboard.alias_log', alias_id=alias.id) }}"
-          class="btn btn-sm btn-link">查看所有 &nbsp;→</a>
+           class="btn btn-sm btn-link">查看所有 &nbsp;→</a>
         {% if mailboxes|length > 1 %}
 
           <div class="small-text">收件邮箱</div>
@@ -428,8 +418,8 @@
           </div>
         {% endif %}
         <div class="small-text mt-2"
-            data-toogle="tooltip"
-            title="发件人名称 - 当你用该别名'回复邮件/发送邮件'时，对方看到的发件人的名称">
+             data-toogle="tooltip"
+             title="发件人名称 - 当你用该别名'回复邮件/发送邮件'时，对方看到的发件人的名称">
           发件人名称
           <i class="fe fe-help-circle"></i>
           <span id="display-name-focus-message-{{ alias.id }}"
@@ -438,19 +428,19 @@
         <div class="d-flex">
           <div class="flex-grow-1 mr-2">
             <input id="alias-name-{{ alias.id }}"
-                  value="{{ alias.name or '' }}"
-                  class="form-control"
-                  placeholder="{{ alias.custom_domain.name or "发件人的名称：你用别名发邮件，对方看到你是谁" }}"
-                  onchange="handleDisplayNameChange({{ alias.id }}, '{{ alias.email }}')"
-                  onfocus="handleDisplayNameFocus({{ alias.id }})"
-                  onblur="handleDisplayNameBlur({{ alias.id }})">
+                   value="{{ alias.name or '' }}"
+                   class="form-control"
+                   placeholder="{{ alias.custom_domain.name or "发件人的名称：你用别名发邮件，对方看到你是谁" }}"
+                   onchange="handleDisplayNameChange({{ alias.id }}, '{{ alias.email }}')"
+                   onfocus="handleDisplayNameFocus({{ alias.id }})"
+                   onblur="handleDisplayNameBlur({{ alias.id }})">
           </div>
         </div>
         {% if alias.mailbox_support_pgp() %}
 
           <div class="small-text mt-2"
-              data-toogle="tooltip"
-              title="您可以决定关闭别名的 PGP。如果发件人已经加密电子邮件，这将很有用">
+               data-toogle="tooltip"
+               title="您可以决定关闭别名的 PGP。如果发件人已经加密电子邮件，这将很有用">
             PGP（电子邮件加密）
             <i class="fe fe-help-circle"></i>
           </div>
@@ -462,8 +452,8 @@
           </div>
         {% endif %}
         <div class="small-text mt-2"
-            data-toogle="tooltip"
-            title="别名置顶 - 置顶别名将显示在别名列表的顶部">
+             data-toogle="tooltip"
+             title="别名置顶 - 置顶别名将显示在别名列表的顶部">
           置顶别名
           <i class="fe fe-help-circle"></i>
         </div>
@@ -476,7 +466,7 @@
         <div>
           <div class="btn-group float-right" role="group" aria-label="Basic example">
             <a href="{{ url_for('dashboard.alias_transfer_send_route', alias_id=alias.id) }}"
-              class="btn btn-sm btn-link">
+               class="btn btn-sm btn-link">
               转移别名
               <i class="ml-0 dropdown-icon fe fe-share-2 text-primary"></i>
             </a>

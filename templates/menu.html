@@ -40,14 +40,16 @@
       Discover
     </a>
   </li>
--->
-  {#  <li class="nav-item">#}
-  {#    <a href="{{ url_for('developer.index') }}"#}
-  {#       class="nav-link {{ 'active' if active_page == 'developer' }}">#}
-  {#      <i class="fe fe-terminal"></i>#}
-  {#      SIWSL#}
-  {#    </a>#}
-  {#  </li>#}
+  -->
+  {#
+  <li class="nav-item">
+    <a href="{{ url_for("developer.index") }}"
+       class="nav-link {{ 'active' if active_page == 'developer' }}">
+      <i class="fe fe-terminal"></i>
+      SIWSL
+    </a>
+  </li>
+  #}
   {% if current_user.should_show_app_page() %}
 
     <li class="nav-item">
@@ -59,19 +61,19 @@
     </li>
   {% endif %}
   <li class="nav-item">
+    <a href="{{ url_for("dashboard.api_key") }}"
+       class="nav-link {{ 'active' if active_page == 'api_key' }}">
+      <i class="fa fa-key"></i>
+      API Keys
+    </a>
+  </li>
+  <li class="nav-item">
     <a href="{{ url_for("dashboard.setting") }}"
        class="nav-link {{ 'active' if active_page == 'setting' }}">
       <i class="fe fe-settings"></i>
       设置
     </a>
   </li>
-  {#  <li class="nav-item">#}
-  {#    <a href="{{ url_for('dashboard.api_key') }}"#}
-  {#       class="nav-link {{ 'active' if active_page == 'api_key' }}">#}
-  {#      <i class="fa fa-key"></i>#}
-  {#      API Keys#}
-  {#    </a>#}
-  {#  </li>#}
   {% if current_user.can_use_phone %}
 
     <li class="nav-item">
@@ -93,33 +95,4 @@
       </a>
     </li>
   {% endif %}
-<!--  {% if ZENDESK_ENABLED %}-->
-
-<!--    <li class="nav-item">-->
-<!--      <div id="help-menu-item" class="dropdown nav-item align-items-center mb-3">-->
-<!--        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>-->
-<!--        <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">-->
-<!--          <div class="dropdown-item">-->
-<!--            <a href="https://simplelogin.io/docs/"-->
-<!--               target="_blank"-->
-<!--               rel="noopener noreferrer">-->
-<!--              Docs-->
-<!--              <i class="fa fa-external-link" aria-hidden="true"></i>-->
-<!--            </a>-->
-<!--          </div>-->
-<!--          <div class="dropdown-item">-->
-<!--            <a href="https://github.com/simple-login/app/discussions"-->
-<!--               target="_blank"-->
-<!--               rel="noopener noreferrer">-->
-<!--              Forum-->
-<!--              <i class="fa fa-external-link" aria-hidden="true"></i>-->
-<!--            </a>-->
-<!--          </div>-->
-<!--          <div class="dropdown-item">-->
-<!--            <a href="/dashboard/support">Support</a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </li>-->
-<!--  {% endif %}-->
 </ul>

@@ -4,21 +4,15 @@
       <a class="header-brand" href="{{ url_for("dashboard.index") }}">
         <picture>
           <source media="(max-width: 650px)" srcset="/static/logo.png">
-          <img src="/static/logo.png"
-               class="header-brand-img"
-               alt="logo">
+          <img src="/static/logo.png" class="header-brand-img" alt="logo">
         </picture>
       </a>
       <div class="d-flex order-lg-2 ml-auto">
-        <div class="nav-item"
-             data-toggle="dark-mode"
-             title="亮色模式/深色模式">
+        <div class="nav-item" data-toggle="dark-mode" title="亮色模式/深色模式">
           <i class="fe fe-moon"></i>
         </div>
-        <div class="nav-item"
-          data-toggle="tooltip"
-          title="仅别名邮箱页面可用">
-          <a onclick="startIntro()" data-intro="欢迎来到 原邮邮箱 ！
+        <div class="nav-item d-none d-sm-flex">
+          <a href="{{ url_for("dashboard.index") }}?showIntro=1" data-intro="欢迎来到 原邮邮箱 ！
             <br />
             <br />
             看来这是您第一次来这里，让我们一起了解一些 原邮邮箱 功能吧！
@@ -69,53 +63,32 @@
             </div>
           </div>
         </div>
-<!--        {% if ZENDESK_ENABLED %}-->
-
-<!--          <div id="help-btn" class="dropdown nav-item align-items-center">-->
-<!--            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>-->
-<!--            <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">-->
-<!--              <div class="dropdown-item">-->
-<!--                <a href="https://simplelogin.io/docs/"-->
-<!--                   target="_blank"-->
-<!--                   rel="noopener noreferrer">-->
-<!--                  Docs-->
-<!--                  <i class="fa fa-external-link" aria-hidden="true"></i>-->
-<!--                </a>-->
-<!--              </div>-->
-<!--              <div class="dropdown-item">-->
-<!--                <a href="https://github.com/simple-login/app/"-->
-<!--                   target="_blank"-->
-<!--                   rel="noopener noreferrer">-->
-<!--                  Github repo-->
-<!--                  <i class="fa fa-external-link" aria-hidden="true"></i>-->
-<!--                </a>-->
-<!--              </div>-->
-<!--              <div class="dropdown-item">-->
-<!--                <a href="https://github.com/simple-login/app/discussions"-->
-<!--                   target="_blank"-->
-<!--                   rel="noopener noreferrer">-->
-<!--                  Forum-->
-<!--                  <i class="fa fa-external-link" aria-hidden="true"></i>-->
-<!--                </a>-->
-<!--              </div>-->
-<!--              <div class="dropdown-item">-->
-<!--                <a href="/dashboard/support">Support</a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        {% else %}-->
-<!--          <div class="nav-item">-->
-<!--            <a href="https://simplelogin.io/docs/"-->
-<!--               target="_blank"-->
-<!--               rel="noopener noreferrer">-->
-<!--              Docs-->
-<!--              <i class="fa fa-external-link" aria-hidden="true"></i>-->
-<!--            </a>-->
-<!--          </div>-->
-<!--        {% endif %}-->
+        <div id="help-btn"
+             class="dropdown nav-item align-items-center d-none d-md-flex"
+             title="帮助">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">使用教程</a>
+          <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+            <div class="dropdown-item">
+              <a href="https://github.com/lhbdhr/yuanyou-doc/blob/main/browser.md"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                浏览器插件使用教程
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="dropdown-item">
+              <a href="https://github.com/lhbdhr/yuanyou-doc/blob/main/startup.md"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                基础功能使用教程
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
         {% if current_user.should_show_upgrade_button() %}
 
-          <div class="nav-item">
+          <div class="nav-item d-none d-sm-flex">
             <a href="{{ url_for("dashboard.pricing") }}"
                class="btn btn-sm btn-outline-primary">升级</a>
           </div>
