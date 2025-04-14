@@ -76,7 +76,7 @@
         <form method="post">
           {{ csrf_form.csrf_token }}
           <input type="hidden" name="form-name" value="change-password">
-          <button class="btn btn-outline-primary">保存</button>
+          <button class="btn btn-outline-primary">发送修改密码的电子邮件</button>
         </form>
       </div>
     </div>
@@ -104,9 +104,7 @@
     <div class="card">
       <div class="card-body">
         <div class="card-title">安全密钥 (WebAuthn)</div>
-        <div class="mb-3">
-          您可以通过将 FIDO 支持的物理密钥（例如 Yubikey、Google Titan 或具有适当硬件的设备）链接到您的帐户来保护您的帐户。
-        </div>
+        <div class="mb-3">您可以通过将 FIDO 支持的物理密钥（例如 Yubikey、Google Titan 或具有适当硬件的设备）链接到您的帐户来保护您的帐户。</div>
         {% if current_user.fido_uuid is none %}
 
           <a href="{{ url_for("dashboard.fido_setup") }}"

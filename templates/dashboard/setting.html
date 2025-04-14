@@ -142,62 +142,62 @@
         </form>
       </div>
       <!-- END change name & profile picture -->
-       <!-- Connect with Proton -->
+      <!-- Connect with Proton -->
       <div class="card" id="connect-with-proton">
         <div class="card-body">
           <div class="card-title">账号连接</div>
           <div class="mb-3">
-              您可以将您的 Google/LinuxDo 账户 和 原邮邮箱 帐户连接。
-              <br>
-              然后，您可以使用 Google/LinuxDo 帐户快速登录到您的 原邮邮箱 帐户。
-              <br />
-            </div>
+            您可以将您的 Google/LinuxDo 账户 和 原邮邮箱 帐户连接。
+            <br>
+            然后，您可以使用 Google/LinuxDo 帐户快速登录到您的 原邮邮箱 帐户。
+            <br />
+          </div>
           {% if google_linked_account != None %}
-              <form class="d-inline" method="post"
+
+            <form class="d-inline"
+                  method="post"
                   action="{{ url_for("dashboard.unlink_google_account") }}">
               {{ csrf_form.csrf_token }}
-              <button class="btn btn-primary mt-2"
-                  style="color:#000;background-color:#fff"
-              >
+              <button class="btn btn-primary mt-2" style="color:#000;background-color:#fff">
                 <img class="mr-2" width="24px" src="/static/images/google.svg">
                 取消 和 Google 账号 连接
               </button>
             </form>
           {% else %}
-
             <a class="btn btn-primary mt-2"
-                style="color:#000;background-color:#fff"
-                href="{{ url_for("auth.google_login", action="link") }}">
+               style="color:#000;
+                      background-color:#fff"
+               href="{{ url_for("auth.google_login", action="link") }}">
               <img class="mr-2" width="24px" src="/static/images/google.svg">
               和 Google 账号 连接
             </a>
           {% endif %}
           {% if linuxdo_linked_account != None %}
-              <form method="post"
+
+            <form method="post"
                   class="d-inline"
                   action="{{ url_for("dashboard.unlink_linuxdo_account") }}">
               {{ csrf_form.csrf_token }}
               <button class="btn btn-primary mt-2 "
-                  style="color:#000;background-color:#fff"
-              >
+                      style="color:#000;
+                             background-color:#fff">
                 <img class="mr-2" height="24px" src="/static/images/linuxdo.svg">
                 取消 和 LinuxDo 账号 连接
               </button>
             </form>
           {% else %}
             <a class="btn btn-primary mt-2 proton-button"
-                style="color:#000;background-color:#fff"
-                href="{{ url_for("auth.linuxdo_login", action="link") }}">
+               style="color:#000;
+                      background-color:#fff"
+               href="{{ url_for("auth.linuxdo_login", action="link") }}">
               <img class="mr-2"
-                    height="24px"
-                    src="{{ url_for('static', filename='images/linuxdo.svg') }}" />
+                   height="24px"
+                   src="{{ url_for('static', filename='images/linuxdo.svg') }}" />
               和 LinuxDo 账号 连接
             </a>
           {% endif %}
-
         </div>
       </div>
-
       <!-- END Connect with Proton -->
       <!-- Random alias -->
       <div id="random-alias" class="card">
@@ -208,12 +208,8 @@
             {{ csrf_form.csrf_token }}
             <input type="hidden" name="form-name" value="change-alias-generator">
             <select class="form-control mr-sm-2" name="alias-generator-scheme">
-              <option value="{{ AliasGeneratorEnum.word.value }}" {% if current_user.alias_generator == AliasGeneratorEnum.word.value %}selected{% endif %}>
-                基于随机单词
-              </option>
-              <option value="{{ AliasGeneratorEnum.uuid.value }}" {% if current_user.alias_generator == AliasGeneratorEnum.uuid.value %}selected{% endif %}>
-                基于 UUID
-              </option>
+              <option value="{{ AliasGeneratorEnum.word.value }}" {% if current_user.alias_generator == AliasGeneratorEnum.word.value %}selected{% endif %}>基于随机单词</option>
+              <option value="{{ AliasGeneratorEnum.uuid.value }}" {% if current_user.alias_generator == AliasGeneratorEnum.uuid.value %}selected{% endif %}>基于 UUID</option>
             </select>
             <button class="btn btn-outline-primary">保存</button>
           </form>
@@ -231,6 +227,7 @@
                    {% if current_user.default_random_alias_domain() == domain %}selected{% endif %} {% endif %}>
                   {{ domain }} (
                   {% if is_public %}
+
                     原邮邮箱域名
                   {% else %}
                     你的域名
@@ -453,7 +450,8 @@
                       <div class="mb-3">
                         当电子邮件被发送到<b>已禁用</b>的别名或从<b>已阻止</b>的联系人发送时，您可以决定发件人应该看到什么响应。
                         <br />
-                        <b>忽略</b>意味着他们将看到已发送的消息，但 原邮邮箱 实际上不会将其转发给您。<br />
+                        <b>忽略</b>意味着他们将看到已发送的消息，但 原邮邮箱 实际上不会将其转发给您。
+                        <br />
                         这是默认选项，因为您可以通过重新启用别名或取消阻止联系人来再次开始接收电子邮件。
                         <br />
                         <b>拒绝</b>意味着 原邮邮箱 将告诉他们别名不存在。
@@ -463,12 +461,8 @@
                         {{ csrf_form.csrf_token }}
                         <input type="hidden" name="form-name" value="change-blocked-behaviour">
                         <select class="form-control mr-sm-2" name="blocked-behaviour">
-                          <option value="{{ BlockBehaviourEnum.return_2xx.value }}" {% if current_user.block_behaviour.value == BlockBehaviourEnum.return_2xx.value %}selected="selected"{% endif %}>
-                            忽略（发件人将看到电子邮件已送达，但您不会收到任何内容）。
-                          </option>
-                          <option value="{{ BlockBehaviourEnum.return_5xx.value }}" {% if current_user.block_behaviour.value == BlockBehaviourEnum.return_5xx.value %}selected="selected"{% endif %}>
-                            拒绝（发件人将被告知您的别名不存在）。
-                          </option>
+                          <option value="{{ BlockBehaviourEnum.return_2xx.value }}" {% if current_user.block_behaviour.value == BlockBehaviourEnum.return_2xx.value %}selected="selected"{% endif %}>忽略（发件人将看到电子邮件已送达，但您不会收到任何内容）。</option>
+                          <option value="{{ BlockBehaviourEnum.return_5xx.value }}" {% if current_user.block_behaviour.value == BlockBehaviourEnum.return_5xx.value %}selected="selected"{% endif %}>拒绝（发件人将被告知您的别名不存在）。</option>
                         </select>
                         <button class="btn btn-outline-primary">保存</button>
                       </form>
@@ -520,5 +514,5 @@
                   <script>
                     {# let anchor = window.location.hash;
                     $(anchor).addClass("highlighted") #}
-                  </script>
-                {% endblock %}
+</script>
+{% endblock %}

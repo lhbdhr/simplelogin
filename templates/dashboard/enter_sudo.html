@@ -32,11 +32,38 @@
 
         <div class="my-3">
           <p>或者，您可以使用您的 SSO 凭证来确保是您本人。</p>
-          <a class="btn btn-primary btn-block mt-2 btn-social w-25"
-             href="{{ url_for('auth.oidc_login', next=next) }}">
-            <i class="fa {{ connect_with_oidc_icon }}"></i> 使用 SSO 进行身份验证
-          </a>
-        {% endif %}
-      </div>
+        </div>
+        <a class="btn btn-primary btn-block mt-2 btn-social w-25"
+           href="{{ url_for('auth.oidc_login', next=next) }}">
+          <i class="fa {{ connect_with_oidc_icon }}"></i> 使用 SSO 进行身份验证
+        </a>
+      {% endif %}
+      {% if connect_with_google %}
+
+        <div class="my-3">
+          <p>或者，您可以使用您的 Google 凭证来确保是您本人。</p>
+        </div>
+        <a class="btn btn-primary btn-block mt-2 proton-button"
+           href="{{ url_for('auth.google_login', next=next) }}"
+           style="max-width: 400px">
+          <img class="mr-2" height="24px" src="/static/images/google.svg" />
+          使用 Google 进行身份验证
+        </a>
+      {% endif %}
+      {% if connect_with_linuxdo %}
+
+        <div class="my-3">
+          <p>或者，您可以使用您的 LinuxDo 凭证来确保是您本人。</p>
+        </div>
+        <a class="btn btn-primary btn-block mt-2"
+           href="{{ url_for('auth.linuxdo_login', next=next) }}"
+           style="max-width: 400px;
+                  color:#000;
+                  background-color:#fff">
+          <img class="mr-2" height="24px" src="/static/images/linuxdo.svg" />
+          使用 LinuxDo 进行身份验证
+        </a>
+      {% endif %}
     </div>
-  {% endblock %}
+  </div>
+{% endblock %}

@@ -6,13 +6,21 @@ from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, validators
 
-from app.config import CONNECT_WITH_PROTON, OIDC_CLIENT_ID, CONNECT_WITH_OIDC_ICON
+from app.config import (
+    CONNECT_WITH_PROTON,
+    OIDC_CLIENT_ID,
+    CONNECT_WITH_OIDC_ICON,
+    LINUXDO_CLIENT_ID,
+    GOOGLE_CLIENT_ID,
+)
 from app.dashboard.base import dashboard_bp
 from app.extensions import limiter
 from app.log import LOG
 from app.models import PartnerUser, SocialAuth
 from app.proton.proton_partner import get_proton_partner
 from app.utils import sanitize_next_url
+from app.partner.partner import get_partner_by_name
+
 
 _SUDO_GAP = 120
 
@@ -50,7 +58,24 @@ def enter_sudo():
         partner_user = PartnerUser.get_by(user_id=current_user.id)
         if not partner_user or partner_user.partner_id != get_proton_partner().id:
             proton_enabled = False
-
+    google_enabled = GOOGLE_CLIENT_ID
+    if google_enabled:
+        # Only for users that have the account linked
+        partner_user = PartnerUser.get_by(user_id=current_user.id)
+        if (
+            not partner_user
+            or partner_user.partner_id != get_partner_by_name("google").id
+        ):
+            google_enabled = False
+    linuxdo_enabled = LINUXDO_CLIENT_ID
+    if linuxdo_enabled:
+        # Only for users that have the account linked
+        partner_user = PartnerUser.get_by(user_id=current_user.id)
+        if (
+            not partner_user
+            or partner_user.partner_id != get_partner_by_name("linuxdo").id
+        ):
+            linuxdo_enabled = False
     oidc_enabled = OIDC_CLIENT_ID is not None
     if oidc_enabled:
         oidc_enabled = (
@@ -62,6 +87,8 @@ def enter_sudo():
         password_check_form=password_check_form,
         next=request.args.get("next"),
         connect_with_proton=proton_enabled,
+        connect_with_google=google_enabled,
+        connect_with_linuxdo=linuxdo_enabled,
         connect_with_oidc=oidc_enabled,
         connect_with_oidc_icon=CONNECT_WITH_OIDC_ICON,
     )
