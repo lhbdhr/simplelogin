@@ -11,19 +11,8 @@
         <div class="nav-item" data-toggle="dark-mode" title="亮色模式/深色模式">
           <i class="fe fe-moon"></i>
         </div>
-        <div class="nav-item d-none d-sm-flex">
-          <a href="{{ url_for("dashboard.index") }}?showIntro=1" data-intro="欢迎来到 原邮邮箱 ！
-            <br />
-            <br />
-            看来这是您第一次来这里，让我们一起了解一些 原邮邮箱 功能吧！
-            <br />
-            <br />
-            您可以随时通过单击上方的 <i class=&quot;fe fe-help-circle&quot;></i> 图标 👆" data-step="1"> 再次显示教程
-            <i class="fe fe-help-circle"></i>
-          </a>
-        </div>
         <div id="notification-app"
-             class="dropdown d-none d-md-flex"
+             class="dropdown d-none d-sm-flex"
              v-if="showNotification">
           <a class="nav-link icon"
              data-toggle="collapse"
@@ -63,6 +52,17 @@
             </div>
           </div>
         </div>
+        <div class="nav-item d-none d-sm-flex">
+          <a href="{{ url_for("dashboard.index") }}?showIntro=1" data-intro="欢迎来到 原邮邮箱 ！
+            <br />
+            <br />
+            看来这是您第一次来这里，让我们一起了解一些 原邮邮箱 功能吧！
+            <br />
+            <br />
+            您可以随时通过单击上方的 <i class=&quot;fe fe-help-circle&quot;></i> 图标 👆" data-step="1"> 再次显示教程
+            <i class="fe fe-help-circle"></i>
+          </a>
+        </div>
         <div id="help-btn"
              class="dropdown nav-item align-items-center d-none d-md-flex"
              title="帮助">
@@ -81,6 +81,22 @@
                  target="_blank"
                  rel="noopener noreferrer">
                 基础功能使用教程
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="dropdown-item">
+              <a href="https://t.me/yuanyou_official"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                联系我们：原邮TG频道
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="dropdown-item">
+              <a href="https://t.me/yuanyou_de"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                联系我们：原邮TG交流群
                 <i class="fa fa-external-link" aria-hidden="true"></i>
               </a>
             </div>

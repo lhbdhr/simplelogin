@@ -24,9 +24,7 @@ from app.utils import sanitize_next_url
 
 class OtpTokenForm(FlaskForm):
     token = StringField("Token", validators=[validators.DataRequired()])
-    remember = BooleanField(
-        "attr", default=False, description="Remember this browser for 30 days"
-    )
+    remember = BooleanField("attr", default=False, description="记住这个设备30天")
 
 
 @auth_bp.route("/mfa", methods=["GET", "POST"])

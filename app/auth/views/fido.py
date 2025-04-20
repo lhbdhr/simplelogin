@@ -29,9 +29,7 @@ from app.utils import sanitize_next_url
 
 class FidoTokenForm(FlaskForm):
     sk_assertion = HiddenField("sk_assertion", validators=[validators.DataRequired()])
-    remember = BooleanField(
-        "attr", default=False, description="Remember this browser for 30 days"
-    )
+    remember = BooleanField("attr", default=False, description="记住这个设备30天")
 
 
 @auth_bp.route("/fido", methods=["GET", "POST"])

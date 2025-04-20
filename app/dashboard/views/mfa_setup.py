@@ -48,7 +48,7 @@ def mfa_setup():
             flash("Incorrect token", "warning")
 
     otp_uri = pyotp.totp.TOTP(current_user.otp_secret).provisioning_uri(
-        name=current_user.email, issuer_name="SimpleLogin"
+        name=current_user.email, issuer_name="YuanYou"
     )
 
     return render_template(
