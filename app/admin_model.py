@@ -230,6 +230,18 @@ class UserAdmin(SLModelView):
         manual_upgrade("Adhoc", ids, is_giveaway=False)
 
     @action(
+        "lifetime_upgrade",
+        "Lifetime upgrade",
+        "Are you sure you want to lifetime-upgrade selected users?",
+    )
+    def lifetime_upgrade(self, ids):
+        for user in User.filter(User.id.in_(ids)):
+            user.lifetime = True
+            flash(f"Lifetime upgrade for {user} to {user.lifetime}", "success")
+            AdminAuditLog.lifetime_upgrade(current_user.id, user.id)
+        Session.commit()
+
+    @action(
         "extend_trial_1w",
         "Extend trial for 1 week more",
         "Extend trial for 1 week more?",

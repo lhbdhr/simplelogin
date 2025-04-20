@@ -240,6 +240,7 @@ class AuditLogActionEnum(EnumE):
     enable_user = 10
     stop_trial = 11
     unlink_user = 12
+    lifetime_upgrade = 101
 
 
 class Phase(EnumE):
@@ -3631,6 +3632,16 @@ class AdminAuditLog(Base):
         cls.create(
             admin_user_id=admin_user_id,
             action=AuditLogActionEnum.stop_trial.value,
+            model="User",
+            model_id=user_id,
+            data={},
+        )
+
+    @classmethod
+    def lifetime_upgrade(cls, admin_user_id: int, user_id: int):
+        cls.create(
+            admin_user_id=admin_user_id,
+            action=AuditLogActionEnum.lifetime_upgrade.value,
             model="User",
             model_id=user_id,
             data={},
