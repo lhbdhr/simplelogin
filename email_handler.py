@@ -926,7 +926,8 @@ def forward_email_to_mailbox(
     # add List-Unsubscribe header
     msg = UnsubscribeGenerator().add_header_to_message(alias, contact, msg)
 
-    add_dkim_signature(msg, EMAIL_DOMAIN)
+    contact_domain = get_email_domain_part(contact.reply_email)
+    add_dkim_signature(msg, contact_domain)
 
     LOG.d(
         "Forward mail from %s to %s, mail_options:%s, rcpt_options:%s ",
@@ -936,7 +937,6 @@ def forward_email_to_mailbox(
         envelope.rcpt_options,
     )
 
-    contact_domain = get_email_domain_part(contact.reply_email)
     try:
         sl_sendmail(
             # use a different envelope sender for each forward (aka VERP)

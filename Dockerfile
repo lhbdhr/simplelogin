@@ -19,7 +19,7 @@ COPY pyproject.toml uv.lock .python-version ./
 
 # Install deps and dependencies for uname
 RUN apt-get update \
-    && apt-get install -y curl netcat-traditional gcc python3-dev gnupg git libre2-dev build-essential pkg-config cmake ninja-build bash clang coreutils \
+    && apt-get install -y vim curl netcat-traditional gcc python3-dev gnupg git libre2-dev build-essential pkg-config cmake ninja-build bash clang coreutils \
     && ARCH=$(uname -m) && \
     case "$ARCH" in \
     "x86_64") UV_ARCH="x86_64-unknown-linux-gnu" ;; \
