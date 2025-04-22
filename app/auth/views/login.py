@@ -54,24 +54,24 @@ def login():
             # Trigger rate limiter
             g.deduct_limit = True
             form.password.data = None
-            flash("Email or password incorrect", "error")
+            flash("邮箱或密码不正确", "error")
             LoginEvent(LoginEvent.ActionType.failed).send()
         elif user.disabled:
             flash(
-                "Your account is disabled. Please contact SimpleLogin team to re-enable your account.",
+                "您的帐户已被禁用。请联系 原邮邮箱 重新启用您的帐户。",
                 "error",
             )
             LoginEvent(LoginEvent.ActionType.disabled_login).send()
         elif user.delete_on is not None:
             flash(
-                f"Your account is scheduled to be deleted on {user.delete_on}",
+                f"您的帐户将于 {user.delete_on} 删除",
                 "error",
             )
             LoginEvent(LoginEvent.ActionType.scheduled_to_be_deleted).send()
         elif not user.activated:
             show_resend_activation = True
             flash(
-                "Please check your inbox for the activation email. You can also have this email re-sent",
+                "请检查您的收件箱，查找激活邮件。您也可以要求重新发送此邮件",
                 "error",
             )
             LoginEvent(LoginEvent.ActionType.not_activated).send()

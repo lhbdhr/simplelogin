@@ -134,7 +134,7 @@ def setting():
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(url_for("dashboard.setting"))
 
         if request.form.get("form-name") == "update-profile":
@@ -150,7 +150,7 @@ def setting():
                     image_contents = form.profile_picture.data.read()
                     if detect_image_format(image_contents) == ImageFormat.Unknown:
                         flash(
-                            "This image format is not supported",
+                            "不支持此图像格式",
                             "error",
                         )
                         return redirect(url_for("dashboard.setting"))
@@ -178,7 +178,7 @@ def setting():
                     profile_updated = True
 
                 if profile_updated:
-                    flash("Your profile has been updated", "success")
+                    flash("您的个人资料已更新", "success")
                     return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "notification-preference":
             choose = request.form.get("notification")
@@ -187,14 +187,14 @@ def setting():
             else:
                 current_user.notification = False
             Session.commit()
-            flash("Your notification preference has been updated", "success")
+            flash("您的通知偏好设置已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "change-alias-generator":
             scheme = int(request.form.get("alias-generator-scheme"))
             if AliasGeneratorEnum.has_value(scheme):
                 current_user.alias_generator = scheme
                 Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "change-random-alias-default-domain":
             default_domain = request.form.get("random-alias-default-domain")
@@ -205,7 +205,7 @@ def setting():
                 return redirect(url_for("dashboard.setting"))
 
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "random-alias-suffix":
             try:
@@ -217,7 +217,7 @@ def setting():
             if AliasSuffixEnum.has_value(scheme):
                 current_user.random_alias_suffix = scheme
                 Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "change-sender-format":
             sender_format = int(request.form.get("sender-format"))
@@ -225,7 +225,7 @@ def setting():
                 current_user.sender_format = sender_format
                 current_user.sender_format_updated_at = arrow.now()
                 Session.commit()
-                flash("Your sender format preference has been updated", "success")
+                flash("您的发件人格式偏好设置已更新", "success")
             Session.commit()
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "replace-ra":
@@ -235,21 +235,21 @@ def setting():
             else:
                 current_user.replace_reverse_alias = False
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "enable_data_breach_check":
             if not current_user.is_premium():
-                flash("Only premium plan can enable data breach monitoring", "warning")
+                flash("只有高级计划才能启用数据泄露监控", "warning")
                 return redirect(url_for("dashboard.setting"))
             choose = request.form.get("enable_data_breach_check")
             if choose == "on":
                 LOG.i("User {current_user} has enabled data breach monitoring")
                 current_user.enable_data_breach_check = True
-                flash("Data breach monitoring is enabled", "success")
+                flash("数据泄露监控已启用", "success")
             else:
                 LOG.i("User {current_user} has disabled data breach monitoring")
                 current_user.enable_data_breach_check = False
-                flash("Data breach monitoring is disabled", "info")
+                flash("数据泄露监控已禁用", "info")
             Session.commit()
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "sender-in-ra":
@@ -259,7 +259,7 @@ def setting():
             else:
                 current_user.include_sender_in_reverse_alias = False
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "expand-alias-info":
             choose = request.form.get("enable")
@@ -268,7 +268,7 @@ def setting():
             else:
                 current_user.expand_alias_info = False
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "ignore-loop-email":
             choose = request.form.get("enable")
@@ -277,7 +277,7 @@ def setting():
             else:
                 current_user.ignore_loop_email = False
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "one-click-unsubscribe":
             choose = request.form.get("unsubscribe-behaviour")
@@ -288,10 +288,10 @@ def setting():
             elif choose == UnsubscribeBehaviourEnum.BlockContact.name:
                 current_user.unsub_behaviour = UnsubscribeBehaviourEnum.BlockContact
             else:
-                flash("There was an error. Please try again", "warning")
+                flash("出现错误。请重试", "warning")
                 return redirect(url_for("dashboard.setting"))
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "include_website_in_one_click_alias":
             choose = request.form.get("enable")
@@ -300,7 +300,7 @@ def setting():
             else:
                 current_user.include_website_in_one_click_alias = False
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "change-blocked-behaviour":
             choose = request.form.get("blocked-behaviour")
@@ -309,10 +309,10 @@ def setting():
             elif choose == str(BlockBehaviourEnum.return_5xx.value):
                 current_user.block_behaviour = BlockBehaviourEnum.return_5xx.name
             else:
-                flash("There was an error. Please try again", "warning")
+                flash("出现错误。请重试", "warning")
                 return redirect(url_for("dashboard.setting"))
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
         elif request.form.get("form-name") == "sender-header":
             choose = request.form.get("enable")
             if choose == "on":
@@ -320,7 +320,7 @@ def setting():
             else:
                 current_user.include_header_email_header = False
             Session.commit()
-            flash("Your preference has been updated", "success")
+            flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
 
     manual_sub = ManualSubscription.get_by(user_id=current_user.id)

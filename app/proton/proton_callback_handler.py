@@ -30,7 +30,7 @@ class ProtonCallbackResult:
 def generate_account_not_allowed_to_log_in() -> ProtonCallbackResult:
     return ProtonCallbackResult(
         redirect_to_login=True,
-        flash_message="This account is not allowed to log in with Proton. Please convert your account to a full Proton account",
+        flash_message="此帐户无法使用 Proton 登录。请将您的帐户转换为完整的 Proton 帐户",
         flash_category="error",
         redirect=None,
         user=None,
@@ -77,7 +77,7 @@ class ProtonCallbackHandler:
             res = process_link_case(user, current_user, partner)
             return ProtonCallbackResult(
                 redirect_to_login=False,
-                flash_message="Account successfully linked",
+                flash_message="账户关联成功",
                 flash_category="success",
                 redirect=url_for("dashboard.setting"),
                 user=res.user,

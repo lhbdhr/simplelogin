@@ -14,7 +14,7 @@ current_user: User
 def reservation_route(reservation_id: int):
     reservation: PhoneReservation = PhoneReservation.get(reservation_id)
     if not reservation or reservation.user_id != current_user.id:
-        flash("Unknown error, redirect back to phone page", "warning")
+        flash("未知错误，重定向回手机页面", "warning")
         return redirect(url_for("phone.index"))
 
     phone_number = reservation.number
@@ -25,13 +25,13 @@ def reservation_route(reservation_id: int):
             if time_left.seconds > 0:
                 current_user.phone_quota += time_left.seconds // 60
                 flash(
-                    f"Your phone quota is increased by {time_left.seconds // 60} minutes",
+                    f"您的电话配额已增加 {time_left.seconds // 60} 分钟",
                     "success",
                 )
             reservation.end = arrow.now()
             Session.commit()
 
-            flash(f"{phone_number.number} is released", "success")
+            flash(f"{phone_number.number} 已发布", "success")
             return redirect(url_for("phone.index"))
 
     return render_template(

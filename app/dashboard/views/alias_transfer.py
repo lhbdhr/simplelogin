@@ -36,12 +36,12 @@ def hmac_alias_transfer_token(transfer_token: str) -> str:
 def alias_transfer_send_route(alias_id):
     alias = Alias.get(alias_id)
     if not alias or alias.user_id != current_user.id:
-        flash("You cannot see this page", "warning")
+        flash("您无权访问此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     if current_user.newsletter_alias_id == alias.id:
         flash(
-            "This alias is currently used for receiving the newsletter and cannot be transferred",
+            "此别名目前用于接收新闻通讯，无法转移",
             "error",
         )
         return redirect(url_for("dashboard.index"))
@@ -51,7 +51,7 @@ def alias_transfer_send_route(alias_id):
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
 
         # banned custom domain aliases transferred
@@ -77,14 +77,14 @@ def alias_transfer_send_route(alias_id):
                 + "/dashboard/alias_transfer/receive"
                 + f"?token={transfer_token}"
             )
-            flash("Share alias URL created", "success")
+            flash("转移别名 URL 已创建", "success")
         # request.form.get("form-name") == "remove"
         else:
             alias.transfer_token = None
             alias.transfer_token_expiration = None
             Session.commit()
             alias_transfer_url = None
-            flash("Share URL deleted", "success")
+            flash("转移 URL 已删除", "success")
 
     return render_template(
         "dashboard/alias_transfer_send.html",
@@ -105,7 +105,7 @@ def alias_transfer_receive_route():
     """
     token = request.args.get("token")
     if not token:
-        flash("Invalid transfer token", "error")
+        flash("转移令牌无效", "error")
         return redirect(url_for("dashboard.index"))
     hashed_token = hmac_alias_transfer_token(token)
     # TODO: Don't allow unhashed tokens once all the tokens have been migrated to the new format
@@ -114,7 +114,7 @@ def alias_transfer_receive_route():
     )
 
     if not alias:
-        flash("Invalid link", "error")
+        flash("链接无效", "error")
         return redirect(url_for("dashboard.index"))
 
     # TODO: Don't allow none once all the tokens have been migrated to the new format
@@ -122,19 +122,19 @@ def alias_transfer_receive_route():
         alias.transfer_token_expiration is not None
         and alias.transfer_token_expiration < arrow.utcnow()
     ):
-        flash("Expired link, please request a new one", "error")
+        flash("链接已过期，请申请新的链接", "error")
         return redirect(url_for("dashboard.index"))
 
     # alias already belongs to this user
     if alias.user_id == current_user.id:
-        flash("You already own this alias", "warning")
+        flash("您已经拥有此别名", "warning")
         return redirect(url_for("dashboard.index"))
 
     # check if user has not exceeded the alias quota
     if not current_user.can_create_new_alias():
         LOG.d("%s can't receive new alias", current_user)
         flash(
-            "You have reached free plan limit, please upgrade to create new aliases",
+            "您已达到免费计划的限制，请升级以创建新的别名",
             "warning",
         )
         return redirect(url_for("dashboard.index"))
@@ -152,12 +152,12 @@ def alias_transfer_receive_route():
                 or mailbox.user_id != current_user.id
                 or not mailbox.verified
             ):
-                flash("Something went wrong, please retry", "warning")
+                flash("出了点问题，请重试", "warning")
                 return redirect(request.url)
             mailboxes.append(mailbox)
 
         if not mailboxes:
-            flash("You must select at least 1 mailbox", "warning")
+            flash("您必须至少选择 1 个邮箱", "warning")
             return redirect(request.url)
 
         LOG.d(
@@ -175,7 +175,7 @@ def alias_transfer_receive_route():
         alias.transfer_token_expiration = None
         Session.commit()
 
-        flash(f"You are now owner of {alias.email}", "success")
+        flash(f"您现在是 {alias.email} 的所有者", "success")
         return redirect(url_for("dashboard.index", highlight_alias_id=alias.id))
 
     return render_template(

@@ -31,7 +31,7 @@ class NewSubdomainForm(FlaskForm):
 @parallel_limiter.lock(only_when=lambda: request.method == "POST")
 def subdomain_route():
     if not current_user.subdomain_is_available():
-        flash("Unknown error, redirect to the home page", "error")
+        flash("未知错误，重定向至主页", "error")
         return redirect(url_for("dashboard.index"))
 
     sl_domains = SLDomain.filter_by(can_use_subdomain=True).all()
@@ -45,50 +45,48 @@ def subdomain_route():
     if request.method == "POST":
         if request.form.get("form-name") == "create":
             if not new_subdomain_form.validate():
-                flash("Invalid new subdomain", "warning")
+                flash("新子域名无效", "warning")
                 return redirect(url_for("dashboard.subdomain_route"))
             if not current_user.is_premium():
-                flash("Only premium plan can add subdomain", "warning")
+                flash("只有高级计划可以添加子域名", "warning")
                 return redirect(request.url)
 
             if current_user.subdomain_quota <= 0:
-                flash(
-                    f"You can't create more than {MAX_NB_SUBDOMAIN} subdomains", "error"
-                )
+                flash(f"您无法创建超过 {MAX_NB_SUBDOMAIN} 个子域名", "error")
                 return redirect(request.url)
 
             subdomain = new_subdomain_form.subdomain.data.lower().strip()
             domain = new_subdomain_form.domain.data.lower().strip()
 
             if len(subdomain) < 3:
-                flash("Subdomain must have at least 3 characters", "error")
+                flash("子域名必须至少包含 3 个字符", "error")
                 return redirect(request.url)
 
             if re.fullmatch(_SUBDOMAIN_PATTERN, subdomain) is None:
                 flash(
-                    "Subdomain can only contain lowercase letters, numbers and dashes (-)",
+                    "子域名只能包含小写字母、数字和短划线 (-)",
                     "error",
                 )
                 return redirect(request.url)
 
             if subdomain.endswith("-"):
-                flash("Subdomain can't end with dash (-)", "error")
+                flash("子域名不能以破折号 (-) 结尾", "error")
                 return redirect(request.url)
 
             if domain not in [sl_domain.domain for sl_domain in sl_domains]:
                 LOG.e("Domain %s is tampered by %s", domain, current_user)
-                flash("Unknown error, refresh the page", "error")
+                flash("未知错误，请刷新页面", "error")
                 return redirect(request.url)
 
             full_domain = f"{subdomain}.{domain}"
 
             if CustomDomain.get_by(domain=full_domain):
-                flash(f"{full_domain} already used", "error")
+                flash(f"{full_domain} 已被使用", "error")
             elif Mailbox.filter(
                 Mailbox.verified.is_(True),
                 Mailbox.email.endswith(f"@{full_domain}"),
             ).first():
-                flash(f"{full_domain} already used in a SimpleLogin mailbox", "error")
+                flash(f"{full_domain} 已在 原邮邮箱 中使用", "error")
             else:
                 try:
                     new_custom_domain = CustomDomain.create(
@@ -111,12 +109,12 @@ def subdomain_route():
                     )
                 except SubdomainInTrashError:
                     flash(
-                        f"{full_domain} has been used before and cannot be reused",
+                        f"{full_domain} 已被使用，无法重复使用",
                         "error",
                     )
                 else:
                     flash(
-                        f"New subdomain {new_custom_domain.domain} is created",
+                        f"已创建新子域 {new_custom_domain.domain}",
                         "success",
                     )
 

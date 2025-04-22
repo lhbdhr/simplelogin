@@ -56,7 +56,7 @@ def api_key():
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         if request.form.get("form-name") == "delete":
             api_key_id = request.form.get("api-key-id")
@@ -64,16 +64,16 @@ def api_key():
             api_key = ApiKey.get(api_key_id)
 
             if not api_key:
-                flash("Unknown error. Refresh the page", "warning")
+                flash("未知错误。请刷新页面", "warning")
                 return redirect(url_for("dashboard.api_key"))
             elif api_key.user_id != current_user.id:
-                flash("You cannot delete this api key", "warning")
+                flash("您无法删除此 API 密钥", "warning")
                 return redirect(url_for("dashboard.api_key"))
 
             name = api_key.name
             ApiKey.delete(api_key_id)
             Session.commit()
-            flash(f"API Key {name} has been deleted", "success")
+            flash(f"API 密钥 {name} 已删除", "success")
 
         elif request.form.get("form-name") == "create":
             if new_api_key_form.validate():
@@ -82,7 +82,7 @@ def api_key():
                     name=new_api_key_form.name.data, user_id=current_user.id
                 )
                 Session.commit()
-                flash(f"New API Key {new_api_key.name} has been created", "success")
+                flash(f"新的 API 密钥 {new_api_key.name} 已创建", "success")
                 return render_template(
                     "dashboard/new_api_key.html", api_key=new_api_key
                 )
@@ -90,7 +90,7 @@ def api_key():
         elif request.form.get("form-name") == "delete-all":
             ApiKey.delete_all(current_user.id)
             Session.commit()
-            flash("All API Keys have been deleted", "success")
+            flash("所有 API 密钥均已删除", "success")
 
         return redirect(url_for("dashboard.api_key"))
 

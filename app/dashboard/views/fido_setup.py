@@ -37,7 +37,7 @@ def fido_setup():
         try:
             sk_assertion = json.loads(fido_token_form.sk_assertion.data)
         except Exception:
-            flash("Key registration failed. Error: Invalid Payload", "warning")
+            flash("密钥注册失败。错误：载荷无效", "warning")
             return redirect(url_for("dashboard.index"))
 
         fido_uuid = session["fido_uuid"]
@@ -56,7 +56,7 @@ def fido_setup():
             fido_credential = fido_reg_response.verify()
         except Exception as e:
             LOG.w(f"An error occurred in WebAuthn registration process: {e}")
-            flash("Key registration failed.", "warning")
+            flash("密钥注册失败。", "warning")
             return redirect(url_for("dashboard.index"))
 
         if current_user.fido_uuid is None:
@@ -77,7 +77,7 @@ def fido_setup():
             f"credential_id={str(fido_credential.credential_id, 'utf-8')} added for {fido_uuid}"
         )
 
-        flash("Security key has been activated", "success")
+        flash("安全密钥已激活", "success")
         recovery_codes = RecoveryCode.generate(current_user)
         return render_template(
             "dashboard/recovery_code.html", recovery_codes=recovery_codes

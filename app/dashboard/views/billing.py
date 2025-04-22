@@ -16,7 +16,7 @@ def billing():
     sub: Subscription = current_user.get_paddle_subscription()
 
     if not sub:
-        flash("You don't have any active subscription", "warning")
+        flash("您没有任何有效订阅", "warning")
         return redirect(url_for("dashboard.index"))
 
     if request.method == "POST":
@@ -27,11 +27,10 @@ def billing():
             if success:
                 sub.cancelled = True
                 Session.commit()
-                flash("Your subscription has been canceled successfully", "success")
+                flash("您的订阅已成功取消", "success")
             else:
                 flash(
-                    "Something went wrong, sorry for the inconvenience. Please retry. "
-                    "We are already notified and will be on it asap",
+                    "出现错误，很抱歉造成不便。请重试。" "我们已收到通知并将尽快处理",
                     "error",
                 )
 
@@ -45,14 +44,14 @@ def billing():
             if success:
                 sub.plan = PlanEnum.monthly
                 Session.commit()
-                flash("Your subscription has been updated", "success")
+                flash("您的订阅已更新", "success")
             else:
                 if msg:
                     flash(msg, "error")
                 else:
                     flash(
-                        "Something went wrong, sorry for the inconvenience. Please retry. "
-                        "We are already notified and will be on it asap",
+                        "出现错误，很抱歉造成不便。请重试。"
+                        "我们已收到通知并将尽快处理",
                         "error",
                     )
 
@@ -66,14 +65,14 @@ def billing():
             if success:
                 sub.plan = PlanEnum.yearly
                 Session.commit()
-                flash("Your subscription has been updated", "success")
+                flash("您的订阅已更新", "success")
             else:
                 if msg:
                     flash(msg, "error")
                 else:
                     flash(
-                        "Something went wrong, sorry for the inconvenience. Please retry. "
-                        "We are already notified and will be on it asap",
+                        "出现错误，很抱歉造成不便。请重试。"
+                        "我们已收到通知并将尽快处理",
                         "error",
                     )
 

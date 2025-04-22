@@ -17,20 +17,20 @@ def referral_route():
             code = request.form.get("code")
             if re.fullmatch(_REFERRAL_PATTERN, code) is None:
                 flash(
-                    "At least 3 characters. Only lowercase letters, "
-                    "numbers, dashes (-) and underscores (_) are currently supported.",
+                    "至少 3 个字符。仅限小写字母， "
+                    "目前支持数字、破折号 (-) 和下划线 (_)。",
                     "error",
                 )
                 return redirect(url_for("dashboard.referral_route"))
 
             if Referral.get_by(code=code):
-                flash("Code already used", "error")
+                flash("代码已被使用", "error")
                 return redirect(url_for("dashboard.referral_route"))
 
             name = request.form.get("name")
             referral = Referral.create(user_id=current_user.id, code=code, name=name)
             Session.commit()
-            flash("A new referral code has been created", "success")
+            flash("已创建新的推荐代码", "success")
             return redirect(
                 url_for("dashboard.referral_route", highlight_id=referral.id)
             )
@@ -40,7 +40,7 @@ def referral_route():
             if referral and referral.user_id == current_user.id:
                 referral.name = request.form.get("name")
                 Session.commit()
-                flash("Referral name updated", "success")
+                flash("推荐人姓名已更新", "success")
                 return redirect(
                     url_for("dashboard.referral_route", highlight_id=referral.id)
                 )
@@ -50,7 +50,7 @@ def referral_route():
             if referral and referral.user_id == current_user.id:
                 Referral.delete(referral.id)
                 Session.commit()
-                flash("Referral deleted", "success")
+                flash("已删除推荐", "success")
                 return redirect(url_for("dashboard.referral_route"))
 
     # Highlight a referral

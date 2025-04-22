@@ -77,12 +77,12 @@ def authorize():
     if hostname != "localhost" and hostname != "127.0.0.1":
         # support custom scheme for mobile app
         if scheme == "http":
-            flash("The external client must use HTTPS", "error")
+            flash("外部客户端必须使用 HTTPS", "error")
             return redirect(url_for("dashboard.index"))
 
         # check if redirect_uri is valid
         if not RedirectUri.get_by(client_id=client.id, uri=redirect_uri):
-            flash("The external client is using an invalid URL", "error")
+            flash("外部客户端正在使用无效的 URL", "error")
             return redirect(url_for("dashboard.index"))
 
     # redirect from client website
@@ -173,8 +173,8 @@ def authorize():
 
                 if not check_alias_prefix(alias_prefix):
                     flash(
-                        "Only lowercase letters, numbers, dashes (-), dots (.) and underscores (_) "
-                        "are currently supported for alias prefix. Cannot be more than 40 letters",
+                        "仅限小写字母、数字、破折号 (-)、点 (.) 和下划线 (_) "
+                        "目前支持别名前缀。不能超过 40 个字母",
                         "error",
                     )
                     return redirect(request.url)
@@ -184,11 +184,11 @@ def authorize():
                     alias_suffix = check_suffix_signature(signed_suffix)
                     if not alias_suffix:
                         LOG.w("Alias creation time expired for %s", current_user)
-                        flash("Alias creation time is expired, please retry", "warning")
+                        flash("别名创建时间已过期，请重试", "warning")
                         return redirect(request.url)
                 except Exception:
                     LOG.w("Alias suffix is tampered, user %s", current_user)
-                    flash("Unknown error, refresh the page", "error")
+                    flash("未知错误，请刷新页面", "error")
                     return redirect(request.url)
 
                 user_custom_domains = [
@@ -206,7 +206,7 @@ def authorize():
                         or DomainDeletedAlias.get_by(email=full_alias)
                     ):
                         LOG.e("alias %s already used, very rare!", full_alias)
-                        flash(f"Alias {full_alias} already used", "error")
+                        flash(f"别名 {full_alias} 已被使用", "error")
                         return redirect(request.url)
                     else:
                         alias = Alias.create(
@@ -216,10 +216,10 @@ def authorize():
                         )
 
                         Session.flush()
-                        flash(f"Alias {full_alias} has been created", "success")
+                        flash(f"别名 {full_alias} 已创建", "success")
                 # only happen if the request has been "hacked"
                 else:
-                    flash("something went wrong", "warning")
+                    flash("出了点问题", "warning")
                     return redirect(request.url)
             # User chooses one of the suggestions
             else:

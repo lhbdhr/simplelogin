@@ -37,7 +37,7 @@ class ChangeEmailForm(FlaskForm):
 def mailbox_detail_route(mailbox_id):
     mailbox: Mailbox = Mailbox.get(mailbox_id)
     if not mailbox or mailbox.user_id != current_user.id:
-        flash("You cannot see this page", "warning")
+        flash("您无法看到此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     change_email_form = ChangeEmailForm()
@@ -50,7 +50,7 @@ def mailbox_detail_route(mailbox_id):
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         if (
             request.form.get("form-name") == "update-email"
@@ -61,7 +61,7 @@ def mailbox_detail_route(mailbox_id):
                     current_user, mailbox, change_email_form.email.data
                 )
                 flash(
-                    f"You are going to receive an email to confirm {mailbox.email}.",
+                    f"您将收到一封确认{mailbox.email}的电子邮件。",
                     "success",
                 )
             except mailbox_utils.MailboxError as e:
@@ -71,7 +71,7 @@ def mailbox_detail_route(mailbox_id):
             )
         elif request.form.get("form-name") == "force-spf":
             if not ENFORCE_SPF:
-                flash("SPF enforcement globally not enabled", "error")
+                flash("全局 SPF 强制执行未启用", "error")
                 return redirect(url_for("dashboard.index"))
 
             force_spf_value = request.form.get("spf-status") == "on"
@@ -83,9 +83,11 @@ def mailbox_detail_route(mailbox_id):
             )
             Session.commit()
             flash(
-                "SPF enforcement was " + "enabled"
-                if request.form.get("spf-status")
-                else "disabled" + " successfully",
+                (
+                    "强制SPF已 " + "启用"
+                    if request.form.get("spf-status")
+                    else "禁用" + " 成功"
+                ),
                 "success",
             )
             return redirect(
@@ -98,10 +100,10 @@ def mailbox_detail_route(mailbox_id):
                     address, check_deliverability=False, allow_smtputf8=False
                 ).domain
             except EmailNotValidError:
-                flash(f"invalid {address}", "error")
+                flash(f"无效 {address}", "error")
             else:
                 if AuthorizedAddress.get_by(mailbox_id=mailbox.id, email=address):
-                    flash(f"{address} already added", "error")
+                    flash(f"{address} 已经添加", "error")
                 else:
                     emit_user_audit_log(
                         user=current_user,
@@ -114,7 +116,7 @@ def mailbox_detail_route(mailbox_id):
                         email=address,
                         commit=True,
                     )
-                    flash(f"{address} added as authorized address", "success")
+                    flash(f"{address} 已添加为授权地址", "success")
 
             return redirect(
                 url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
@@ -125,7 +127,7 @@ def mailbox_detail_route(mailbox_id):
                 authorized_address_id
             )
             if not authorized_address or authorized_address.mailbox_id != mailbox.id:
-                flash("Unknown error. Refresh the page", "warning")
+                flash("未知错误。请刷新页面", "warning")
             else:
                 address = authorized_address.email
                 emit_user_audit_log(
@@ -135,7 +137,7 @@ def mailbox_detail_route(mailbox_id):
                 )
                 AuthorizedAddress.delete(authorized_address_id)
                 Session.commit()
-                flash(f"{address} has been deleted", "success")
+                flash(f"{address} 已删除", "success")
 
             return redirect(
                 url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
@@ -143,14 +145,14 @@ def mailbox_detail_route(mailbox_id):
         elif request.form.get("form-name") == "pgp":
             if request.form.get("action") == "save":
                 if not current_user.is_premium():
-                    flash("Only premium plan can add PGP Key", "warning")
+                    flash("只有高级计划可以添加 PGP 密钥", "warning")
                     return redirect(
                         url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
                     )
 
                 if mailbox.is_proton():
                     flash(
-                        "Enabling PGP for a Proton Mail mailbox is redundant and does not add any security benefit",
+                        "为 Proton Mail 邮箱启用 PGP 是多余的，并且不会增加任何安全优势",
                         "info",
                     )
                     return redirect(
@@ -163,7 +165,7 @@ def mailbox_detail_route(mailbox_id):
                         mailbox.pgp_public_key
                     )
                 except PGPException:
-                    flash("Cannot add the public key, please verify it", "error")
+                    flash("无法添加公钥，请验证公钥是否正确", "error")
                 else:
                     emit_user_audit_log(
                         user=current_user,
@@ -171,7 +173,7 @@ def mailbox_detail_route(mailbox_id):
                         message=f"Add PGP Key {mailbox.pgp_finger_print} to mailbox {mailbox_id} ({mailbox.email})",
                     )
                     Session.commit()
-                    flash("Your PGP public key is saved successfully", "success")
+                    flash("您的 PGP 公钥已成功保存", "success")
                     return redirect(
                         url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
                     )
@@ -186,7 +188,7 @@ def mailbox_detail_route(mailbox_id):
                 mailbox.pgp_finger_print = None
                 mailbox.disable_pgp = False
                 Session.commit()
-                flash("Your PGP public key is removed successfully", "success")
+                flash("您的 PGP 公钥已成功删除", "success")
                 return redirect(
                     url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
                 )
@@ -196,7 +198,7 @@ def mailbox_detail_route(mailbox_id):
                 if mailbox.is_proton():
                     mailbox.disable_pgp = True
                     flash(
-                        "Enabling PGP for a Proton Mail mailbox is redundant and does not add any security benefit",
+                        "为 Proton Mail 邮箱启用 PGP 是多余的，并且不会增加任何安全优势",
                         "info",
                     )
                 else:
@@ -206,7 +208,7 @@ def mailbox_detail_route(mailbox_id):
                         action=UserAuditLogAction.UpdateMailbox,
                         message=f"Enabled PGP for mailbox {mailbox_id} ({mailbox.email})",
                     )
-                    flash(f"PGP is enabled on {mailbox.email}", "info")
+                    flash(f"PGP 已在 {mailbox.email} 上启用", "info")
             else:
                 mailbox.disable_pgp = True
                 emit_user_audit_log(
@@ -214,7 +216,7 @@ def mailbox_detail_route(mailbox_id):
                     action=UserAuditLogAction.UpdateMailbox,
                     message=f"Disabled PGP for mailbox {mailbox_id} ({mailbox.email})",
                 )
-                flash(f"PGP is disabled on {mailbox.email}", "info")
+                flash(f"{mailbox.email} 上的 PGP 已禁用", "info")
 
             Session.commit()
             return redirect(
@@ -229,7 +231,7 @@ def mailbox_detail_route(mailbox_id):
                     message=f"Set generic subject for mailbox {mailbox_id} ({mailbox.email})",
                 )
                 Session.commit()
-                flash("Generic subject is enabled", "success")
+                flash("通用主题已启用", "success")
                 return redirect(
                     url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
                 )
@@ -241,7 +243,7 @@ def mailbox_detail_route(mailbox_id):
                     message=f"Remove generic subject for mailbox {mailbox_id} ({mailbox.email})",
                 )
                 Session.commit()
-                flash("Generic subject is disabled", "success")
+                flash("通用主题已禁用", "success")
                 return redirect(
                     url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
                 )
@@ -257,7 +259,7 @@ def mailbox_detail_route(mailbox_id):
 def cancel_mailbox_change_route(mailbox_id):
     try:
         mailbox_utils.cancel_email_change(mailbox_id, current_user)
-        flash("Your mailbox change is cancelled", "success")
+        flash("您的邮箱变更已取消", "success")
         return redirect(
             url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id)
         )
@@ -276,12 +278,12 @@ def mailbox_confirm_email_change_route():
     if code:
         try:
             mailbox = mailbox_utils.verify_mailbox_code(current_user, mailbox_id, code)
-            flash("Successfully changed mailbox email", "success")
+            flash("成功修改邮箱", "success")
             return redirect(
                 url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox.id)
             )
         except mailbox_utils.MailboxError as e:
-            flash(f"Cannot verify mailbox: {e.msg}", "error")
+            flash(f"无法验证邮箱：{e.msg}", "error")
             return redirect(url_for("dashboard.mailbox_route"))
     else:
         s = TimestampSigner(MAILBOX_SECRET)
@@ -299,8 +301,8 @@ def mailbox_confirm_email_change_route():
                 else:
                     raise Exception("Unhandled MailboxEmailChangeError")
         except Exception:
-            flash("Invalid link", "error")
+            flash("链接无效", "error")
             return redirect(url_for("dashboard.index"))
 
-    flash("Successfully changed mailbox email", "success")
+    flash("成功修改邮箱", "success")
     return redirect(url_for("dashboard.mailbox_detail_route", mailbox_id=mailbox_id))

@@ -29,13 +29,13 @@ from app.proton.proton_partner import get_proton_partner
 @login_required
 def pricing():
     if current_user.lifetime:
-        flash("You already have a lifetime subscription", "error")
+        flash("您已经拥有终身订阅", "error")
         return redirect(url_for("dashboard.index"))
 
     paddle_sub: Subscription = current_user.get_paddle_subscription()
     # user who has canceled can re-subscribe
     if paddle_sub and not paddle_sub.cancelled:
-        flash("You already have an active subscription", "error")
+        flash("您已拥有有效订阅", "error")
         return redirect(url_for("dashboard.index"))
 
     now = arrow.now()
@@ -50,7 +50,7 @@ def pricing():
 
     apple_sub: AppleSubscription = AppleSubscription.get_by(user_id=current_user.id)
     if apple_sub and apple_sub.is_valid():
-        flash("Please make sure to cancel your subscription on Apple first", "warning")
+        flash("请务必先在 Apple 上取消订阅", "warning")
 
     proton_upgrade = False
     partner_user = PartnerUser.get_by(user_id=current_user.id)
@@ -58,7 +58,7 @@ def pricing():
         partner_sub = PartnerSubscription.get_by(partner_user_id=partner_user.id)
         if partner_sub and partner_sub.is_active():
             flash(
-                f"You already have a subscription provided by {partner_user.partner.name}",
+                f"您已拥有 {partner_user.partner.name} 提供的订阅",
                 "error",
             )
             return redirect(url_for("dashboard.index"))

@@ -59,7 +59,7 @@ def activate():
     ActivationCode.delete(activation_code.id)
     Session.commit()
 
-    flash("Your account has been activated", "success")
+    flash("您的帐户已激活", "success")
 
     email_utils.send_welcome_email(user)
 

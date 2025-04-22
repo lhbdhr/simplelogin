@@ -32,11 +32,11 @@ class RegisterForm(FlaskForm):
 def register():
     if current_user.is_authenticated:
         LOG.d("user is already authenticated, redirect to dashboard")
-        flash("You are already logged in", "warning")
+        flash("您已登录", "warning")
         return redirect(url_for("dashboard.index"))
 
     if config.DISABLE_REGISTRATION:
-        flash("Registration is closed", "error")
+        flash("注册已关闭", "error")
         return redirect(url_for("auth.login"))
 
     form = RegisterForm(request.form)
@@ -61,7 +61,7 @@ def register():
                     form.email.data,
                     hcaptcha_res,
                 )
-                flash("Wrong Captcha", "error")
+                flash("验证码错误", "error")
                 RegisterEvent(RegisterEvent.ActionType.catpcha_failed).send()
                 return render_template(
                     "auth/register.html",
@@ -72,14 +72,14 @@ def register():
 
         email = canonicalize_email(form.email.data)
         if not email_can_be_used_as_mailbox(email):
-            flash("You cannot use this email address as your personal inbox.", "error")
+            flash("您不能将此电子邮箱地址用作您的个人收件箱。", "error")
             RegisterEvent(RegisterEvent.ActionType.email_in_use).send()
         else:
             sanitized_email = sanitize_email(form.email.data)
             if personal_email_already_used(email) or personal_email_already_used(
                 sanitized_email
             ):
-                flash(f"Email {email} already used", "error")
+                flash(f"电子邮箱地址 {email} 已被使用", "error")
                 RegisterEvent(RegisterEvent.ActionType.email_in_use).send()
             else:
                 LOG.d("create user %s", email)
@@ -97,7 +97,7 @@ def register():
                     DailyMetric.get_or_create_today_metric().nb_new_web_non_proton_user += 1
                     Session.commit()
                 except Exception:
-                    flash("Invalid email, are you sure the email is correct?", "error")
+                    flash("电子邮件无效，您确定该电子邮件正确吗？", "error")
                     RegisterEvent(RegisterEvent.ActionType.invalid_email).send()
                     return redirect(url_for("auth.register"))
 

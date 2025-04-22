@@ -113,14 +113,14 @@ def google_login():
 @auth_bp.route("/google/callback")
 def google_callback():
     if SESSION_STATE_KEY not in session or SESSION_STATE_KEY not in session:
-        flash("Invalid state, please retry", "error")
+        flash("状态无效，请重试", "error")
         return redirect(url_for("auth.login"))
     if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
         return redirect(url_for("auth.login"))
 
     # user clicks on cancel
     if "error" in request.args:
-        flash("Please use another sign in method then", "warning")
+        flash("请使用其他登录方式", "warning")
         return redirect("/")
 
     google = OAuth2Session(
@@ -168,7 +168,7 @@ def google_callback():
         # }
     except Exception as e:
         LOG.warning(f"Error fetching Partner token: {e}")
-        flash("There was an error in the login process", "error")
+        flash("登录过程中出现错误", "error")
         return redirect(url_for("auth.login"))
 
     credentials = token["access_token"]

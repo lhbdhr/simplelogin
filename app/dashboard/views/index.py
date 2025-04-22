@@ -89,13 +89,13 @@ def index():
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         if request.form.get("form-name") == "create-custom-email":
             if current_user.can_create_new_alias():
                 return redirect(url_for("dashboard.custom_alias"))
             else:
-                flash("You need to upgrade your plan to create new alias.", "warning")
+                flash("您需要升级您的计划才能创建新的别名。", "warning")
 
         elif request.form.get("form-name") == "create-random-email":
             if current_user.can_create_new_alias():
@@ -111,7 +111,7 @@ def index():
                 Session.commit()
 
                 LOG.d("create new random alias %s for user %s", alias, current_user)
-                flash(f"Alias {alias.email} has been created", "success")
+                flash(f"别名 {alias.email} 已创建", "success")
 
                 return redirect(
                     url_for(
@@ -123,18 +123,18 @@ def index():
                     )
                 )
             else:
-                flash("You need to upgrade your plan to create new alias.", "warning")
+                flash("您需要升级您的计划才能创建新的别名。", "warning")
 
         elif request.form.get("form-name") in ("delete-alias", "disable-alias"):
             try:
                 alias_id = int(request.form.get("alias-id"))
             except ValueError:
-                flash("unknown error", "error")
+                flash("未知错误", "error")
                 return redirect(request.url)
 
             alias: Alias = Alias.get(alias_id)
             if not alias or alias.user_id != current_user.id:
-                flash("Unknown error, sorry for the inconvenience", "error")
+                flash("未知错误，不便之处，敬请谅解", "error")
                 return redirect(
                     url_for(
                         "dashboard.index",
@@ -150,13 +150,13 @@ def index():
                 alias_utils.delete_alias(
                     alias, current_user, AliasDeleteReason.ManualAction, commit=True
                 )
-                flash(f"Alias {email} has been deleted", "success")
+                flash(f"别名 {email} 已删除", "success")
             elif request.form.get("form-name") == "disable-alias":
                 alias_utils.change_alias_status(
                     alias, enabled=False, message="Set enabled=False from dashboard"
                 )
                 Session.commit()
-                flash(f"Alias {alias.email} has been disabled", "success")
+                flash(f"别名 {alias.email} 已被禁用", "success")
 
         return redirect(
             url_for(

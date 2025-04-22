@@ -50,7 +50,7 @@ def mailbox_route():
     if request.method == "POST":
         if request.form.get("form-name") == "delete":
             if not delete_mailbox_form.validate():
-                flash("Invalid request", "warning")
+                flash("无效请求", "warning")
                 return redirect(request.url)
             try:
                 mailbox = mailbox_utils.delete_mailbox(
@@ -70,7 +70,7 @@ def mailbox_route():
 
         if request.form.get("form-name") == "set-default":
             if not csrf_form.validate():
-                flash("Invalid request", "warning")
+                flash("无效请求", "warning")
                 return redirect(request.url)
             try:
                 mailbox_id = request.form.get("mailbox_id")
@@ -79,13 +79,13 @@ def mailbox_route():
                 flash(e.msg, "warning")
                 return redirect(url_for("dashboard.mailbox_route"))
 
-            flash(f"Mailbox {mailbox.email} is set as Default Mailbox", "success")
+            flash(f"邮箱 {mailbox.email} 已设置为默认邮箱", "success")
 
             return redirect(url_for("dashboard.mailbox_route"))
 
         elif request.form.get("form-name") == "create":
             if not new_mailbox_form.validate():
-                flash("Invalid request", "warning")
+                flash("无效请求", "warning")
                 return redirect(request.url)
             mailbox_email = new_mailbox_form.email.data.lower().strip().replace(" ", "")
             try:
@@ -97,7 +97,7 @@ def mailbox_route():
                 return redirect(url_for("dashboard.mailbox_route"))
 
             flash(
-                f"You are going to receive an email to confirm {mailbox.email}.",
+                f"您将收到一封确认{mailbox.email}的电子邮件。",
                 "success",
             )
 
@@ -123,7 +123,7 @@ def mailbox_verify():
     mailbox_id = request.args.get("mailbox_id")
     if not mailbox_id:
         LOG.i("Missing mailbox_id")
-        flash("You followed an invalid link", "error")
+        flash("您点击了无效链接", "error")
         return redirect(url_for("dashboard.mailbox_route"))
 
     code = request.args.get("code")
@@ -135,7 +135,7 @@ def mailbox_verify():
         mailbox = mailbox_utils.verify_mailbox_code(current_user, mailbox_id, code)
     except mailbox_utils.MailboxError as e:
         LOG.i(f"Cannot verify mailbox {mailbox_id} because of {e}")
-        flash(f"Cannot verify mailbox: {e.msg}", "error")
+        flash(f"无法验证邮箱：{e.msg}", "error")
         return redirect(url_for("dashboard.mailbox_route"))
     LOG.d("Mailbox %s is verified", mailbox)
     return render_template("dashboard/mailbox_validation.html", mailbox=mailbox)
@@ -147,25 +147,25 @@ def verify_with_signed_secret(request: str):
     try:
         mailbox_raw_data = s.unsign(mailbox_verify_request, max_age=900)
     except Exception:
-        flash("Invalid link. Please delete and re-add your mailbox", "error")
+        flash("链接无效，请删除并重新添加您的邮箱", "error")
         return redirect(url_for("dashboard.mailbox_route"))
     try:
         decoded_data = base64.urlsafe_b64decode(mailbox_raw_data)
     except binascii.Error:
-        flash("Invalid link. Please delete and re-add your mailbox", "error")
+        flash("链接无效，请删除并重新添加您的邮箱", "error")
         return redirect(url_for("dashboard.mailbox_route"))
     mailbox_data = json.loads(decoded_data)
     if not isinstance(mailbox_data, list) or len(mailbox_data) != 2:
-        flash("Invalid link. Please delete and re-add your mailbox", "error")
+        flash("链接无效，请删除并重新添加您的邮箱", "error")
         return redirect(url_for("dashboard.mailbox_route"))
     mailbox_id = mailbox_data[0]
     mailbox: Optional[Mailbox] = Mailbox.get(mailbox_id)
     if not mailbox:
-        flash("Invalid link", "error")
+        flash("链接无效", "error")
         return redirect(url_for("dashboard.mailbox_route"))
     mailbox_email = mailbox_data[1]
     if mailbox_email != mailbox.email:
-        flash("Invalid link", "error")
+        flash("链接无效", "error")
         return redirect(url_for("dashboard.mailbox_route"))
 
     mailbox.verified = True

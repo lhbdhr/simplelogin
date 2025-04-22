@@ -37,13 +37,13 @@ def mfa():
 
     # user access this page directly without passing by login page
     if not user_id:
-        flash("Unknown error, redirect back to main page", "warning")
+        flash("未知错误，跳转至主页", "warning")
         return redirect(url_for("auth.login"))
 
     user = User.get(user_id)
 
     if not (user and user.enable_otp):
-        flash("Only user with MFA enabled should go to this page", "warning")
+        flash("只有启用 MFA 的用户才能访问此页面", "warning")
         return redirect(url_for("auth.login"))
 
     otp_token_form = OtpTokenForm()
@@ -53,7 +53,7 @@ def mfa():
         browser = MfaBrowser.get_by(token=request.cookies.get("mfa"))
         if browser and not browser.is_expired() and browser.user_id == user.id:
             login_user(user)
-            flash("Welcome back!", "success")
+            flash("欢迎回来!", "success")
             # Redirect user to correct page
             return redirect(next_url or url_for("dashboard.index"))
         else:
@@ -71,7 +71,7 @@ def mfa():
             Session.commit()
 
             login_user(user)
-            flash("Welcome back!", "success")
+            flash("欢迎回来!", "success")
 
             # Redirect user to correct page
             response = make_response(redirect(next_url or url_for("dashboard.index")))
@@ -91,7 +91,7 @@ def mfa():
             return response
 
         else:
-            flash("Incorrect token", "warning")
+            flash("令牌不正确", "warning")
             # Trigger rate limiter
             g.deduct_limit = True
             otp_token_form.token.data = None

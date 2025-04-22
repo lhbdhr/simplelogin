@@ -31,7 +31,7 @@ def coupon_route():
         code = coupon_form.code.data
         if LifetimeCoupon.get_by(code=code):
             LOG.d("redirect %s to lifetime page instead", current_user)
-            flash("Redirect to the lifetime coupon page instead", "success")
+            flash("重定向至终身优惠券页面", "success")
             return redirect(url_for("dashboard.lifetime_licence"))
 
     # handle case user already has an active subscription via another channel (Paddle, Apple, etc)
@@ -60,17 +60,17 @@ def coupon_route():
             coupon = redeem_coupon(code, current_user)
             if coupon:
                 flash(
-                    "Your account has been upgraded to Premium, thanks for your support!",
+                    "您的帐户已升级为高级帐户，感谢您的支持！",
                     "success",
                 )
             else:
                 flash(
-                    "This coupon cannot be redeemed. It's invalid or has expired",
+                    "此优惠券无法兑换。它无效或已过期",
                     "warning",
                 )
         except CouponUserCannotRedeemError:
             flash(
-                "You have an active subscription. Please remove it before redeeming a coupon",
+                "您有一个有效订阅。请在兑换优惠券前将其移除",
                 "warning",
             )
 

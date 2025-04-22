@@ -31,9 +31,7 @@ def upload_file_to_zendesk_and_get_upload_token(
     email: str, file: FileStorage
 ) -> Union[None, str]:
     if file.mimetype not in VALID_MIME_TYPES and not file.mimetype.startswith("image/"):
-        flash(
-            "File {} is not an image, text or an email".format(file.filename), "warning"
-        )
+        flash("文件 {} 不是图像、文本或电子邮件".format(file.filename), "warning")
         return
 
     escaped_filename = urllib.parse.urlencode({"filename": file.filename})
@@ -87,7 +85,7 @@ def create_zendesk_request(email: str, content: str, files: [FileStorage]) -> bo
 )
 def support_route():
     if not ZENDESK_HOST:
-        flash("Support isn't enabled", "error")
+        flash("未启用支持", "error")
         return redirect(url_for("dashboard.index"))
 
     if request.method == "POST":
@@ -95,18 +93,18 @@ def support_route():
         email = request.form.get("ticket_email")
 
         if not content:
-            flash("Please add a description", "error")
+            flash("请添加描述", "error")
             return render_template("dashboard/support.html", ticket_email=email)
 
         if not email:
-            flash("Please provide an email address", "error")
+            flash("请提供电子邮件地址", "error")
             return render_template("dashboard/support.html", ticket_content=content)
 
         if not create_zendesk_request(
             email, content, request.files.getlist("ticket_files")
         ):
             flash(
-                "Cannot create a Zendesk ticket, sorry for the inconvenience! Please retry later.",
+                "无法创建 Zendesk 工单，不便之处，敬请谅解！请稍后重试。",
                 "error",
             )
             return render_template(
@@ -116,7 +114,7 @@ def support_route():
         # only enable rate limiting for successful Zendesk ticket creation
         g.deduct_limit = True
         flash(
-            "Support ticket is created. You will receive an email about its status.",
+            "支持工单已创建。您将收到一封有关其状态的电子邮件。",
             "success",
         )
         return redirect(url_for("dashboard.index"))

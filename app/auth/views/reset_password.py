@@ -56,7 +56,7 @@ def reset_password():
 
         user.set_password(new_password)
 
-        flash("Your new password has been set", "success")
+        flash("您的新密码已设置", "success")
 
         # this can be served to activate user too
         user.activated = True

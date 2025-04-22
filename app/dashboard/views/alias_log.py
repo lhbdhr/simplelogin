@@ -34,11 +34,11 @@ def alias_log(alias_id, page_id):
 
     # sanity check
     if not alias:
-        flash("You do not have access to this page", "warning")
+        flash("您无权访问此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     if alias.user_id != current_user.id:
-        flash("You do not have access to this page", "warning")
+        flash("您无权访问此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     logs = get_alias_log(alias, page_id)

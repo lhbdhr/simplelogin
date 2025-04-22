@@ -13,12 +13,12 @@ def notification_route(notification_id):
     notification = Notification.get(notification_id)
 
     if not notification:
-        flash("Incorrect link. Redirect you to the home page", "warning")
+        flash("链接错误。请将您重定向至主页", "warning")
         return redirect(url_for("dashboard.index"))
 
     if notification.user_id != current_user.id:
         flash(
-            "You don't have access to this page. Redirect you to the home page",
+            "您无权访问此页面。请将您重定向至主页",
             "warning",
         )
         return redirect(url_for("dashboard.index"))
@@ -31,7 +31,7 @@ def notification_route(notification_id):
         notification_title = notification.title or notification.message[:20]
         Notification.delete(notification_id)
         Session.commit()
-        flash(f"{notification_title} has been deleted", "success")
+        flash(f"{notification_title} 已删除", "success")
 
         return redirect(url_for("dashboard.index"))
     else:

@@ -13,7 +13,7 @@ from app.utils import CSRFValidationForm
 @sudo_required
 def mfa_cancel():
     if not current_user.enable_otp:
-        flash("you don't have MFA enabled", "warning")
+        flash("您没有启用 MFA", "warning")
         return redirect(url_for("dashboard.index"))
 
     csrf_form = CSRFValidationForm()
@@ -21,7 +21,7 @@ def mfa_cancel():
     # user cancels TOTP
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         current_user.enable_otp = False
         current_user.otp_secret = None
@@ -31,7 +31,7 @@ def mfa_cancel():
         if not current_user.two_factor_authentication_enabled():
             RecoveryCode.empty(current_user)
 
-        flash("TOTP is now disabled", "warning")
+        flash("TOTP 现已禁用", "warning")
         return redirect(url_for("dashboard.index"))
 
     return render_template("dashboard/mfa_cancel.html", csrf_form=csrf_form)

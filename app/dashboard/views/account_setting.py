@@ -65,7 +65,7 @@ def account_setting():
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(url_for("dashboard.setting"))
         if request.form.get("form-name") == "update-email":
             if change_email_form.validate():
@@ -77,11 +77,11 @@ def account_setting():
                     if personal_email_already_used(new_email) or Alias.get_by(
                         email=new_email
                     ):
-                        flash(f"Email {new_email} already used", "error")
+                        flash(f"邮箱 {new_email} 已被使用", "error")
                         new_email_valid = False
                     elif not email_can_be_used_as_mailbox(new_email):
                         flash(
-                            "You cannot use this email address as your personal inbox.",
+                            "您不能将此电子邮件地址用作您的个人收件箱。",
                             "error",
                         )
                         new_email_valid = False
@@ -104,7 +104,7 @@ def account_setting():
                             Session.commit()
                         else:
                             flash(
-                                "You cannot use this email address as your personal inbox.",
+                                "您不能将此电子邮件地址用作您的个人收件箱。",
                                 "error",
                             )
                             new_email_valid = False
@@ -120,13 +120,13 @@ def account_setting():
                         Session.commit()
                         send_change_email_confirmation(current_user, email_change)
                         flash(
-                            "A confirmation email is on the way, please check your inbox",
+                            "确认邮件正在发送中，请检查您的收件箱",
                             "success",
                         )
                         return redirect(url_for("dashboard.account_setting"))
         elif request.form.get("form-name") == "change-password":
             flash(
-                "You are going to receive an email containing instructions to change your password",
+                "您将收到一封包含更改密码说明的电子邮件",
                 "success",
             )
             send_reset_password_email(current_user)
@@ -134,11 +134,11 @@ def account_setting():
         elif request.form.get("form-name") == "send-full-user-report":
             if ExportUserDataJob(current_user).store_job_in_db():
                 flash(
-                    "You will receive your SimpleLogin data via email shortly",
+                    "您将很快通过电子邮件收到您的 原邮邮箱 数据",
                     "success",
                 )
             else:
-                flash("An export of your data is currently in progress", "error")
+                flash("您的数据正在导出中", "error")
 
     partner_sub = None
     partner_name = None
@@ -193,7 +193,7 @@ def send_change_email_confirmation(user: User, email_change: EmailChange):
 def resend_email_change():
     form = CSRFValidationForm()
     if not form.validate():
-        flash("Invalid request. Please try again", "warning")
+        flash("请求无效。请重试", "warning")
         return redirect(url_for("dashboard.setting"))
     email_change = EmailChange.get_by(user_id=current_user.id)
     if email_change:
@@ -202,12 +202,10 @@ def resend_email_change():
         Session.commit()
 
         send_change_email_confirmation(current_user, email_change)
-        flash("A confirmation email is on the way, please check your inbox", "success")
+        flash("确认邮件正在发送中，请检查您的收件箱", "success")
         return redirect(url_for("dashboard.setting"))
     else:
-        flash(
-            "You have no pending email change. Redirect back to Setting page", "warning"
-        )
+        flash("您没有待处理的电子邮件地址更改。重定向回“设置”页面", "warning")
         return redirect(url_for("dashboard.setting"))
 
 
@@ -217,18 +215,16 @@ def resend_email_change():
 def cancel_email_change():
     form = CSRFValidationForm()
     if not form.validate():
-        flash("Invalid request. Please try again", "warning")
+        flash("请求无效。请重试", "warning")
         return redirect(url_for("dashboard.setting"))
     email_change = EmailChange.get_by(user_id=current_user.id)
     if email_change:
         EmailChange.delete(email_change.id)
         Session.commit()
-        flash("Your email change is cancelled", "success")
+        flash("您的电子邮件更改已取消", "success")
         return redirect(url_for("dashboard.setting"))
     else:
-        flash(
-            "You have no pending email change. Redirect back to Setting page", "warning"
-        )
+        flash("您没有待处理的电子邮件地址更改。重定向回“设置”页面", "warning")
         return redirect(url_for("dashboard.setting"))
 
 
@@ -238,13 +234,13 @@ def cancel_email_change():
 def unlink_proton_account():
     csrf_form = CSRFValidationForm()
     if not csrf_form.validate():
-        flash("Invalid request", "warning")
+        flash("请求无效。请重试", "warning")
         return redirect(url_for("dashboard.setting"))
 
     if not perform_proton_account_unlink(current_user):
-        flash("Account cannot be unlinked", "warning")
+        flash("账户无法解除关联", "warning")
     else:
-        flash("Your Proton account has been unlinked", "success")
+        flash("您的 Proton 账户已解除关联", "success")
     return redirect(url_for("dashboard.setting"))
 
 
@@ -254,13 +250,13 @@ def unlink_proton_account():
 def unlink_linuxdo_account():
     csrf_form = CSRFValidationForm()
     if not csrf_form.validate():
-        flash("Invalid request", "warning")
+        flash("请求无效。请重试", "warning")
         return redirect(url_for("dashboard.setting"))
 
     if not perform_partner_account_unlink("linuxdo", current_user):
-        flash("Account cannot be unlinked", "warning")
+        flash("账户无法解除关联", "warning")
     else:
-        flash("Your LinuxDo account has been unlinked", "success")
+        flash("您的 LinuxDo 帐户已取消关联", "success")
     return redirect(url_for("dashboard.setting"))
 
 
@@ -270,11 +266,11 @@ def unlink_linuxdo_account():
 def unlink_google_account():
     csrf_form = CSRFValidationForm()
     if not csrf_form.validate():
-        flash("Invalid request", "warning")
+        flash("请求无效。请重试", "warning")
         return redirect(url_for("dashboard.setting"))
 
     if not perform_partner_account_unlink("google", current_user):
-        flash("Account cannot be unlinked", "warning")
+        flash("账户无法解除关联", "warning")
     else:
-        flash("Your Google account has been unlinked", "success")
+        flash("您的 Google 帐户已取消关联", "success")
     return redirect(url_for("dashboard.setting"))

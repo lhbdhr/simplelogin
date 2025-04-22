@@ -354,7 +354,7 @@ def setup_error_page(app):
         if request.path.startswith("/api/"):
             return jsonify(error="Unauthorized"), 401
         else:
-            flash("You need to login to see this page", "error")
+            flash("您需要登录才能查看此页面", "error")
             return redirect(url_for("auth.login", next=request.full_path))
 
     @app.errorhandler(403)

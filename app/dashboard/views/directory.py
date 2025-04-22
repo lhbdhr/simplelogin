@@ -70,17 +70,17 @@ def directory():
     if request.method == "POST":
         if request.form.get("form-name") == "delete":
             if not delete_dir_form.validate():
-                flash("Invalid request", "warning")
+                flash("无效请求", "warning")
                 return redirect(url_for("dashboard.directory"))
             dir_obj: Optional[Directory] = Directory.get(
                 delete_dir_form.directory_id.data
             )
 
             if not dir_obj:
-                flash("Unknown error. Refresh the page", "warning")
+                flash("未知错误。请刷新页面", "warning")
                 return redirect(url_for("dashboard.directory"))
             elif dir_obj.user_id != current_user.id:
-                flash("You cannot delete this directory", "warning")
+                flash("您不能删除此目录", "warning")
                 return redirect(url_for("dashboard.directory"))
 
             name = dir_obj.name
@@ -91,27 +91,27 @@ def directory():
             )
             Directory.delete(dir_obj.id)
             Session.commit()
-            flash(f"Directory {name} has been deleted", "success")
+            flash(f"目录 {name} 已删除", "success")
 
             return redirect(url_for("dashboard.directory"))
 
         if request.form.get("form-name") == "toggle-directory":
             if not toggle_dir_form.validate():
-                flash("Invalid request", "warning")
+                flash("无效请求", "warning")
                 return redirect(url_for("dashboard.directory"))
             dir_id = toggle_dir_form.directory_id.data
             dir_obj: Optional[Directory] = Directory.get(dir_id)
 
             if not dir_obj or dir_obj.user_id != current_user.id:
-                flash("Unknown error. Refresh the page", "warning")
+                flash("未知错误。请刷新页面", "warning")
                 return redirect(url_for("dashboard.directory"))
 
             if toggle_dir_form.directory_enabled.data:
                 dir_obj.disabled = False
-                flash(f"On-the-fly is enabled for {dir_obj.name}", "success")
+                flash(f"自动创建已为 {dir_obj.name} 启用", "success")
             else:
                 dir_obj.disabled = True
-                flash(f"On-the-fly is disabled for {dir_obj.name}", "warning")
+                flash(f"自动创建已为 {dir_obj.name} 禁用", "warning")
 
             emit_user_audit_log(
                 user=current_user,
@@ -124,13 +124,13 @@ def directory():
 
         elif request.form.get("form-name") == "update":
             if not update_dir_form.validate():
-                flash("Invalid request", "warning")
+                flash("无效请求", "warning")
                 return redirect(url_for("dashboard.directory"))
             dir_id = update_dir_form.directory_id.data
             dir_obj: Optional[Directory] = Directory.get(dir_id)
 
             if not dir_obj or dir_obj.user_id != current_user.id:
-                flash("Unknown error. Refresh the page", "warning")
+                flash("未知错误。请刷新页面", "warning")
                 return redirect(url_for("dashboard.directory"))
 
             mailbox_ids = update_dir_form.mailbox_ids.data
@@ -143,12 +143,12 @@ def directory():
                     or mailbox.user_id != current_user.id
                     or not mailbox.verified
                 ):
-                    flash("Something went wrong, please retry", "warning")
+                    flash("出了点问题，请重试", "warning")
                     return redirect(url_for("dashboard.directory"))
                 mailboxes.append(mailbox)
 
             if not mailboxes:
-                flash("You must select at least 1 mailbox", "warning")
+                flash("您必须至少选择 1 个邮箱", "warning")
                 return redirect(url_for("dashboard.directory"))
 
             # first remove all existing directory-mailboxes links
@@ -165,17 +165,17 @@ def directory():
                 message=f"Updated directory {dir_obj.id} ({dir_obj.name}) mailboxes ({mailboxes_as_str})",
             )
             Session.commit()
-            flash(f"Directory {dir_obj.name} has been updated", "success")
+            flash(f"目录 {dir_obj.name} 已更新", "success")
 
             return redirect(url_for("dashboard.directory"))
         elif request.form.get("form-name") == "create":
             if not current_user.is_premium():
-                flash("Only premium plan can add directory", "warning")
+                flash("只有高级计划可以添加目录", "warning")
                 return redirect(url_for("dashboard.directory"))
 
             if current_user.directory_quota <= 0:
                 flash(
-                    f"You cannot have more than {MAX_NB_DIRECTORY} directories",
+                    f"目录数量不能超过 {MAX_NB_DIRECTORY} 个",
                     "warning",
                 )
                 return redirect(url_for("dashboard.directory"))
@@ -184,7 +184,7 @@ def directory():
                 new_dir_name = new_dir_form.name.data.lower()
 
                 if Directory.get_by(name=new_dir_name):
-                    flash(f"{new_dir_name} already used", "warning")
+                    flash(f"{new_dir_name} 已经被使用", "warning")
                 elif new_dir_name in (
                     "reply",
                     "ra",
@@ -194,7 +194,7 @@ def directory():
                     BOUNCE_PREFIX_FOR_REPLY_PHASE,
                 ):
                     flash(
-                        "this directory name is reserved, please choose another name",
+                        "此目录名称已被保留，请选择其他名称",
                         "warning",
                     )
                 else:
@@ -209,7 +209,7 @@ def directory():
                         )
                     except DirectoryInTrashError:
                         flash(
-                            f"{new_dir_name} has been used before and cannot be reused",
+                            f"{new_dir_name} 之前已被使用，无法重复使用",
                             "error",
                         )
                     else:
@@ -225,9 +225,7 @@ def directory():
                                     or mailbox.user_id != current_user.id
                                     or not mailbox.verified
                                 ):
-                                    flash(
-                                        "Something went wrong, please retry", "warning"
-                                    )
+                                    flash("出了点问题，请重试", "warning")
                                     return redirect(url_for("dashboard.directory"))
                                 mailboxes.append(mailbox)
 
@@ -238,7 +236,7 @@ def directory():
 
                             Session.commit()
 
-                        flash(f"Directory {new_dir.name} is created", "success")
+                        flash(f"目录 {new_dir.name} 已创建", "success")
 
                     return redirect(url_for("dashboard.directory"))
 

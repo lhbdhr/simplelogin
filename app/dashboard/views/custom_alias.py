@@ -36,7 +36,7 @@ def custom_alias():
     if not current_user.can_create_new_alias():
         LOG.d("%s can't create new alias", current_user)
         flash(
-            "You have reached free plan limit, please upgrade to create new aliases",
+            "您已达到免费计划的限制，请升级以创建新的别名",
             "warning",
         )
         return redirect(url_for("dashboard.index"))
@@ -54,7 +54,7 @@ def custom_alias():
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         alias_prefix = request.form.get("prefix").strip().lower().replace(" ", "")
         signed_alias_suffix = request.form.get("signed-alias-suffix")
@@ -63,8 +63,8 @@ def custom_alias():
 
         if not check_alias_prefix(alias_prefix):
             flash(
-                "Only lowercase letters, numbers, dashes (-), dots (.) and underscores (_) "
-                "are currently supported for alias prefix. Cannot be more than 40 letters",
+                "仅限小写字母、数字、破折号 (-)、点 (.) 和下划线 (_) "
+                "目前支持别名前缀。不能超过 40 个字母",
                 "error",
             )
             return redirect(request.url)
@@ -78,30 +78,30 @@ def custom_alias():
                 or mailbox.user_id != current_user.id
                 or not mailbox.verified
             ):
-                flash("Something went wrong, please retry", "warning")
+                flash("出了点问题，请重试", "warning")
                 return redirect(request.url)
             mailboxes.append(mailbox)
 
         if not mailboxes:
-            flash("At least one mailbox must be selected", "error")
+            flash("必须至少选择一个邮箱", "error")
             return redirect(request.url)
 
         try:
             suffix = check_suffix_signature(signed_alias_suffix)
             if not suffix:
                 LOG.w("Alias creation time expired for %s", current_user)
-                flash("Alias creation time is expired, please retry", "warning")
+                flash("别名创建时间已过期，请重试", "warning")
                 return redirect(request.url)
         except Exception:
             LOG.w("Alias suffix is tampered, user %s", current_user)
-            flash("Unknown error, refresh the page", "error")
+            flash("未知错误，请刷新页面", "error")
             return redirect(request.url)
 
         if verify_prefix_suffix(current_user, alias_prefix, suffix):
             full_alias = alias_prefix + suffix
 
             if ".." in full_alias:
-                flash("Your alias can't contain 2 consecutive dots (..)", "error")
+                flash("您的别名不能包含两个连续的点 (..)", "error")
                 return redirect(request.url)
 
             try:
@@ -112,12 +112,12 @@ def custom_alias():
                 flash(str(e), "error")
                 return redirect(request.url)
 
-            general_error_msg = f"{full_alias} cannot be used"
+            general_error_msg = f"{full_alias} 无法使用"
 
             if Alias.get_by(email=full_alias):
                 alias = Alias.get_by(email=full_alias)
                 if alias.user_id == current_user.id:
-                    flash(f"You already have this alias {full_alias}", "error")
+                    flash(f"您已拥有此别名 {full_alias}", "error")
                 else:
                     flash(general_error_msg, "error")
             elif DomainDeletedAlias.get_by(email=full_alias):
@@ -126,8 +126,8 @@ def custom_alias():
                 )
                 custom_domain = domain_deleted_alias.domain
                 flash(
-                    f"You have deleted this alias before. You can restore it on "
-                    f"{custom_domain.domain} 'Deleted Alias' page",
+                    f"您之前已删除此别名。您可以在"
+                    f"{custom_domain.domain} “已删除别名”页面中恢复它",
                     "error",
                 )
 
@@ -146,7 +146,7 @@ def custom_alias():
                 except IntegrityError:
                     LOG.w("Alias %s already exists", full_alias)
                     Session.rollback()
-                    flash("Unknown error, please retry", "error")
+                    flash("未知错误，请重试", "error")
                     return redirect(url_for("dashboard.custom_alias"))
 
                 for i in range(1, len(mailboxes)):
@@ -156,12 +156,12 @@ def custom_alias():
                     )
 
                 Session.commit()
-                flash(f"Alias {full_alias} has been created", "success")
+                flash(f"别名 {full_alias} 已创建", "success")
 
                 return redirect(url_for("dashboard.index", highlight_alias_id=alias.id))
         # only happen if the request has been "hacked"
         else:
-            flash("something went wrong", "warning")
+            flash("出了点问题", "warning")
 
     return render_template(
         "dashboard/custom_alias.html",

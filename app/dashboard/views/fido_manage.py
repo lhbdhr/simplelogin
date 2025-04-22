@@ -19,7 +19,7 @@ class FidoManageForm(FlaskForm):
 @sudo_required
 def fido_manage():
     if not current_user.fido_enabled():
-        flash("You haven't registered a security key", "warning")
+        flash("您尚未注册安全密钥", "warning")
         return redirect(url_for("dashboard.index"))
 
     fido_manage_form = FidoManageForm()
@@ -30,14 +30,14 @@ def fido_manage():
         fido_key = Fido.get_by(uuid=current_user.fido_uuid, credential_id=credential_id)
 
         if not fido_key:
-            flash("Unknown error, redirect back to manage page", "warning")
+            flash("未知错误，重定向回管理页面", "warning")
             return redirect(url_for("dashboard.fido_manage"))
 
         Fido.delete(fido_key.id)
         Session.commit()
 
         LOG.d(f"FIDO Key ID={fido_key.id} Removed")
-        flash(f"Key {fido_key.name} successfully unlinked", "success")
+        flash(f"密钥 {fido_key.name} 已成功解除链接", "success")
 
         # Disable FIDO for the user if all keys have been deleted
         if not Fido.filter_by(uuid=current_user.fido_uuid).all():

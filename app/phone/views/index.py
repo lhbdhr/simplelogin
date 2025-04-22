@@ -14,7 +14,7 @@ from app.phone.base import phone_bp
 @login_required
 def index():
     if not current_user.can_use_phone:
-        flash("You can't use this page", "error")
+        flash("您无法使用此页面", "error")
         return redirect(url_for("dashboard.index"))
 
     countries = available_countries()
@@ -35,12 +35,12 @@ def index():
         try:
             nb_minute = int(request.form.get("minute"))
         except ValueError:
-            flash("Number of minutes must be specified", "error")
+            flash("必须指定分钟数", "error")
             return redirect(request.url)
 
         if current_user.phone_quota < nb_minute:
             flash(
-                f"You don't have enough phone quota. Current quota is {current_user.phone_quota}",
+                f"您的电话配额不足。当前配额为 {current_user.phone_quota}",
                 "error",
             )
             return redirect(request.url)
@@ -81,9 +81,7 @@ def index():
                 url_for("phone.reservation_route", reservation_id=phone_reservation.id)
             )
         else:
-            flash(
-                f"No phone number available for {country.name} during {nb_minute} minutes"
-            )
+            flash(f"{nb_minute} 分钟内没有{country.name}的电话号码可用")
 
     return render_template(
         "phone/index.html",

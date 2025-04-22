@@ -50,7 +50,7 @@ def enter_sudo():
                 LOG.d("redirect user to dashboard")
                 return redirect(url_for("dashboard.index"))
         else:
-            flash("Incorrect password", "warning")
+            flash("密码不正确", "warning")
 
     proton_enabled = CONNECT_WITH_PROTON
     if proton_enabled:

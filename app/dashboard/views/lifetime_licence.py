@@ -17,14 +17,14 @@ class CouponForm(FlaskForm):
 @parallel_limiter.lock()
 def lifetime_licence():
     if current_user.lifetime:
-        flash("You already have a lifetime licence", "warning")
+        flash("您已经拥有终身许可证", "warning")
         return redirect(url_for("dashboard.index"))
 
     # user needs to cancel active subscription first
     # to avoid being charged
     sub = current_user.get_paddle_subscription()
     if sub and not sub.cancelled:
-        flash("Please cancel your current subscription first", "warning")
+        flash("请先取消当前订阅", "warning")
         return redirect(url_for("dashboard.index"))
 
     coupon_form = CouponForm()
@@ -33,10 +33,10 @@ def lifetime_licence():
         code = coupon_form.code.data
         coupon = redeem_lifetime_coupon(code, current_user)
         if coupon:
-            flash("You are upgraded to lifetime premium!", "success")
+            flash("您已升级为终身高级计划！", "success")
             return redirect(url_for("dashboard.index"))
 
         else:
-            flash("Coupon code expired or invalid", "warning")
+            flash("优惠券代码已过期或无效", "warning")
 
     return render_template("dashboard/lifetime_licence.html", coupon_form=coupon_form)

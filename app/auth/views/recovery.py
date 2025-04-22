@@ -28,13 +28,13 @@ def recovery_route():
 
     # user access this page directly without passing by login page
     if not user_id:
-        flash("Unknown error, redirect back to main page", "warning")
+        flash("未知错误，跳转至主页", "warning")
         return redirect(url_for("auth.login"))
 
     user = User.get(user_id)
 
     if not user.two_factor_authentication_enabled():
-        flash("Only user with MFA enabled should go to this page", "warning")
+        flash("只有启用 MFA 的用户才能访问此页面", "warning")
         return redirect(url_for("auth.login"))
 
     recovery_form = RecoveryForm()
@@ -48,12 +48,12 @@ def recovery_route():
             if recovery_code.used:
                 # Trigger rate limiter
                 g.deduct_limit = True
-                flash("Code already used", "error")
+                flash("代码已被使用", "error")
             else:
                 del session[MFA_USER_ID]
 
                 login_user(user)
-                flash("Welcome back!", "success")
+                flash("欢迎回来!", "success")
 
                 recovery_code.used = True
                 recovery_code.used_at = arrow.now()
@@ -69,7 +69,7 @@ def recovery_route():
         else:
             # Trigger rate limiter
             g.deduct_limit = True
-            flash("Incorrect code", "error")
+            flash("无效代码", "error")
             send_invalid_totp_login_email(user, "recovery")
 
     return render_template("auth/recovery.html", recovery_form=recovery_form)

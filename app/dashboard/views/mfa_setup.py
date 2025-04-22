@@ -20,7 +20,7 @@ class OtpTokenForm(FlaskForm):
 @sudo_required
 def mfa_setup():
     if current_user.enable_otp:
-        flash("you have already enabled MFA", "warning")
+        flash("您已启用 MFA", "warning")
         return redirect(url_for("dashboard.index"))
 
     otp_token_form = OtpTokenForm()
@@ -39,13 +39,13 @@ def mfa_setup():
             current_user.enable_otp = True
             current_user.last_otp = token
             Session.commit()
-            flash("MFA has been activated", "success")
+            flash("MFA 已激活", "success")
             recovery_codes = RecoveryCode.generate(current_user)
             return render_template(
                 "dashboard/recovery_code.html", recovery_codes=recovery_codes
             )
         else:
-            flash("Incorrect token", "warning")
+            flash("令牌不正确", "warning")
 
     otp_uri = pyotp.totp.TOTP(current_user.otp_secret).provisioning_uri(
         name=current_user.email, issuer_name="YuanYou"

@@ -49,14 +49,14 @@ def oidc_login():
 @auth_bp.route("/oidc/callback")
 def oidc_callback():
     if SESSION_STATE_KEY not in session:
-        flash("Invalid state, please retry", "error")
+        flash("状态无效，请重试", "error")
         return redirect(url_for("auth.login"))
     if config.OIDC_CLIENT_ID is None or config.OIDC_CLIENT_SECRET is None:
         return redirect(url_for("auth.login"))
 
     # user clicks on cancel
     if "error" in request.args:
-        flash("Please use another sign in method then", "warning")
+        flash("请使用其他登录方式", "warning")
         return redirect("/")
 
     oidc_configuration = requests.get(config.OIDC_WELL_KNOWN_URL).json()
@@ -81,7 +81,7 @@ def oidc_callback():
             f"cannot get oidc user data {oidc_user_data.status_code} {oidc_user_data.text}"
         )
         flash(
-            "Cannot get user data from OIDC, please use another way to login/sign up",
+            "无法从 OIDC 获取用户数据，请使用其他方式登录/注册",
             "error",
         )
         return redirect(url_for("auth.login"))
@@ -92,7 +92,7 @@ def oidc_callback():
     if not email:
         LOG.e(f"cannot get email for OIDC user {oidc_user_data} {email}")
         flash(
-            "Cannot get a valid email from OIDC, please another way to login/sign up",
+            "无法从 OIDC 获取有效电子邮件，请通过其他方式登录/注册",
             "error",
         )
         return redirect(url_for("auth.login"))
@@ -102,7 +102,7 @@ def oidc_callback():
 
     if not user and config.DISABLE_REGISTRATION:
         flash(
-            "Sorry you cannot sign up via the OIDC provider. Please sign-up first with your email.",
+            "抱歉，您无法通过 OIDC 提供商注册。请先使用您的电子邮件注册。",
             "error",
         )
         return redirect(url_for("auth.register"))

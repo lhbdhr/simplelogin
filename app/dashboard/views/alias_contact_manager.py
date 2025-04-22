@@ -195,9 +195,9 @@ def delete_contact(alias: Alias, contact_id: int):
     contact: Optional[Contact] = Contact.get(contact_id)
 
     if not contact:
-        flash("Unknown error. Refresh the page", "warning")
+        flash("未知错误。请刷新页面", "warning")
     elif contact.alias_id != alias.id:
-        flash("You cannot delete reverse-alias", "warning")
+        flash("您无法删除反向别名", "warning")
     else:
         delete_contact_email = contact.website_email
         emit_alias_audit_log(
@@ -208,7 +208,7 @@ def delete_contact(alias: Alias, contact_id: int):
         Contact.delete(contact_id)
         Session.commit()
 
-        flash(f"Reverse-alias for {delete_contact_email} has been deleted", "success")
+        flash(f"{delete_contact_email} 的反向别名已被删除", "success")
 
 
 @dashboard_bp.route("/alias_contact_manager/<int:alias_id>/", methods=["GET", "POST"])
@@ -220,7 +220,7 @@ def alias_contact_manager(alias_id):
         try:
             highlight_contact_id = int(request.args.get("highlight_contact_id"))
         except ValueError:
-            flash("Invalid contact id", "error")
+            flash("联系人 ID 无效", "error")
             return redirect(url_for("dashboard.index"))
 
     alias = Alias.get(alias_id)
@@ -236,11 +236,11 @@ def alias_contact_manager(alias_id):
 
     # sanity check
     if not alias:
-        flash("You do not have access to this page", "warning")
+        flash("您无权访问此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     if alias.user_id != current_user.id:
-        flash("You do not have access to this page", "warning")
+        flash("您无权访问此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     new_contact_form = NewContactForm()
@@ -248,7 +248,7 @@ def alias_contact_manager(alias_id):
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         if request.form.get("form-name") == "create":
             if new_contact_form.validate():
@@ -263,7 +263,7 @@ def alias_contact_manager(alias_id):
                 ) as excp:
                     flash(excp.error_for_user(), "error")
                     return redirect(request.url)
-                flash(f"Reverse alias for {contact_address} is created", "success")
+                flash(f"{contact_address} 的反向别名已创建", "success")
                 return redirect(
                     url_for(
                         "dashboard.alias_contact_manager",

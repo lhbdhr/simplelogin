@@ -20,12 +20,12 @@ from app.models import Alias, Contact
 def unsubscribe(alias_id):
     alias = Alias.get(alias_id)
     if not alias:
-        flash("Incorrect link. Redirect you to the home page", "warning")
+        flash("链接错误。请将您重定向至主页", "warning")
         return redirect(url_for("dashboard.index"))
 
     if alias.user_id != current_user.id:
         flash(
-            "You don't have access to this page. Redirect you to the home page",
+            "您无权访问此页面。请将您重定向至主页",
             "warning",
         )
         return redirect(url_for("dashboard.index"))
@@ -35,7 +35,7 @@ def unsubscribe(alias_id):
         alias_utils.change_alias_status(
             alias, enabled=False, message="Set enabled=False from unsubscribe request"
         )
-        flash(f"Alias {alias.email} has been blocked", "success")
+        flash(f"别名 {alias.email} 已被屏蔽", "success")
         Session.commit()
 
         return redirect(url_for("dashboard.index", highlight_alias_id=alias.id))
@@ -48,12 +48,12 @@ def unsubscribe(alias_id):
 def block_contact(contact_id):
     contact = Contact.get(contact_id)
     if not contact:
-        flash("Incorrect link. Redirect you to the home page", "warning")
+        flash("链接错误。请将您重定向至主页", "warning")
         return redirect(url_for("dashboard.index"))
 
     if contact.user_id != current_user.id:
         flash(
-            "You don't have access to this page. Redirect you to the home page",
+            "您无权访问此页面。请将您重定向至主页",
             "warning",
         )
         return redirect(url_for("dashboard.index"))
@@ -61,7 +61,7 @@ def block_contact(contact_id):
     # automatic unsubscribe, according to https://tools.ietf.org/html/rfc8058
     if request.method == "POST":
         contact.block_forward = True
-        flash(f"Emails sent from {contact.website_email} are now blocked", "success")
+        flash(f"从 {contact.website_email} 发送的电子邮件现已被屏蔽", "success")
         Session.commit()
 
         return redirect(
@@ -82,15 +82,15 @@ def encoded_unsubscribe(encoded_request: str):
         current_user, encoded_request
     )
     if not unsub_data:
-        flash("Invalid unsubscribe request", "error")
+        flash("无效的取消订阅请求", "error")
         return redirect(url_for("dashboard.index"))
     if unsub_data.action == UnsubscribeAction.DisableAlias:
         alias = Alias.get(unsub_data.data)
-        flash(f"Alias {alias.email} has been blocked", "success")
+        flash(f"别名 {alias.email} 已被屏蔽", "success")
         return redirect(url_for("dashboard.index", highlight_alias_id=alias.id))
     if unsub_data.action == UnsubscribeAction.DisableContact:
         contact = Contact.get(unsub_data.data)
-        flash(f"Emails sent from {contact.website_email} are now blocked", "success")
+        flash(f"从 {contact.website_email} 发送的电子邮件现已被屏蔽", "success")
         return redirect(
             url_for(
                 "dashboard.alias_contact_manager",
@@ -99,14 +99,14 @@ def encoded_unsubscribe(encoded_request: str):
             )
         )
     if unsub_data.action == UnsubscribeAction.UnsubscribeNewsletter:
-        flash("You've unsubscribed from the newsletter", "success")
+        flash("您已取消订阅新闻通讯", "success")
         return redirect(
             url_for(
                 "dashboard.index",
             )
         )
     if unsub_data.action == UnsubscribeAction.OriginalUnsubscribeMailto:
-        flash("The original unsubscribe request has been forwarded", "success")
+        flash("原取消订阅请求已转发", "success")
         return redirect(
             url_for(
                 "dashboard.index",

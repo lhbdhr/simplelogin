@@ -21,7 +21,7 @@ def final():
         alias = Alias.get_by(email=form.email.data)
         if alias and alias.user_id == current_user.id:
             send_test_email_alias(current_user, alias.email)
-            flash("An email is sent to your alias", "success")
+            flash("一封电子邮件已发送到您的别名", "success")
 
     return render_template(
         "onboarding/final.html",

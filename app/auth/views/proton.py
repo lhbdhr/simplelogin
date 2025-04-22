@@ -110,14 +110,14 @@ def proton_login():
 @auth_bp.route("/proton/callback")
 def proton_callback():
     if SESSION_STATE_KEY not in session or SESSION_STATE_KEY not in session:
-        flash("Invalid state, please retry", "error")
+        flash("状态无效，请重试", "error")
         return redirect(url_for("auth.login"))
     if PROTON_CLIENT_ID is None or PROTON_CLIENT_SECRET is None:
         return redirect(url_for("auth.login"))
 
     # user clicks on cancel
     if "error" in request.args:
-        flash("Please use another sign in method then", "warning")
+        flash("请使用其他登录方式", "warning")
         return redirect("/")
 
     proton = OAuth2Session(
@@ -151,7 +151,7 @@ def proton_callback():
         )
     except Exception as e:
         LOG.warning(f"Error fetching Proton token: {e}")
-        flash("There was an error in the login process", "error")
+        flash("登录过程中出现错误", "error")
         return redirect(url_for("auth.login"))
 
     credentials = convert_access_token(token["access_token"])

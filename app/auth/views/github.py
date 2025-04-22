@@ -39,7 +39,7 @@ def github_login():
 def github_callback():
     # user clicks on cancel
     if "error" in request.args:
-        flash("Please use another sign in method then", "warning")
+        flash("请使用其他登录方式", "warning")
         return redirect("/")
 
     github = OAuth2Session(
@@ -77,7 +77,7 @@ def github_callback():
     if not email:
         LOG.e(f"cannot get email for github user {github_user_data} {emails}")
         flash(
-            "Cannot get a valid email from Github, please another way to login/sign up",
+            "无法从 Github 获取有效电子邮件，请通过其他方式登录/注册",
             "error",
         )
         return redirect(url_for("auth.login"))
@@ -87,7 +87,7 @@ def github_callback():
 
     if not user:
         flash(
-            "Sorry you cannot sign up via Github, please use email/password sign-up instead",
+            "抱歉，您无法通过 Github 注册，请使用电子邮件/密码注册",
             "error",
         )
         return redirect(url_for("auth.register"))

@@ -30,7 +30,7 @@ def custom_domain():
     if request.method == "POST":
         if request.form.get("form-name") == "create":
             if not current_user.is_premium():
-                flash("Only premium plan can add custom domain", "warning")
+                flash("只有高级计划可以添加自定义域", "warning")
                 return redirect(url_for("dashboard.custom_domain"))
 
             if new_custom_domain_form.validate():
@@ -38,7 +38,7 @@ def custom_domain():
                     user=current_user, domain=new_custom_domain_form.domain.data
                 )
                 if res.success:
-                    flash(f"New domain {res.instance.domain} is created", "success")
+                    flash(f"已创建新域 {res.instance.domain}", "success")
                     return redirect(
                         url_for(
                             "dashboard.domain_detail_dns",

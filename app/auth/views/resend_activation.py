@@ -25,17 +25,17 @@ def resend_activation():
         user = User.get_by(email=email) or User.get_by(email=canonical_email)
 
         if not user:
-            flash("There is no such email", "warning")
+            flash("没有这样的电子邮件", "warning")
             return render_template("auth/resend_activation.html", form=form)
 
         if user.activated:
-            flash("Your account was already activated, please login", "success")
+            flash("您的账户已激活，请登录", "success")
             return redirect(url_for("auth.login"))
 
         # user is not activated
         LOG.d("user %s is not activated", user)
         flash(
-            "An activation email has been sent to you. Please check your inbox/spam folder.",
+            "激活邮件已发送给您。请检查您的收件箱/垃圾邮件文件夹。",
             "warning",
         )
         send_activation_email(user, request.args.get("next"))

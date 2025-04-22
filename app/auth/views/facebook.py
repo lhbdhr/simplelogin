@@ -51,7 +51,7 @@ def facebook_login():
 def facebook_callback():
     # user clicks on cancel
     if "error" in request.args:
-        flash("Please use another sign in method then", "warning")
+        flash("请使用其他登录方式", "warning")
         return redirect("/")
 
     facebook = OAuth2Session(
@@ -86,9 +86,7 @@ def facebook_callback():
 
     # user choose to not share email, cannot continue
     if not email:
-        flash(
-            "In order to use SimpleLogin, you need to give us a valid email", "warning"
-        )
+        flash("为了使用原邮邮箱，您需要向我们提供一个有效的电子邮件", "warning")
         return redirect(url_for("auth.register"))
 
     email = sanitize_email(email)

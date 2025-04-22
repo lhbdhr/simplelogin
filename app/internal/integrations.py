@@ -13,5 +13,5 @@ def set_enable_proton_cookie():
 
     response = make_response(redirect(redirect_url))
 
-    flash("You can now connect your Proton and your SimpleLogin account", "success")
+    flash("您现在可以连接您的 Proton 和您的 SimpleLogin 帐户", "success")
     return response

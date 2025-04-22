@@ -22,14 +22,14 @@ def delete_account():
     delete_form = DeleteDirForm()
     if request.method == "POST" and request.form.get("form-name") == "delete-account":
         if not delete_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return render_template(
                 "dashboard/delete_account.html", delete_form=delete_form
             )
         sub: Subscription = current_user.get_paddle_subscription()
         # user who has canceled can also re-subscribe
         if sub and not sub.cancelled:
-            flash("Please cancel your current subscription first", "warning")
+            flash("请先取消当前订阅", "warning")
             return redirect(url_for("dashboard.setting"))
 
         # Schedule delete account job
@@ -47,8 +47,7 @@ def delete_account():
         )
 
         flash(
-            "Your account deletion has been scheduled. "
-            "You'll receive an email when the deletion is finished",
+            "您的帐户删除已安排完毕。" "删除完成后，您将收到一封电子邮件。",
             "info",
         )
         return redirect(url_for("dashboard.setting"))

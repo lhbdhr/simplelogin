@@ -33,7 +33,7 @@ def change_email():
     Session.commit()
 
     LOG.i(f"User {user} has changed their email from {old_email} to {user.email}")
-    flash("Your new email has been updated", "success")
+    flash("您的新电子邮件已更新", "success")
 
     login_user(user)
 

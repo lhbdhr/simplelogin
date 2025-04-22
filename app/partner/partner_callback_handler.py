@@ -77,7 +77,7 @@ class PartnerCallbackHandler:
             res = process_link_case(user, current_user, partner)
             return PartnerCallbackResult(
                 redirect_to_login=False,
-                flash_message="Account successfully linked",
+                flash_message="账户关联成功",
                 flash_category="success",
                 redirect=url_for("dashboard.setting"),
                 user=res.user,

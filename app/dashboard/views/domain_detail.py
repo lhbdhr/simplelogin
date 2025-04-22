@@ -45,7 +45,7 @@ def domain_detail_dns(custom_domain_id):
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         if request.form.get("form-name") == "check-ownership":
             ownership_validation_result = domain_validator.validate_domain_ownership(
@@ -161,7 +161,7 @@ def domain_detail(custom_domain_id):
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         if request.form.get("form-name") == "switch-catch-all":
             custom_domain.catch_all = not custom_domain.catch_all
@@ -286,7 +286,7 @@ def domain_detail_trash(custom_domain_id):
 
     if request.method == "POST":
         if not csrf_form.validate():
-            flash("Invalid request", "warning")
+            flash("无效请求", "warning")
             return redirect(request.url)
         if request.form.get("form-name") == "empty-all":
             DomainDeletedAlias.filter_by(domain_id=custom_domain.id).delete()

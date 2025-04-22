@@ -25,7 +25,7 @@ class PGPContactForm(FlaskForm):
 def contact_detail_route(contact_id):
     contact: Optional[Contact] = Contact.get(contact_id)
     if not contact or contact.user_id != current_user.id:
-        flash("You cannot see this page", "warning")
+        flash("您无法看到此页面", "warning")
         return redirect(url_for("dashboard.index"))
 
     alias = contact.alias
@@ -34,16 +34,16 @@ def contact_detail_route(contact_id):
     if request.method == "POST":
         if request.form.get("form-name") == "pgp":
             if not pgp_form.validate():
-                flash("Invalid request", "warning")
+                flash("无效请求", "warning")
                 return redirect(request.url)
             if pgp_form.action.data == "save":
                 if not current_user.is_premium():
-                    flash("Only premium plan can add PGP Key", "warning")
+                    flash("只有高级计划可以添加 PGP 密钥", "warning")
                     return redirect(
                         url_for("dashboard.contact_detail_route", contact_id=contact_id)
                     )
                 if not pgp_form.pgp.data:
-                    flash("Invalid pgp key")
+                    flash("无效 PGP 密钥")
                 else:
                     contact.pgp_public_key = pgp_form.pgp.data
                     try:
@@ -51,7 +51,7 @@ def contact_detail_route(contact_id):
                             contact.pgp_public_key
                         )
                     except PGPException:
-                        flash("Cannot add the public key, please verify it", "error")
+                        flash("无法添加公钥，请验证", "error")
                     else:
                         emit_alias_audit_log(
                             alias=alias,
@@ -60,7 +60,7 @@ def contact_detail_route(contact_id):
                         )
                         Session.commit()
                         flash(
-                            f"PGP public key for {contact.email} is saved successfully",
+                            f"{contact.email} 的 PGP 公钥已成功保存",
                             "success",
                         )
                         return redirect(
@@ -78,7 +78,7 @@ def contact_detail_route(contact_id):
                 contact.pgp_public_key = None
                 contact.pgp_finger_print = None
                 Session.commit()
-                flash(f"PGP public key for {contact.email} is removed", "success")
+                flash(f"{contact.email} 的 PGP 公钥已被删除", "success")
                 return redirect(
                     url_for("dashboard.contact_detail_route", contact_id=contact_id)
                 )

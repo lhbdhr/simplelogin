@@ -11,12 +11,12 @@ from app.utils import sanitize_next_url
 def api_to_cookie():
     code = request.args.get("token")
     if not code:
-        flash("Missing token", "error")
+        flash("缺少令牌", "error")
         return redirect(url_for("auth.login"))
 
     token = ApiToCookieToken.get_by(code=code)
     if not token or token.created_at < arrow.now().shift(minutes=-5):
-        flash("Missing token", "error")
+        flash("缺少令牌", "error")
         return redirect(url_for("auth.login"))
 
     user = token.user

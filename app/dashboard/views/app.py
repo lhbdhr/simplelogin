@@ -29,16 +29,14 @@ def app_route():
         client_user_id = request.form.get("client-user-id")
         client_user = ClientUser.get(client_user_id)
         if not client_user or client_user.user_id != current_user.id:
-            flash(
-                "Unknown error, sorry for the inconvenience, refresh the page", "error"
-            )
+            flash("未知错误，抱歉造成不便，请刷新页面", "error")
             return redirect(request.url)
 
         client = client_user.client
         ClientUser.delete(client_user_id)
         Session.commit()
 
-        flash(f"Link with {client.name}  has been removed", "success")
+        flash(f"与 {client.name} 的链接已被删除", "success")
         return redirect(request.url)
 
     return render_template(
