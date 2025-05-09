@@ -508,7 +508,7 @@ def handle_email_sent_to_ourself(alias, from_addr: str, msg: Message, user):
 
     Notification.create(
         user_id=user.id,
-        title=f"Email sent to {alias.email} from its own mailbox {from_addr}",
+        title=f"邮件循环！不能从你的收件箱 {from_addr} 发往你的别名 {alias.email} 再转发到你的收件箱",
         message=Notification.render(
             "notification/cycle-email.html",
             alias=alias,
@@ -522,7 +522,7 @@ def handle_email_sent_to_ourself(alias, from_addr: str, msg: Message, user):
         user,
         ALERT_SEND_EMAIL_CYCLE,
         from_addr,
-        f"Email sent to {alias.email} from its own mailbox {from_addr}",
+        f"邮件循环！不能从你的收件箱 {from_addr} 发往你的别名 {alias.email} 再转发到你的收件箱",
         render(
             "transactional/cycle-email.txt.jinja2",
             user=user,
@@ -683,7 +683,7 @@ def handle_forward(envelope, msg: Message, rcpt_to: str) -> List[Tuple[bool, str
                     user,
                     ALERT_MAILBOX_IS_ALIAS,
                     user.email,
-                    f"Your mailbox {mailbox.email} is an alias",
+                    f"你的收件箱 {mailbox.email} 是一个别名",
                     render(
                         "transactional/mailbox-invalid.txt.jinja2",
                         user=mailbox.user,
@@ -743,7 +743,7 @@ def forward_email_to_mailbox(
             user,
             ALERT_MAILBOX_IS_ALIAS,
             user.email,
-            f"Your mailbox {mailbox.email} and alias {alias.email} use the same domain",
+            f"你的收件邮箱 {mailbox.email} 不能是 原邮邮箱 的别名",
             render(
                 "transactional/mailbox-invalid.txt.jinja2",
                 user=mailbox.user,
@@ -1226,7 +1226,7 @@ def handle_reply(envelope, msg: Message, rcpt_to: str) -> (bool, str):
 
         send_email(
             mailbox.email,
-            f"发送到 {contact.email} 的电子邮件包含非反向别名地址",
+            f"只有反向别名地址可以作为收件人/抄送人",
             render(
                 "transactional/non-reverse-alias-reply-phase.txt.jinja2",
                 user=alias.user,

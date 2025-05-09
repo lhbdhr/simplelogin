@@ -248,7 +248,7 @@ def process_job(job: Job):
         LOG.w("Delete user %s", user)
         send_email(
             user_email,
-            "您的 SimpleLogin 账户已被删除",
+            "您的 原邮邮箱 账户已被删除",
             render("transactional/account-delete.txt", user=user),
             render("transactional/account-delete.html", user=user),
             retries=3,

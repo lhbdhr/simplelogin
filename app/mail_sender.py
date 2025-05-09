@@ -280,7 +280,7 @@ def sl_sendmail(
     send_request = SendRequest(
         envelope_from,
         envelope_to,
-        msg,
+        message_format_base64_parts(msg),
         mail_options,
         rcpt_options,
         is_forward,
