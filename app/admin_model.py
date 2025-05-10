@@ -346,9 +346,9 @@ class UserAdmin(SLModelView):
 
 def manual_upgrade(way: str, ids: [int], is_giveaway: bool):
     for user in User.filter(User.id.in_(ids)).all():
-        if user.lifetime:
-            flash(f"user {user} already has a lifetime license", "warning")
-            continue
+        # if user.lifetime:
+        #     flash(f"user {user} already has a lifetime license", "warning")
+        #     continue
 
         sub: Subscription = user.get_paddle_subscription()
         if sub and not sub.cancelled:
