@@ -74,6 +74,9 @@ def verify_prefix_suffix(
         # when DISABLE_ALIAS_SUFFIX is true, alias_domain_prefix is empty
         and not config.DISABLE_ALIAS_SUFFIX
     ):
+        if user.is_paid():
+            # paid user can use any custom domain
+            return True
         if not alias_domain_prefix.startswith("."):
             LOG.i("User %s submits a wrong alias suffix %s", user, alias_suffix)
             return False
@@ -146,7 +149,9 @@ def get_alias_suffixes(
     default_domain_found = False
     for sl_domain in sl_domains:
         prefix = (
-            "" if config.DISABLE_ALIAS_SUFFIX else f".{user.get_random_alias_suffix()}"
+            ""
+            if config.DISABLE_ALIAS_SUFFIX or user.is_paid()
+            else f".{user.get_random_alias_suffix()}"
         )
         suffix = f"{prefix}@{sl_domain.domain}"
         alias_suffix = AliasSuffix(
