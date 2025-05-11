@@ -471,6 +471,10 @@ class User(Base, ModelMixin, UserMixin, PasswordOracle):
         sa.Boolean, default=True, nullable=False, server_default="0"
     )
 
+    is_alias_suffix = sa.Column(
+        sa.Boolean, default=True, nullable=False, server_default="0"
+    )
+
     # whether to use random string or random word as suffix
     # Random word from dictionary file -> 0
     # Completely random string -> 1

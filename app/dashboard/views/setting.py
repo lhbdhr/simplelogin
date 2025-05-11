@@ -237,6 +237,19 @@ def setting():
             Session.commit()
             flash("您的偏好已更新", "success")
             return redirect(url_for("dashboard.setting"))
+        elif request.form.get("form-name") == "alias-suffix":
+            choose = request.form.get("alias-suffix")
+            if choose == "on":
+                current_user.is_alias_suffix = True
+            else:
+                if current_user.is_paid():
+                    current_user.is_alias_suffix = False
+                else:
+                    flash("只有付费用户才能禁用别名后缀", "error")
+                    return redirect(url_for("dashboard.setting"))
+            Session.commit()
+            flash("您的偏好已更新", "success")
+            return redirect(url_for("dashboard.setting"))
         elif request.form.get("form-name") == "enable_data_breach_check":
             if not current_user.is_premium():
                 flash("只有高级计划才能启用数据泄露监控", "warning")

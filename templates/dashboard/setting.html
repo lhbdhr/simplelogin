@@ -199,6 +199,35 @@
         </div>
       </div>
       <!-- END Connect with Proton -->
+      <!-- is_alias_suffix -->
+      <div class="card" id="is-alias-suffix">
+        <div class="card-body">
+          <div class="card-title">
+            别名随机后缀
+            <div class="badge badge-warning">仅付费用户可用</div>
+          </div>
+          <div class="my-3">
+            <p>禁用后可以生成类似 <em>xxxx@yyyx.uk</em> 格式的别名</p>
+            <p>禁止新建 <em>特殊别名地址</em>，比如 <em>admin@yyyx.uk</em>。
+            类似的关键词还有 root sale info support abuse mail postmaster mailer 等等等等，<br />
+            如果创建这类别名，会导致别名被删除！</p>
+            <p>推荐使用你自己<em>常用的用户名+使用这个别名的网站</em>，
+            比如 <em>username + website =  coolbwg@yyyx.uk</em><br />
+            这样不容易重复，而且不容易无意中创建了特殊地址，导致别名被删除
+            </p>
+          </div>
+          <form method="post" action="#is-alias-suffix">
+            {{ csrf_form.csrf_token }}
+            <input type="hidden" name="form-name" value="alias-suffix">
+            <div class="form-check">
+              <input type="checkbox" id="alias-suffix" name="alias-suffix" {% if current_user.is_alias_suffix %}checked{% endif %} class="form-check-input">
+                <label for="alias-suffix">启用别名随机后缀</label>
+              </div>
+              <button type="submit" class="btn btn-outline-primary">保存</button>
+            </form>
+          </div>
+        </div>
+      <!-- END alias_suffix -->
       <!-- Random alias -->
       <div id="random-alias" class="card">
         <div class="card-body">

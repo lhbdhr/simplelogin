@@ -74,7 +74,7 @@ def verify_prefix_suffix(
         # when DISABLE_ALIAS_SUFFIX is true, alias_domain_prefix is empty
         and not config.DISABLE_ALIAS_SUFFIX
     ):
-        if user.is_paid():
+        if user.is_paid() and not user.is_alias_suffix:
             # paid user can use any custom domain
             return True
         if not alias_domain_prefix.startswith("."):
@@ -147,10 +147,12 @@ def get_alias_suffixes(
     # then SimpleLogin domain
     sl_domains = user.get_sl_domains(alias_options=alias_options)
     default_domain_found = False
+    LOG.d(f"user.is_alias_suffix {user.is_alias_suffix}")
     for sl_domain in sl_domains:
         prefix = (
             ""
-            if config.DISABLE_ALIAS_SUFFIX or user.is_paid()
+            if config.DISABLE_ALIAS_SUFFIX
+            or (user.is_paid() and not user.is_alias_suffix)
             else f".{user.get_random_alias_suffix()}"
         )
         suffix = f"{prefix}@{sl_domain.domain}"
