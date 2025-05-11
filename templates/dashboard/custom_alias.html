@@ -7,7 +7,7 @@
   <div class="card">
     <div class="card-body">
       <h1 class="h3">新的自定义别名邮箱</h1>
-      {% if  user_custom_domains|length == 0 and not DISABLE_ALIAS_SUFFIX %}
+      {% if is_alias_suffix and not DISABLE_ALIAS_SUFFIX %}
 
         <div class="row">
           <div class="col p-1">
@@ -19,6 +19,9 @@
               <br />
               如果您添加自己的域（或子域），则此限制将被删除，您可以完全自定义别名。
               <br />
+              <p>
+                <span class="text-danger">付费用户</span>可以创建无随机后缀别名，例如 <span class="text-success">xxxxx@{{ FIRST_ALIAS_DOMAIN }}</span>，需要在设置中 <span class="text-danger">禁用</span> 别名随机后缀
+              </p>
             </div>
           </div>
         </div>
@@ -83,9 +86,9 @@
         <div class="row mb-2">
           <div class="col p-1">
             <textarea name="note"
-              class="form-control"
-              rows="3"
-              placeholder="注意，可以是任何内容，以帮助您记住创建此别名的原因。此字段是可选的。"></textarea>
+                      class="form-control"
+                      rows="3"
+                      placeholder="注意，可以是任何内容，以帮助您记住创建此别名的原因。此字段是可选的。"></textarea>
           </div>
         </div>
         <div class="row">

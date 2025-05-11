@@ -10,9 +10,7 @@ from app.alias_suffix import (
     verify_prefix_suffix,
 )
 from app.alias_utils import check_alias_prefix
-from app.config import (
-    ALIAS_LIMIT,
-)
+from app.config import ALIAS_LIMIT, DISABLE_ALIAS_SUFFIX
 from app.dashboard.base import dashboard_bp
 from app.db import Session
 from app.extensions import limiter
@@ -170,4 +168,6 @@ def custom_alias():
         at_least_a_premium_domain=at_least_a_premium_domain,
         mailboxes=mailboxes,
         csrf_form=csrf_form,
+        is_alias_suffix=current_user.is_alias_suffix,
+        DISABLE_ALIAS_SUFFIX=DISABLE_ALIAS_SUFFIX,
     )

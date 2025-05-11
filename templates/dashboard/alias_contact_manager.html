@@ -31,184 +31,181 @@
             {% if alias.mailbox_id %}
               {% if alias.mailboxes | length == 1 %}
 
-                一定要从邮箱 <em>{{ alias.mailbox.email }}</em> 发送电子邮件。否则会被本网站拒收。
-                <br>
                 <p style="color: red;">
-                  这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。
+                  注意：这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。
                   <p>
+                    限制：一定要从邮箱 <em>{{ alias.mailbox.email }}</em> 发送电子邮件。否则会被本网站拒收。
                   {% else %}
-                    一定要从以下邮箱之一发送电子邮件：
-                    <br>
-                    {% for mailbox in alias.mailboxes %}
-
-                      - <b>{{ mailbox.email }}</b>
-                      <br>
-                    {% endfor %}
                     <p style="color: red;">
-                      这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。
+                      注意：这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。
                       <p>
+                        限制：一定要从以下邮箱之一发送电子邮件：
+                        <br>
+                        {% for mailbox in alias.mailboxes %}
+
+                          - <b>{{ mailbox.email }}</b>
+                          <br>
+                        {% endfor %}
                       {% endif %}
                     {% else %}
-                      确保从个人电子邮件地址发送电子邮件 ({{ current_user.email }}).
-                      <br>
-                      <p style="color: red;">
-                        这里一定要注意，这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。
-                        <p>{% endif %}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% if can_create_contacts %}
-
-                <div class="row mb-5">
-                  <div class="col-12 col-md-6 pt-1">
-                    <form method="post">
-                      <input type="hidden" name="form-name" value="create" />
-                      {{ new_contact_form.csrf_token }}
-                      {{ new_contact_form.email(class="form-control", placeholder="名 姓 <email@example.com> 或者 直接填写邮箱地址也可以", autofocus=True) }}
-                      {{ render_field_errors(new_contact_form.email) }}
-                      <div class="small-text mt-2">您想将电子邮件发送到哪里？</div>
-                      {% if can_create_contacts %}
-
-                        <button class="btn btn-primary mt-2">创建反向别名邮箱</button>
-                      {% else %}
-                        <button disabled title="升级到高级版以创建反向别名" class="btn btn-primary mt-2">创建反向别名邮箱</button>
-                      {% endif %}
-                    </form>
-                  </div>
-                {% endif %}
-                <div class="col-12 col-md-6 pt-1 d-none d-sm-block">
-                  <div class="float-right d-flex">
-                    <form method="post">
-                      {{ csrf_form.csrf_token }}
-                      <input type="hidden" name="form-name" value="search">
-                      <input type="search"
-                             name="query"
-                             value="{{ query }}"
-                             placeholder="输入以搜索联系人"
-                             class="form-control shadow mr-2"
-                             style="max-width: 20em">
-                    </form>
-                    {% if query %}
-                      {% if highlight_contact_id %}
-
-                        <a href="{{ url_for("dashboard.alias_contact_manager", alias_id=alias.id, highlight_contact_id=highlight_contact_id) }}"
-                           class="btn btn-light">重置</a>
-                      {% else %}
-                        <a href="{{ url_for("dashboard.alias_contact_manager", alias_id=alias.id) }}"
-                           class="btn btn-light">重置</a>
-                      {% endif %}
+                      <p style="color: red;">注意：这里有一个限制。不然别人知道了你的反向别名，谁都可以冒充你了。</p>
+                      限制：确保从个人电子邮件地址发送电子邮件 ({{ current_user.email }}).
                     {% endif %}
                   </div>
                 </div>
               </div>
-              <div class="row">
-                {% for contact_info in contact_infos %}
+            </div>
+            {% if can_create_contacts %}
 
-                  {% set contact = contact_info.contact %}
-                  <div class="col-md-6">
-                    <div class="my-2 p-2 card {% if contact.id == highlight_contact_id %}highlight-row{% endif %}">
-                      <div class="mb-2 row">
-                        <div class="col">
-                          <span class="font-weight-bold">{{ contact.website_email }}</span>
-                          {% if contact.pgp_finger_print %}
+              <div class="row mb-5">
+                <div class="col-12 col-md-6 pt-1">
+                  <form method="post">
+                    <input type="hidden" name="form-name" value="create" />
+                    {{ new_contact_form.csrf_token }}
+                    {{ new_contact_form.email(class="form-control", placeholder="名 姓 <email@example.com> 或者 直接填写邮箱地址也可以", autofocus=True) }}
+                    {{ render_field_errors(new_contact_form.email) }}
+                    <div class="small-text mt-2">您想将电子邮件发送到哪里？</div>
+                    {% if can_create_contacts %}
 
-                            <span class="cursor" data-toggle="tooltip" data-original-title="PGP 已启用">🗝</span>
-                          {% endif %}
-                        </div>
-                        <div class="col text-right">
-                          <label class="custom-switch cursor" data-toggle="tooltip" {% if contact.block_forward %}
-                             title="解除阻止发件人 - 开始接收来自此发件人的电子邮件" {% else %} title="阻止发件人 - 停止接收来自此发件人的电子邮件" {% endif %} style="padding-left: 0px">
-                            <input type="checkbox" class="enable-disable-contact custom-switch-input" data-contact="{{ contact.id }}" data-contact-email="{{ contact.website_email }}" {{ "checked" if not contact.block_forward else "" }}>
-                            <span class="custom-switch-indicator"></span>
-                          </label>
-                        </div>
-                      </div>
-                      <div>
-                        <span>
-                          <a href="{{ 'mailto:' + contact.website_send_to() }}"
-                             target="_blank"
-                             data-toggle="tooltip"
-                             title="您可以单击此处打开您的电子邮件客户端。或者使用复制按钮 👉"
-                             class="font-weight-bold">*************************</a>
-                          <span class="clipboard btn btn-sm btn-success copy-btn"
-                                data-toggle="tooltip"
-                                title="复制反向别名邮箱地址"
-                                data-clipboard-text="{{ contact.website_send_to() }}">复制反向别名邮箱地址</span>
-                        </span>
-                      </div>
-                      <div class="mb-2 text-muted small-text">
-                        {% if contact_info.latest_email_log != None %}
-
-                          {% set email_log = contact_info.latest_email_log %}
-                          {% if email_log.is_reply %}
-
-                            <i class="fa fa-reply mr-2" data-toggle="tooltip" title="电子邮件回复/从别名发送"></i>
-                            {{ email_log.created_at | dt }}
-                          {% elif email_log.bounced %}
-                            <span class="text-danger">
-                              <i class="fa fa-warning mr-2"
-                                 data-toggle="tooltip"
-                                 title="电子邮件被退回，无法转发至您的邮箱"></i>
-                              {{ email_log.created_at | dt }}
-                            </span>
-                          {% elif email_log.blocked %}
-                            <i class="fa fa-ban mr-2 text-danger"
-                               data-toggle="tooltip"
-                               title="电子邮件被阻止"></i>
-                            {{ email_log.created_at | dt }}
-                          {% else %}
-                            <i class="fa fa-paper-plane  mr-2"
-                               data-toggle="tooltip"
-                               title="电子邮件已发送至别名"></i>
-                            {{ email_log.created_at | dt }}
-                          {% endif %}
-                          <br />
-                          已创建联系人 {{ contact.created_at | dt }}
-                        {% else %}
-                          过去 14 天内无活动。联系人创建于 {{ contact.created_at | dt }}
-                        {% endif %}
-                        <div>
-                          <span class="alias-activity">{{ contact_info.nb_forward }}</span> 个转发,
-                          <span class="alias-activity">{{ contact_info.nb_reply }}</span> 个发送 ( 14天内 )
-                        </div>
-                      </div>
-                      <a href="{{ url_for('dashboard.contact_detail_route', contact_id=contact.id) }}">编辑 ➡</a>
-                      <form method="post">
-                        {{ csrf_form.csrf_token }}
-                        <input type="hidden" name="form-name" value="delete">
-                        <input type="hidden" name="contact-id" value="{{ contact.id }}">
-                        <span class="card-link btn btn-link float-right delete-forward-email text-danger">删除</span>
-                      </form>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-              {% if nb_contact > PAGE_LIMIT or page > 0 %}
-
-                <div class="row mt-3">
-                  <div class="col">
-                    <nav aria-label="Contact navigation">
-                      <ul class="pagination">
-                        <li class="page-item mr-2">
-                          <a class="btn btn-outline-secondary {% if page == 0 %}disabled{% endif %}" href="{{ url_for('dashboard.alias_contact_manager', alias_id=alias.id, page=page-1) }}">
-                            上一页
-                          </a>
-                        </li>
-                        <li class="page-item">
-                          <a class="btn btn-outline-secondary {% if last_page %}disabled{% endif %}" href="{{ url_for('dashboard.alias_contact_manager', alias_id=alias.id, page=page+1) }}">
-                            下一页
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
+                      <button class="btn btn-primary mt-2">创建反向别名邮箱</button>
+                    {% else %}
+                      <button disabled title="升级到高级版以创建反向别名" class="btn btn-primary mt-2">创建反向别名邮箱</button>
+                    {% endif %}
+                  </form>
                 </div>
               {% endif %}
-            {% endblock %}
-            {% block script %}
+              <div class="col-12 col-md-6 pt-1 d-none d-sm-block">
+                <div class="float-right d-flex">
+                  <form method="post">
+                    {{ csrf_form.csrf_token }}
+                    <input type="hidden" name="form-name" value="search">
+                    <input type="search"
+                           name="query"
+                           value="{{ query }}"
+                           placeholder="输入以搜索联系人"
+                           class="form-control shadow mr-2"
+                           style="max-width: 20em">
+                  </form>
+                  {% if query %}
+                    {% if highlight_contact_id %}
 
-              <script>
+                      <a href="{{ url_for("dashboard.alias_contact_manager", alias_id=alias.id, highlight_contact_id=highlight_contact_id) }}"
+                         class="btn btn-light">重置</a>
+                    {% else %}
+                      <a href="{{ url_for("dashboard.alias_contact_manager", alias_id=alias.id) }}"
+                         class="btn btn-light">重置</a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              {% for contact_info in contact_infos %}
+
+                {% set contact = contact_info.contact %}
+                <div class="col-md-6">
+                  <div class="my-2 p-2 card {% if contact.id == highlight_contact_id %}highlight-row{% endif %}">
+                    <div class="mb-2 row">
+                      <div class="col">
+                        <span class="font-weight-bold">{{ contact.website_email }}</span>
+                        {% if contact.pgp_finger_print %}
+
+                          <span class="cursor" data-toggle="tooltip" data-original-title="PGP 已启用">🗝</span>
+                        {% endif %}
+                      </div>
+                      <div class="col text-right">
+                        <label class="custom-switch cursor" data-toggle="tooltip" {% if contact.block_forward %}
+                           title="解除阻止发件人 - 开始接收来自此发件人的电子邮件" {% else %} title="阻止发件人 - 停止接收来自此发件人的电子邮件" {% endif %} style="padding-left: 0px">
+                          <input type="checkbox" class="enable-disable-contact custom-switch-input" data-contact="{{ contact.id }}" data-contact-email="{{ contact.website_email }}" {{ "checked" if not contact.block_forward else "" }}>
+                          <span class="custom-switch-indicator"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <span>
+                        <a href="{{ 'mailto:' + contact.website_send_to() }}"
+                           target="_blank"
+                           data-toggle="tooltip"
+                           title="您可以单击此处打开您的电子邮件客户端。或者使用复制按钮 👉"
+                           class="font-weight-bold">*************************</a>
+                        <span class="clipboard btn btn-sm btn-success copy-btn"
+                              data-toggle="tooltip"
+                              title="复制反向别名邮箱地址"
+                              data-clipboard-text="{{ contact.website_send_to() }}">复制反向别名邮箱地址</span>
+                      </span>
+                    </div>
+                    <div class="mb-2 text-muted small-text">
+                      {% if contact_info.latest_email_log != None %}
+
+                        {% set email_log = contact_info.latest_email_log %}
+                        {% if email_log.is_reply %}
+
+                          <i class="fa fa-reply mr-2" data-toggle="tooltip" title="电子邮件回复/从别名发送"></i>
+                          {{ email_log.created_at | dt }}
+                        {% elif email_log.bounced %}
+                          <span class="text-danger">
+                            <i class="fa fa-warning mr-2"
+                               data-toggle="tooltip"
+                               title="电子邮件被退回，无法转发至您的邮箱"></i>
+                            {{ email_log.created_at | dt }}
+                          </span>
+                        {% elif email_log.blocked %}
+                          <i class="fa fa-ban mr-2 text-danger"
+                             data-toggle="tooltip"
+                             title="电子邮件被阻止"></i>
+                          {{ email_log.created_at | dt }}
+                        {% else %}
+                          <i class="fa fa-paper-plane  mr-2"
+                             data-toggle="tooltip"
+                             title="电子邮件已发送至别名"></i>
+                          {{ email_log.created_at | dt }}
+                        {% endif %}
+                        <br />
+                        已创建联系人 {{ contact.created_at | dt }}
+                      {% else %}
+                        过去 14 天内无活动。联系人创建于 {{ contact.created_at | dt }}
+                      {% endif %}
+                      <div>
+                        <span class="alias-activity">{{ contact_info.nb_forward }}</span> 个转发,
+                        <span class="alias-activity">{{ contact_info.nb_reply }}</span> 个发送 ( 14天内 )
+                      </div>
+                    </div>
+                    <a href="{{ url_for('dashboard.contact_detail_route', contact_id=contact.id) }}">编辑 ➡</a>
+                    <form method="post">
+                      {{ csrf_form.csrf_token }}
+                      <input type="hidden" name="form-name" value="delete">
+                      <input type="hidden" name="contact-id" value="{{ contact.id }}">
+                      <span class="card-link btn btn-link float-right delete-forward-email text-danger">删除</span>
+                    </form>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            {% if nb_contact > PAGE_LIMIT or page > 0 %}
+
+              <div class="row mt-3">
+                <div class="col">
+                  <nav aria-label="Contact navigation">
+                    <ul class="pagination">
+                      <li class="page-item mr-2">
+                        <a class="btn btn-outline-secondary {% if page == 0 %}disabled{% endif %}" href="{{ url_for('dashboard.alias_contact_manager', alias_id=alias.id, page=page-1) }}">
+                          上一页
+                        </a>
+                      </li>
+                      <li class="page-item">
+                        <a class="btn btn-outline-secondary {% if last_page %}disabled{% endif %}" href="{{ url_for('dashboard.alias_contact_manager', alias_id=alias.id, page=page+1) }}">
+                          下一页
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            {% endif %}
+          {% endblock %}
+          {% block script %}
+
+            <script>
     $(".delete-forward-email").on("click", function (e) {
       let that = $(this);
 
@@ -271,5 +268,5 @@
         $(this).prop("checked", oldValue);
       }
     }
-              </script>
-            {% endblock %}
+            </script>
+          {% endblock %}

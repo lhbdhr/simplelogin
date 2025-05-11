@@ -147,7 +147,7 @@ def get_alias_suffixes(
     # then SimpleLogin domain
     sl_domains = user.get_sl_domains(alias_options=alias_options)
     default_domain_found = False
-    LOG.d(f"user.is_alias_suffix {user.is_alias_suffix}")
+    # LOG.d(f"user.is_alias_suffix {user.is_alias_suffix}")
     for sl_domain in sl_domains:
         prefix = (
             ""
