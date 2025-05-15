@@ -75,7 +75,7 @@ class ErrContactErrorUpgradeNeeded(SLException):
     """raised when user cannot create a contact because the plan doesn't allow it"""
 
     def error_for_user(self) -> str:
-        return "Please upgrade to premium to create reverse-alias"
+        return "请升级到付费用户以创建反向别名"
 
 
 class ErrAddressInvalid(SLException):
@@ -85,7 +85,7 @@ class ErrAddressInvalid(SLException):
         self.address = address
 
     def error_for_user(self) -> str:
-        return f"{self.address} is not a valid email address"
+        return f"{self.address} 不是有效的电子邮件地址"
 
 
 class InvalidContactEmailError(SLException):
@@ -93,7 +93,7 @@ class InvalidContactEmailError(SLException):
         self.website_email = website_email
 
     def error_for_user(self) -> str:
-        return f"Cannot create contact with invalid email {self.website_email}"
+        return f"无法创建具有无效电子邮件 {self.website_email} 的联系人"
 
 
 class ErrContactAlreadyExists(SLException):
@@ -104,7 +104,7 @@ class ErrContactAlreadyExists(SLException):
         self.contact = contact
 
     def error_for_user(self) -> str:
-        return f"{self.contact.website_email} is already added"
+        return f"{self.contact.website_email} 联系人已存在，无法添加"
 
 
 class LinkException(SLException):
@@ -114,26 +114,31 @@ class LinkException(SLException):
 
 class AccountAlreadyLinkedToAnotherPartnerException(LinkException):
     def __init__(self):
-        super().__init__("This account is already linked to another partner")
+        super().__init__("此帐户已关联至另一个合作伙伴")
 
 
 class AccountAlreadyLinkedToAnotherUserException(LinkException):
     def __init__(self):
-        super().__init__("This account is linked to another user")
+        super().__init__("此帐户已关联至另一用户")
 
 
 class AccountIsUsingAliasAsEmail(LinkException):
     def __init__(self):
-        super().__init__("Your account has an alias as it's email address")
+        super().__init__("您的帐户有一个别名作为其电子邮件地址")
 
 
 class ProtonAccountNotVerified(LinkException):
     def __init__(self):
-        super().__init__(
-            "The Proton account you are trying to use has not been verified"
-        )
+        super().__init__("您尝试使用的 Proton 帐户尚未验证")
 
 
 class PartnerAccountNotVerified(LinkException):
     def __init__(self):
         super().__init__("您尝试使用的帐户尚未经过验证")
+
+
+class CannotCreateAliasQuotaExceeded(SLException):
+    """raised when an alias cannot be created because there is no quota left"""
+
+    def __init__(self):
+        super().__init__("您无法创建更多别名")

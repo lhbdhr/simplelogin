@@ -446,6 +446,48 @@
     </div> #}
     <!-- END Ignore Loop Email -->
 
+    <!-- One-click unsubscribe -->
+    <div class="card" id="one-click-unsubscribe-section">
+      <div class="card-body">
+        <div class="card-title">一键退订</div>
+        <div class="mb-3">
+          在支持<span class="text-primary">一键退订</span>按钮的邮箱客户端中，点击该按钮将允许您执行以下操作之一：
+          <ul>
+            <li>
+              <b>原始操作：</b> 使用发送方设置的退订策略。
+              原邮邮箱 将确保隐藏您的邮箱地址。
+            </li>
+            <li>
+              <b>禁用别名：</b> 退订操作将禁用接收该邮件的别名。
+            </li>
+            <li>
+              <b>屏蔽联系人：</b> 邮件的发送方将被屏蔽：您将不再通过别名接收该发送方的邮件。
+            </li>
+          </ul>
+        </div>
+        <form method="post" action="#one-click-unsubscribe-section" class="form-inline">
+          {{ csrf_form.csrf_token }}
+          <input type="hidden" name="form-name" value="one-click-unsubscribe">
+          <select class="form-control mr-sm-2" name="unsubscribe-behaviour">
+            <option value="{{ UnsubscribeBehaviourEnum.PreserveOriginal.name }}"
+                    {% if current_user.unsub_behaviour.value == UnsubscribeBehaviourEnum.PreserveOriginal.value %}selected="selected"{% endif %}>
+              保留原始退订策略
+            </option>
+            <option value="{{ UnsubscribeBehaviourEnum.DisableAlias.name }}"
+                    {% if current_user.unsub_behaviour.value == UnsubscribeBehaviourEnum.DisableAlias.value %}selected="selected"{% endif %}>
+              禁用接收邮件的别名
+            </option>
+            <option value="{{ UnsubscribeBehaviourEnum.BlockContact.name }}"
+                    {% if current_user.unsub_behaviour.value == UnsubscribeBehaviourEnum.BlockContact.value %}selected="selected"{% endif %}>
+              屏蔽发送该邮件的发送方
+            </option>
+          </select>
+          <button type="submit" class="btn btn-outline-primary">更新</button>
+        </form>
+      </div>
+    </div>
+    <!-- END One-click unsubscribe -->
+
     <!-- Isolation and Refused Emails -->
     <div class="card">
       <div class="card-body">
@@ -495,6 +537,41 @@
       </div>
     </div>
     <!-- END Blocked Behaviour -->
+
+    <!-- START Alias delete action -->
+    <div class="card" id="alias-delete-action">
+      <div class="card-body">
+        <div class="card-title">别名删除选项</div>
+        <div class="mb-3">
+          删除别名时，您可以选择以下两种选项：
+          <ul>
+            <li>
+              <b>移至回收站</b>：别名将在 30 天后永久删除，在此之前可以恢复。
+            </li>
+            <li>
+              <b>立即删除</b>：别名将立即永久删除，无法恢复。
+            </li>
+          </ul>
+        </div>
+        <form method="post" action="#alias-delete-action" class="form-inline mb-3">
+          {{ csrf_form.csrf_token }}
+          <input type="hidden" name="form-name" value="alias-delete-action">
+          <select class="form-control mr-sm-2" name="alias-delete-action">
+            <option value="{{ UserAliasDeleteAction.MoveToTrash.value }}"
+                    {% if current_user.alias_delete_action.value == UserAliasDeleteAction.MoveToTrash.value %}selected="selected"{% endif %}>
+              移至回收站
+            </option>
+            <option value="{{ UserAliasDeleteAction.DeleteImmediately.value }}"
+                    {% if current_user.alias_delete_action.value == UserAliasDeleteAction.DeleteImmediately.value %}selected="selected"{% endif %}>
+              立即删除
+            </option>
+          </select>
+          <button class="btn btn-outline-primary">保存</button>
+        </form>
+        <a href="{{ url_for('dashboard.alias_trash') }}" class="btn btn-outline-warning">查看别名回收站</a>
+      </div>
+    </div>
+    <!-- END Alias delete action -->
 
     <!-- Sender Header -->
     <div class="card" id="sender-header">

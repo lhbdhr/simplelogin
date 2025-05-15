@@ -522,6 +522,60 @@
           }
       {% endif %}
 
+
+      function confirmDeleteAlias() {
+          let that = $(this);
+          let alias = that.data("alias-email");
+          let aliasDomainTrashUrl = that.data("custom-domain-trash-url");
+
+          let userAliasDeleteAction = "{{ current_user.alias_delete_action.name }}";
+          let title = `删除 ${alias}`;
+          let message = `也许您想禁用别名？请注意，一旦删除，<b>无法</b>恢复。`;
+          let buttonText = "删除，我再也不需要它了";
+
+          if (userAliasDeleteAction === "{{ UserAliasDeleteAction.MoveToTrash.name }}") {
+              title = `删除 ${alias}`
+              message = `也许您想禁用别名，以便在需要时轻松启用它。`;
+              buttonText = "移到回收站";
+          }
+
+          if (aliasDomainTrashUrl !== undefined) {
+              message = `也许你想禁用别名？删除后，它会被移动到域中<a href="${aliasDomainTrashUrl}">回收站</a>`;
+          }
+
+          bootbox.dialog({
+              title: title,
+              message: message,
+              size: 'large',
+              onEscape: true,
+              backdrop: true,
+              buttons: {
+                  disable: {
+                      label: '禁用别名',
+                      className: 'btn-primary',
+                      callback: function () {
+                          that.closest("form").find('input[name="form-name"]').val("disable-alias");
+                          that.closest("form").submit();
+                      }
+                  },
+
+                  delete: {
+                      label: buttonText,
+                      className: 'btn-outline-danger',
+                      callback: function () {
+                          that.closest("form").submit();
+                      }
+                  },
+
+                  cancel: {
+                      label: '取消',
+                      className: 'btn-outline-primary'
+                  },
+
+              }
+          });
+      }
+
       $('.highlighted').tooltip("show");
   </script>
 {% endblock %}

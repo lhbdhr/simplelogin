@@ -124,8 +124,8 @@ def custom_alias():
                 )
                 custom_domain = domain_deleted_alias.domain
                 flash(
-                    f"您之前已删除此别名。您可以在"
-                    f"{custom_domain.domain} “已删除别名”页面中恢复它",
+                    f"您此前已经删除该别名，如果您希望重新创建它, 请把它从 "
+                    f"{custom_domain.domain} '已删除别名' 页面中移除",
                     "error",
                 )
 

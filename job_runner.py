@@ -24,12 +24,14 @@ from app.import_utils import handle_batch_import
 from app.jobs.event_jobs import send_alias_creation_events_for_user
 from app.jobs.export_user_data_job import ExportUserDataJob
 from app.jobs.send_event_job import SendEventToWebhookJob
+from app.jobs.sync_subscription_job import SyncSubscriptionJob
 from app.log import LOG
-from app.models import User, Job, BatchImport, Mailbox, CustomDomain, JobState
+from app.models import User, Job, BatchImport, Mailbox, JobState
 from app.monitor_utils import send_version_event
 from app.user_audit_log_utils import emit_user_audit_log, UserAuditLogAction
 from events.event_sink import HttpEventSink
 from server import create_light_app
+from tasks.delete_custom_domain_job import DeleteCustomDomainJob
 
 _MAX_JOBS_PER_BATCH = 50
 
@@ -259,41 +261,10 @@ def process_job(job: Job):
         delete_mailbox_job(job)
 
     elif job.name == JobType.DELETE_DOMAIN.value:
-        custom_domain_id = job.payload.get("custom_domain_id")
-        custom_domain: Optional[CustomDomain] = CustomDomain.get(custom_domain_id)
-        if not custom_domain:
-            return
+        delete_job = DeleteCustomDomainJob.create_from_job(job)
+        if delete_job:
+            delete_job.run()
 
-        is_subdomain = custom_domain.is_sl_subdomain
-        domain_name = custom_domain.domain
-        user = custom_domain.user
-
-        custom_domain_partner_id = custom_domain.partner_id
-        CustomDomain.delete(custom_domain.id)
-        Session.commit()
-
-        if is_subdomain:
-            message = f"Delete subdomain {custom_domain_id} ({domain_name})"
-        else:
-            message = f"Delete custom domain {custom_domain_id} ({domain_name})"
-        emit_user_audit_log(
-            user=user,
-            action=UserAuditLogAction.DeleteCustomDomain,
-            message=message,
-        )
-
-        LOG.d("Domain %s deleted", domain_name)
-
-        if custom_domain_partner_id is None:
-            send_email(
-                user.email,
-                f"您的域 {domain_name} 已被删除",
-                f"""域 {domain_name} 及其别名已成功删除.
-                祝好,
-                原邮邮箱.
-                """,
-                retries=3,
-            )
     elif job.name == JobType.SEND_USER_REPORT.value:
         export_job = ExportUserDataJob.create_from_job(job)
         if export_job:
@@ -316,6 +287,10 @@ def process_job(job: Job):
         send_job = SendEventToWebhookJob.create_from_job(job)
         if send_job:
             send_job.run(HttpEventSink())
+    elif job.name == JobType.SYNC_SUBSCRIPTION.value:
+        sync_job = SyncSubscriptionJob.create_from_job(job)
+        if sync_job:
+            sync_job.run(HttpEventSink())
     else:
         LOG.e("Unknown job name %s", job.name)
 
@@ -376,47 +351,51 @@ def take_job(job: Job, taken_before_time: arrow.Arrow) -> bool:
     return res.rowcount > 0
 
 
+@newrelic.agent.background_task()
+def execute():
+    # wrap in an app context to benefit from app setup like database cleanup, sentry integration, etc
+    with create_light_app().app_context():
+        taken_before_time = arrow.now().shift(minutes=-config.JOB_TAKEN_RETRY_WAIT_MINS)
+
+        jobs_done = 0
+        for job in get_jobs_to_run(taken_before_time):
+            if not take_job(job, taken_before_time):
+                continue
+            LOG.d("Take job %s", job)
+
+            try:
+                newrelic.agent.record_custom_event("ProcessJob", {"job": job.name})
+                process_job(job)
+                job_result = "success"
+
+                job.state = JobState.done.value
+                jobs_done += 1
+                LOG.d("Processed job %s", job)
+            except Exception as e:
+                LOG.warning(f"Error processing job (id={job.id} name={job.name}): {e}")
+
+                # Increment manually, as the attempts increment is done by the take_job but not
+                # updated in our instance
+                job_attempts = job.attempts + 1
+                if job_attempts >= config.JOB_MAX_ATTEMPTS:
+                    LOG.warning(
+                        f"Marking job (id={job.id} name={job.name} attempts={job_attempts}) as ERROR"
+                    )
+                    job.state = JobState.error.value
+                    job_result = "error"
+                else:
+                    job_result = "retry"
+
+            newrelic.agent.record_custom_event(
+                "JobProcessed", {"job": job.name, "result": job_result}
+            )
+            Session.commit()
+
+        if jobs_done == 0:
+            time.sleep(10)
+
+
 if __name__ == "__main__":
     send_version_event("job_runner")
     while True:
-        # wrap in an app context to benefit from app setup like database cleanup, sentry integration, etc
-        with create_light_app().app_context():
-            taken_before_time = arrow.now().shift(
-                minutes=-config.JOB_TAKEN_RETRY_WAIT_MINS
-            )
-
-            jobs_done = 0
-            for job in get_jobs_to_run(taken_before_time):
-                if not take_job(job, taken_before_time):
-                    continue
-                LOG.d("Take job %s", job)
-
-                try:
-                    newrelic.agent.record_custom_event("ProcessJob", {"job": job.name})
-                    process_job(job)
-                    job_result = "success"
-
-                    job.state = JobState.done.value
-                    jobs_done += 1
-                except Exception as e:
-                    LOG.warn(f"Error processing job (id={job.id} name={job.name}): {e}")
-
-                    # Increment manually, as the attempts increment is done by the take_job but not
-                    # updated in our instance
-                    job_attempts = job.attempts + 1
-                    if job_attempts >= config.JOB_MAX_ATTEMPTS:
-                        LOG.warn(
-                            f"Marking job (id={job.id} name={job.name} attempts={job_attempts}) as ERROR"
-                        )
-                        job.state = JobState.error.value
-                        job_result = "error"
-                    else:
-                        job_result = "retry"
-
-                newrelic.agent.record_custom_event(
-                    "JobProcessed", {"job": job.name, "result": job_result}
-                )
-                Session.commit()
-
-            if jobs_done == 0:
-                time.sleep(10)
+        execute()

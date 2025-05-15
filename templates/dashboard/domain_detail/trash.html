@@ -20,7 +20,7 @@
     <div class="alert alert-primary">
       在此页面上，您可以查看已删除且属于 <b>{{ custom_domain.domain }}</b> 域的所有别名
       <br />
-      当别名位于垃圾箱中时，无论是通过手工创建的别名还是使用域 Catch-All 自动创建的别名，
+      当别名位于回收站中时，无论是通过手工创建的别名还是使用域 Catch-All 自动创建的别名，
       <br />
       您都无法重新创建它。
     </div>
@@ -30,9 +30,9 @@
     <form method="post">
       {{ csrf_form.csrf_token }}
       <input type="hidden" name="form-name" value="empty-all">
-      <button class="btn btn-outline-danger">清空垃圾箱</button>
+      <button class="btn btn-outline-danger">清空回收站</button>
       <div class="small-text mt-3">
-        从垃圾箱中删除所有已删除的别名，以便重新创建它们。
+        从回收站中删除所有已删除的别名，以便重新创建它们。
         <br />
         该操作不可逆。
       </div>
@@ -49,7 +49,7 @@
       {{ csrf_form.csrf_token }}
       <input type="hidden" name="form-name" value="remove-single">
       <input type="hidden" name="deleted-alias-id" value="{{ deleted_alias.id }}">
-      <button class="btn btn-sm btn-outline-warning">从垃圾箱中删除</button>
+      <button class="btn btn-sm btn-outline-warning">从回收站中删除</button>
     </form>
   {% endfor %}
 {% endblock %}

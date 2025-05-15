@@ -1,49 +1,5 @@
 $('.mailbox-select').multipleSelect();
 
-function confirmDeleteAlias() {
-  let that = $(this);
-  let alias = that.data("alias-email");
-  let aliasDomainTrashUrl = that.data("custom-domain-trash-url");
-
-  let message = `也许您想禁用别名？请注意，一旦删除，<b>无法</b>恢复。`;
-  if (aliasDomainTrashUrl !== undefined) {
-    message = `也许您想禁用别名？删除后，它会移至域
-    <a href="${aliasDomainTrashUrl}">垃圾箱</a>`;
-  }
-
-  bootbox.dialog({
-    title: `删除 ${alias}`,
-    message: message,
-    size: 'large',
-    onEscape: true,
-    backdrop: true,
-    buttons: {
-      disable: {
-        label: '禁用别名',
-        className: 'btn-primary',
-        callback: function () {
-          that.closest("form").find('input[name="form-name"]').val("disable-alias");
-          that.closest("form").submit();
-        }
-      },
-
-      delete: {
-        label: "确认删除，我已经不需要它了",
-        className: 'btn-outline-danger',
-        callback: function () {
-          that.closest("form").submit();
-        }
-      },
-
-      cancel: {
-        label: '取消',
-        className: 'btn-outline-primary'
-      },
-
-    }
-  });
-}
-
 $(".enable-disable-alias").change(async function () {
   let aliasId = $(this).data("alias");
   let alias = $(this).data("alias-email");
