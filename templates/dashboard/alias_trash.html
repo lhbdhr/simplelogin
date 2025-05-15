@@ -51,7 +51,7 @@
                     data-toggle="tooltip"
                     title="清空回收站"
                     class="btn btn-danger">
-                <i class="fa fa-ban"></i> 清空回收站
+                <i class="fa fa-ban"></i> 清空回收站( 永久删除所有别名 )
               </span>
             </form>
           </div>
@@ -137,7 +137,7 @@
         let that = $(this);
 
         bootbox.confirm({
-            message: "这将永久删除回收站中的所有别名。您确定吗？",
+            message: "这将永久删除回收站中的所有别名。它们将再也不可以重新使用，您确定吗？",
             buttons: {
                 confirm: {
                     label: '永久删除所有',

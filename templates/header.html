@@ -137,6 +137,12 @@
             <a class="dropdown-item mb-3" href="{{ url_for("dashboard.api_key") }}">
               <i class="dropdown-icon fa fa-key"></i> API Keys
             </a>
+            <a class="dropdown-item mb-3" href="{{ url_for("dashboard.alias_trash") }}">
+              <i class="dropdown-icon fa fa-trash"></i> 别名回收站
+            </a>
+             <a class="dropdown-item mb-3" href="{{ url_for("dashboard.refused_email_route") }}">
+              <i class="dropdown-icon fa fa-ban"></i> 隔离和退信
+            </a>
             <a class="dropdown-item mb-3"
                href="{{ url_for("dashboard.account_setting") }}">
               <i class="dropdown-icon fa fa-user"></i> 账户设置
