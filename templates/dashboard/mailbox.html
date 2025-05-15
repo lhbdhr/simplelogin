@@ -143,8 +143,8 @@
             let inputOptions = new_mailboxes.map((index, option) => { return {["value"]: option.value, ["text"]: option.text}}).toArray()
 
             let that = $(this);
-            let message = `根据您的别名删除设置，邮箱 <b>${mailbox}</b> 拥有的所有别名将被立即删除或移至别名回收站。<br>` +
-                          "或者，您也可以选择将这些别名转移到其他收件箱，而不把它们删除/移到别名回收站：<br><br>";
+            let message = `根据您的别名删除设置，邮箱 <b>${mailbox}</b> 拥有的所有别名将被立即删除或移至回收站。<br>` +
+                          "或者，您也可以选择将这些别名转移到其他收件箱：<br><br>";
 
             bootbox.prompt({
                 title: '<b>删除 收件邮箱</b>',
