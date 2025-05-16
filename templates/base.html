@@ -1,40 +1,37 @@
 {% from "_formhelpers.html" import render_field, render_field_errors %}
 <!DOCTYPE html>
-<html lang="en"
-      dir="ltr"
-      data-theme="{%- if request.cookies.get('dark-mode') == 'true' -%} dark{%- endif -%}">
+<html lang="en" dir="ltr" data-theme="{%- if request.cookies.get('dark-mode') == 'true' -%} dark{%- endif -%}">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <meta http-equiv="Content-Language" content="en"/>
-    <meta name="msapplication-TileColor" content="#2d89ef"/>
-    <meta name="theme-color" content="#4188c9"/>
-    <meta name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="HandheldFriendly" content="True"/>
-    <meta name="MobileOptimized" content="320"/>
-    <meta name="referrer" content="no-referrer"/>
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef" />
+    <meta name="theme-color" content="#4188c9" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="referrer" content="no-referrer" />
     <!-- Bing -->
-    <meta name="msvalidate.01" content="2A313A69CBFD1A378C3B91734DC221A8"/>
+    <meta name="msvalidate.01" content="2A313A69CBFD1A378C3B91734DC221A8" />
     <!-- Yandex -->
-    <meta name="yandex-verification" content="c9e5d4d68bc983a1"/>
+    <meta name="yandex-verification" content="c9e5d4d68bc983a1" />
     <meta name="description"
-          content="Protect your email address with email ALIAS. Create a different email alias for each website. No more phishing, or spam."/>
-    <link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
-    <link rel="canonical" href="{{ CANONICAL_URL }}"/>
+        content="Protect your email address with email ALIAS. Create a different email alias for each website. No more phishing, or spam." />
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico" />
+    <link rel="canonical" href="{{ CANONICAL_URL }}" />
     <title>
         {% block title %}{% endblock %}
         | 原邮邮箱
     </title>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='node_modules/font-awesome/css/font-awesome.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/font-awesome/css/font-awesome.css') }}" />
     <!-- Dashboard Core -->
-    <link href="/static/assets/css/dashboard.css" rel="stylesheet"/>
+    <link href="/static/assets/css/dashboard.css" rel="stylesheet" />
     <!-- Tabler JS -->
     <script src="/static/assets/js/vendors/jquery-3.2.1.min.js"></script>
     <script src="/static/assets/js/vendors/bootstrap.bundle.min.js"></script>
@@ -49,21 +46,19 @@
     <!-- ClipboardJS -->
     <script src="/static/vendor/clipboard.min.js"></script>
     <!-- IntroJS -->
-    <link rel="stylesheet"
-          type="text/css"
-          href="{{ url_for('static', filename='node_modules/intro.js/minified/introjs.min.css') }}"/>
+    <link rel="stylesheet" type="text/css"
+        href="{{ url_for('static', filename='node_modules/intro.js/minified/introjs.min.css') }}" />
     <script src="{{ url_for('static', filename='node_modules/intro.js/minified/intro.min.js') }}"></script>
     <!-- Sentry -->
     <script src="{{ url_for('static', filename='node_modules/@sentry/browser/build/bundle.min.js') }}"></script>
-    <link rel="stylesheet" href="/static/vendor/bootstrap-social.min.css"/>
+    <link rel="stylesheet" href="/static/vendor/bootstrap-social.min.css" />
     <!-- Toastr library -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='node_modules/toastr/build/toastr.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/toastr/build/toastr.min.css') }}" />
     <script src="{{ url_for('static', filename='node_modules/toastr/build/toastr.min.js') }}"></script>
     <script src="{{ url_for('static', filename='node_modules/bootbox/dist/bootbox.min.js') }}"></script>
     <!-- Multiple-select library -->
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='node_modules/multiple-select/dist/multiple-select.min.css') }}"/>
+        href="{{ url_for('static', filename='node_modules/multiple-select/dist/multiple-select.min.css') }}" />
     <script src="{{ url_for('static', filename='node_modules/multiple-select/dist/multiple-select.min.js') }}"></script>
     <!-- Parseley library -->
     <script src="{{ url_for('static', filename='node_modules/parsleyjs/dist/parsley.min.js') }}"></script>
@@ -71,44 +66,54 @@
     <script src="{{ url_for('static', filename='node_modules/htmx.org/dist/htmx.min.js') }}"></script>
     {% if PLAUSIBLE_HOST and PLAUSIBLE_DOMAIN %}
 
-        <!-- Plausible Analytics library -->
-        <script async defer data-domain=”{{ PLAUSIBLE_DOMAIN }}”
-                src=”{{ PLAUSIBLE_HOST }}/js/plausible.outbound-links.js”></script>
+    <!-- Plausible Analytics library -->
+    <script async defer data-domain=”{{ PLAUSIBLE_DOMAIN }}” src=”{{ PLAUSIBLE_HOST
+        }}/js/plausible.outbound-links.js”></script>
     {% endif %}
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='darkmode.css') }}?v={{ VERSION }}"/>
-    <link rel="stylesheet"
-          type="text/css"
-          href="/static/style.css?v={{ VERSION }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='darkmode.css') }}?v={{ VERSION }}" />
+    <link rel="stylesheet" type="text/css" href="/static/style.css?v={{ VERSION }}" />
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
     <script>toastr.options.closeButton = true;</script>
     <!-- For additional head -->
     {% block head %}{% endblock %}
 </head>
-<body>
-<div class="page">
-    {% if NOW.timestamp < 1701475201 and current_user.is_authenticated and current_user.should_show_upgrade_button() %}
 
-        <div class="alert alert-success text-center mb-0" role="alert">
-            Black Friday: $20 for the first year instead of $30. Available until December 1st.
+<body>
+    <div class="page">
+        {% if is_default_mailbox_virtual_mailbox %}
+        <div class="alert alert-warning text-center mb-0" role="alert">
+            <span class="fa fa-exclamation-triangle"></span>
+            <strong>注意：</strong> 您的默认收件邮箱 <span class="text-danger">{{current_user.default_mailbox.email}}</span>
+            为虚假邮箱，您无法<span class="text-danger">查看发给该邮箱的邮件</span>，请访问<a href="{{ url_for('dashboard.mailbox_route')
+                }}">收件邮箱</a>页面，添加真实收件邮箱后将其删除！
         </div>
-    {% endif %}
-    {% block announcement %}{% endblock %}
-    <div class="container">
-        <!-- For flash messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% endif %}
+        {% if is_user_email_virtual_mailbox %}
+        <div class="alert alert-warning text-center mb-0" role="alert">
+            <span class="fa fa-exclamation-triangle"></span>
+            <strong>注意:</strong>您的登录账户为 <span class="text-danger">{{current_user.default_mailbox.email}}</span>，请访问<a
+                href="{{ url_for('dashboard.account_setting')
+                }}">账户设置</a>页面修改，因为如果发生转发邮件失败，系统会通过邮件通知用户，如果账户Email是虚假邮箱，您将无法收到通知。
+            <br />
+            修改账户Email地址后，您仍然可以使用Linux Do一键登录功能。
+        </div>
+        {% endif %}
+        {% block announcement %}{% endblock %}
+        <div class="container">
+            <!-- For flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
             <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
             {% if messages %}
 
-                {% for category, message in messages %}
-                    <script>toastr.{{category }}("{{ message }}");</script>{% endfor %}
+            {% for category, message in messages %}
+            <script>toastr.{ { category } } ("{{ message }}");</script>{% endfor %}
             {% endif %}
-        {% endwith %}
+            {% endwith %}
+        </div>
+        {% block content %}{% endblock %}
     </div>
-    {% block content %}{% endblock %}
-</div>
-<script>
-    {% if SENTRY_DSN %}
+    <script>
+        {% if SENTRY_DSN %}
         console.log("Init sentry");
         try {
             Sentry.init({
@@ -159,39 +164,40 @@
         } catch (error) {
             console.log("请禁用 AdBlocker 后重试 ...")
         }
-    {% endif %}
+        {% endif %}
 
-    // default options for bootbox
-    bootbox.setDefaults({
-        closeButton: false,
-        backdrop: true
-    })
+        // default options for bootbox
+        bootbox.setDefaults({
+            closeButton: false,
+            backdrop: true
+        })
 
-    var clipboard = new ClipboardJS('.clipboard');
+        var clipboard = new ClipboardJS('.clipboard');
 
-    clipboard.on('success', function (e) {
-        toastr.success("已经复制到剪贴版");
-        e.clearSelection();
-    });
+        clipboard.on('success', function (e) {
+            toastr.success("已经复制到剪贴版");
+            e.clearSelection();
+        });
 
-    // Handle back or close button
-    $('.back-or-close').on("click", function () {
-        // the window is actually a popup, in this case just close it
-        if (history.length === 1) {
-            window.close();
-        } else {
-            history.back();
-        }
-    });
+        // Handle back or close button
+        $('.back-or-close').on("click", function () {
+            // the window is actually a popup, in this case just close it
+            if (history.length === 1) {
+                window.close();
+            } else {
+                history.back();
+            }
+        });
 
-    document.body.addEventListener('htmx:responseError', function (evt) {
-        toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
-    });
+        document.body.addEventListener('htmx:responseError', function (evt) {
+            toastr.error("抱歉造成不便！您可以刷新页面并重试吗？", "未知错误");
+        });
 
-</script>
-<script src="{{ url_for('static', filename='local-storage-polyfill.js') }}"></script>
-<script src="{{ url_for('static', filename='js/an.js', v='2') }}"></script>
-<!-- For additional script -->
-{% block script %}{% endblock %}
+    </script>
+    <script src="{{ url_for('static', filename='local-storage-polyfill.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/an.js', v='2') }}"></script>
+    <!-- For additional script -->
+    {% block script %}{% endblock %}
 </body>
+
 </html>

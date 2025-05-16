@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 
 from flask import render_template, request, redirect, url_for, flash
@@ -190,6 +191,15 @@ def index():
 
     stats = get_stats(current_user)
 
+    # check if the default mailbox is a virtual mailbox
+    default_mailbox = str(current_user.default_mailbox.email)
+    is_default_mailbox_virtual_mailbox = (
+        re.match("^u\\d+@linux\\.do$", default_mailbox) is not None
+    )
+    is_user_email_virtual_mailbox = (
+        re.match("^u\\d+@linux\\.do$", current_user.email) is not None
+    )
+
     mailbox_id = None
     if alias_filter and alias_filter.startswith("mailbox:"):
         mailbox_id = int(alias_filter[len("mailbox:") :])
@@ -239,6 +249,8 @@ def index():
         filter=alias_filter,
         stats=stats,
         csrf_form=csrf_form,
+        is_default_mailbox_virtual_mailbox=is_default_mailbox_virtual_mailbox,
+        is_user_email_virtual_mailbox=is_user_email_virtual_mailbox,
     )
 
 
