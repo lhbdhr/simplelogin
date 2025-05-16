@@ -54,14 +54,14 @@
                   class="float-left ml-2">
               {{ change_email_form.csrf_token }}
               <a onclick="this.closest('form').submit()"
-                 class="btn btn-secondary btn-sm">重新发送验证邮件</a>
+                 class="btn btn-outline-secondary btn-sm">重新发送验证邮件</a>
             </form>
             <form method="POST"
                   action="{{ url_for("dashboard.cancel_email_change") }}"
                   class="float-left ml-2">
               {{ change_email_form.csrf_token }}
               <a onclick="this.closest('form').submit()"
-                 class="btn btn-secondary btn-sm">取消登陆邮箱更改</a>
+                 class="btn btn-outline-secondary btn-sm">取消登陆邮箱更改</a>
             </form>
           </div>
         {% endif %}

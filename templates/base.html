@@ -84,8 +84,8 @@
         <div class="alert alert-warning text-center mb-0" role="alert">
             <span class="fa fa-exclamation-triangle"></span>
             <strong>注意：</strong> 您的默认收件邮箱 <span class="text-danger">{{current_user.default_mailbox.email}}</span>
-            为虚假邮箱，您无法<span class="text-danger">查看发给该邮箱的邮件</span>，请访问<a href="{{ url_for('dashboard.mailbox_route')
-                }}">收件邮箱</a>页面，添加真实收件邮箱后将其删除！
+            为虚假邮箱，<span class="text-danger">该邮箱地址会拒绝所有的Email，您将无法正常收信</span>，请访问<a href="{{ url_for('dashboard.mailbox_route')
+                }}">收件邮箱</a>页面，添加真实收件邮箱后将其<span class="text-danger">删除</span>！
         </div>
         {% endif %}
         {% if is_user_email_virtual_mailbox %}
@@ -93,7 +93,7 @@
             <span class="fa fa-exclamation-triangle"></span>
             <strong>注意:</strong>您的登录账户为 <span class="text-danger">{{current_user.default_mailbox.email}}</span>，请访问<a
                 href="{{ url_for('dashboard.account_setting')
-                }}">账户设置</a>页面修改，因为如果发生转发邮件失败，系统会通过邮件通知用户，如果账户Email是虚假邮箱，您将无法收到通知。
+                }}">账户设置</a>页面修改，因为如果发生转发邮件失败，系统会通过邮件通知用户，如果账户Email是虚假邮箱，<span class="text-danger">您将无法收到系统通知</span>。
             <br />
             修改账户Email地址后，您仍然可以使用Linux Do一键登录功能。
         </div>
