@@ -37,9 +37,9 @@ class DeleteCustomDomainJob:
         Session.commit()
 
         if is_subdomain:
-            message = f"Delete subdomain {custom_domain_id} ({domain_name})"
+            message = f"删除子域名 {custom_domain_id} ({domain_name})"
         else:
-            message = f"Delete custom domain {custom_domain_id} ({domain_name})"
+            message = f"删除自定义域名 {custom_domain_id} ({domain_name})"
         emit_user_audit_log(
             user=user,
             action=UserAuditLogAction.DeleteCustomDomain,
@@ -52,11 +52,11 @@ class DeleteCustomDomainJob:
         if custom_domain_partner_id is None:
             send_email(
                 user.email,
-                f"Your domain {domain_name} has been deleted",
-                f"""Domain {domain_name} along with its aliases are deleted successfully.
+                f"您的域名 {domain_name} 已经删除",
+                f"""域 {domain_name} 及其别名已成功删除.
 
-        Regards,
-        SimpleLogin team.
+        祝好,
+        原邮邮箱.
         """,
                 retries=3,
             )
