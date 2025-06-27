@@ -1293,7 +1293,7 @@ def clear_user_audit_log():
 
 
 def clear_aliases_pending_to_be_deleted():
-    oldest_valid = arrow.now().shift(days=-config.ALIAS_TRASH_DAYS)
+    oldest_valid = arrow.now()
     cleanup_alias(oldest_valid)
 
 

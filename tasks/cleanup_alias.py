@@ -14,6 +14,7 @@ def cleanup_alias(oldest_allowed: arrow.Arrow):
             and_(Alias.delete_on.isnot(None), Alias.delete_on <= oldest_allowed)
         )
         .yield_per(500)
+        .enable_eagerloads(False)
         .all()
     ):
         alias: Alias = alias
