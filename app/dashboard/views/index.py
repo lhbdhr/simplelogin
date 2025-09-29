@@ -193,12 +193,15 @@ def index():
 
     # check if the default mailbox is a virtual mailbox
     default_mailbox = str(current_user.default_mailbox.email)
-    is_default_mailbox_virtual_mailbox = (
-        re.match("^u\\d+@linux\\.do$", default_mailbox) is not None
+    VIRTUAL_MAILBOX_PATTERN = re.compile(
+        r"^(u\d+@linux\.do|[a-z0-9]+@privaterelay\.linux\.do)$"
     )
-    is_user_email_virtual_mailbox = (
-        re.match("^u\\d+@linux\\.do$", current_user.email) is not None
-    )
+
+    def is_virtual_mailbox(email: str) -> bool:
+        return VIRTUAL_MAILBOX_PATTERN.match(email) is not None
+
+    is_default_mailbox_virtual_mailbox = is_virtual_mailbox(default_mailbox)
+    is_user_email_virtual_mailbox = is_virtual_mailbox(current_user.email)
 
     mailbox_id = None
     if alias_filter and alias_filter.startswith("mailbox:"):
