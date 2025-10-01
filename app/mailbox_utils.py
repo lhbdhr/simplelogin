@@ -124,11 +124,17 @@ def delete_mailbox(
         LOG.i(
             f"User {user} has tried to delete another user's mailbox with {mailbox_id}"
         )
-        raise MailboxError("Invalid mailbox")
+        raise MailboxError("无效收件箱")
 
     if mailbox.id == user.default_mailbox_id:
         LOG.i(f"User {user} has tried to delete the default mailbox")
-        raise MailboxError("Cannot delete your default mailbox")
+        raise MailboxError("不能删除默认收件箱")
+
+    if mailbox.nb_alias() > 0 and (
+        not transfer_mailbox_id and transfer_mailbox_id <= 0
+    ):
+        LOG.i(f"User {user} has tried to delete a mailbox with aliases")
+        raise MailboxError("此收件箱仍有关联的别名，请先删除或转移这些别名")
 
     if transfer_mailbox_id and transfer_mailbox_id > 0:
         transfer_mailbox = Mailbox.get(transfer_mailbox_id)
@@ -137,19 +143,17 @@ def delete_mailbox(
             LOG.i(
                 f"User {user} has tried to transfer to a mailbox owned by another user"
             )
-            raise MailboxError("You must transfer the aliases to a mailbox you own")
+            raise MailboxError("您只能将别名转移到您自己的收件箱中")
 
         if transfer_mailbox.id == mailbox.id:
             LOG.i(
                 f"User {user} has tried to transfer to the same mailbox he is deleting"
             )
-            raise MailboxError(
-                "You can not transfer the aliases to the mailbox you want to delete"
-            )
+            raise MailboxError("您无法将别名转移到即将删除的收件箱")
 
         if not transfer_mailbox.verified:
             LOG.i(f"User {user} has tried to transfer to a non verified mailbox")
-            raise MailboxError("Your new mailbox is not verified")
+            raise MailboxError("您的新邮箱尚未验证")
 
     # Schedule delete mailbox job
     LOG.i(
