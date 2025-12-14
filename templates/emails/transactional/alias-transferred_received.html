@@ -3,11 +3,12 @@
 {% block content %}
 
   {% call text() %}
-    <h1>{{ alias.email }} 已被转移。</h1>
+    <h1>{{ alias.email }} 已接收</h1>
   {% endcall %}
 
   {% call text() %}
-    您的（以前的）别名 {{ alias.email }} 已转移给其他用户。
+    您接收了别名 {{ alias.email }} ，您已拥有该别名的所有权，<br>
+    今后该别名收到的邮件将转发到您的收件箱。
   {% endcall %}
 
   {% call text() %}

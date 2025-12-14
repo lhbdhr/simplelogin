@@ -3,5 +3,5 @@
 {% block content %}
 {{ alias.email }} 已被转移。
 
-您的（以前的）别名 {{ alias.email }} 已被其他用户接收。
+您的（以前的）别名 {{ alias.email }} 已转移给其他用户。
 {% endblock %}

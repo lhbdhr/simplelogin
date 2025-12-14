@@ -1,0 +1,8 @@
+{% extends "base.txt.jinja2" %}
+
+{% block content %}
+{{ alias.email }} 已接收。
+
+您接收了别名 {{ alias.email }} ，您已拥有该别名的所有权，
+今后该别名收到的邮件将转发到您的收件箱。
+{% endblock %}

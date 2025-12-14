@@ -336,7 +336,7 @@ def aliases_for_mailbox(mailbox: Mailbox) -> [Alias]:
     get list of aliases for a given mailbox
     """
     ret = set(
-        Alias.filter(Alias.mailbox_id == mailbox.id, Alias.delete_on == None).all()  # noqa: E711
+        Alias.filter(Alias.mailbox_id == mailbox.id, Alias.delete_on is None).all()
     )
 
     for alias in (
@@ -438,7 +438,7 @@ def transfer_alias(alias: Alias, new_user: User, new_mailboxes: [Mailbox]):
     old_user = alias.user
     send_email(
         old_user.email,
-        f"别名 {alias.email} 已收到",
+        f"别名 {alias.email} 已转移",
         render(
             "transactional/alias-transferred.txt",
             user=old_user,
@@ -446,6 +446,21 @@ def transfer_alias(alias: Alias, new_user: User, new_mailboxes: [Mailbox]):
         ),
         render(
             "transactional/alias-transferred.html",
+            user=old_user,
+            alias=alias,
+        ),
+    )
+
+    send_email(
+        new_user.email,
+        f"别名 {alias.email} 已接收",
+        render(
+            "transactional/alias-transferred_received.txt",
+            user=old_user,
+            alias=alias,
+        ),
+        render(
+            "transactional/alias-transferred_received.html",
             user=old_user,
             alias=alias,
         ),

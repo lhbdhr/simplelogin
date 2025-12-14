@@ -101,7 +101,7 @@ Run the postgres database:
 ```bash
 docker run --rm --name="dev-db" -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=myuser -e POSTGRES_DB=simplelogin -p 127.0.0.1:15432:5432 postgres:13
 docker run --rm --name="dev-redis" -p 127.0.0.1:6379:6379 redis:alpine
-docker exec -it db-test psql -U myuser simplelogin
+docker exec -it dev-db psql -U myuser simplelogin
 ```
 
 To run the server:
