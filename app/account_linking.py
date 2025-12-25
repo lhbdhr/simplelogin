@@ -21,6 +21,7 @@ from app.events.event_dispatcher import EventDispatcher
 from app.events.generated.event_pb2 import UserPlanChanged, EventContent
 from app.log import LOG
 from app.models import (
+    ActivationCode,
     PartnerSubscription,
     Partner,
     PartnerUser,
@@ -303,6 +304,16 @@ def process_login_case(
             user = users[0]
         else:
             user = None
+        if user is not None and user.activated is False:
+            user.activated = True
+            activation_code: ActivationCode = ActivationCode.get_by(user_id=user.id)
+            ActivationCode.delete(activation_code.id)
+            emit_user_audit_log(
+                user=user,
+                action=UserAuditLogAction.ActivateUser,
+                message=f"User has been activated: {user.email} by partner_login",
+            )
+            Session.commit()
         return get_login_strategy(link_request, user, partner).process()
     else:
         # We found the SL user registered with that partner user id
