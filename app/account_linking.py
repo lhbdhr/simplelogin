@@ -307,7 +307,8 @@ def process_login_case(
         if user is not None and user.activated is False:
             user.activated = True
             activation_code: ActivationCode = ActivationCode.get_by(user_id=user.id)
-            ActivationCode.delete(activation_code.id)
+            if activation_code is not None:
+                ActivationCode.delete(activation_code.id)
             emit_user_audit_log(
                 user=user,
                 action=UserAuditLogAction.ActivateUser,
