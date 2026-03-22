@@ -92,7 +92,7 @@ More info on https://simplelogin.io/docs/getting-started/anti-phishing/
         email_log = quarantine_dmarc_failed_forward_email(alias, contact, envelope, msg)
         Notification.create(
             user_id=alias.user_id,
-            title=f"{alias.email} has a new mail in quarantine",
+            title=f"发送到 {alias.email} 的邮件已被隔离",
             message=Notification.render(
                 "notification/message-quarantine.html", alias=alias
             ),

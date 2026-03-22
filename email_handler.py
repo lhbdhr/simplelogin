@@ -843,6 +843,8 @@ def forward_email_to_mailbox(
         headers.LIST_UNSUBSCRIBE,
         headers.LIST_ID,
         headers.LIST_UNSUBSCRIBE_POST,
+        headers.X_RSPAMD_SCORE,
+        headers.X_RSPAMD_ACTION,
     ] + headers.MIME_HEADERS
     if user.include_header_email_header:
         headers_to_keep.append(headers.AUTHENTICATION_RESULTS)
@@ -1153,6 +1155,8 @@ def handle_reply(envelope, msg: Message, rcpt_to: str) -> (bool, str):
             headers.REFERENCES,
             headers.IN_REPLY_TO,
             headers.SL_QUEUE_ID,
+            headers.X_RSPAMD_SCORE,
+            headers.X_RSPAMD_ACTION,
         ]
         + headers.MIME_HEADERS,
     )
@@ -1528,7 +1532,7 @@ def handle_bounce_forward_phase(msg: Message, email_log: EmailLog):
 
         Notification.create(
             user_id=user.id,
-            title=f"{alias.email} has been disabled due to multiple bounces",
+            title=f"别名 {alias.email} 因多次退信已被禁用",
             message=Notification.render(
                 "notification/alias-disable.html", alias=alias, mailbox=mailbox
             ),
@@ -1570,7 +1574,7 @@ def handle_bounce_forward_phase(msg: Message, email_log: EmailLog):
 
         Notification.create(
             user_id=user.id,
-            title=f"Email from {contact.website_email} to {alias.email} cannot be delivered to {mailbox.email}",
+            title=f"从 {contact.website_email} 发送到您的别名 {alias.email} 的邮件无法投递到您的收件箱 {mailbox.email}",
             message=Notification.render(
                 "notification/bounce-forward-phase.html",
                 alias=alias,
